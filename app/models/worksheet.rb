@@ -5,7 +5,6 @@
 #  id              :bigint           not null, primary key
 #  correct_content :json
 #  display_content :json
-#  name            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

@@ -3,9 +3,13 @@
 # Table name: work_groups
 #
 #  id              :bigint           not null, primary key
+#  aasm_state      :string
+#  answered        :integer
 #  name            :string
-#  rotation_time   :integer
-#  time_limit      :integer
+#  score           :integer
+#  session_time    :integer
+#  start_at        :datetime
+#  turn_time       :integer
 #  video_call_code :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -20,7 +24,10 @@
 #  fk_rails_...  (classroom_id => classrooms.id)
 #
 class WorkGroup < ApplicationRecord
+  include AASM
+
+  aasm do
+  end
   belongs_to :classroom
   has_many :worksheets, through: :group_work_sheets
-  has_many :students, through: :student_work_groups
 end
