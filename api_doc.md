@@ -2,9 +2,7 @@
 
 ## RESTful endpoints
 
-### GET /login
-> Get all assets
-
+### POST /login
 
 _Request Body_
 ```
