@@ -2,9 +2,7 @@
 
 ## RESTful endpoints
 
-### GET /login
-> Get all assets
-
+### POST /login
 
 _Request Body_
 ```
@@ -36,22 +34,26 @@ _Request Header_
 
 _Response (200)_
 ```
-[
-    {
+Classroom: {
+    id: 1,
+    name: "English class",
+    teacher_id: 1,
+    Teacher: {
         id: 1,
-        student_id: 1,
-        classroom: 1,
-        Classroom: {
+        name: "Lolita"
+    },
+    Students: [
+        {
             id: 1,
-            name: "English class",
-            teacher_id: 1,
-            Teacher: {
+            student_id: 1,
+            Student: {
                 id: 1,
-                name: "Lolita"
-            }
+                name: "qweqwe"
+            },
+            classroom: 1,
         }
-    }
-]
+    ]
+}
 ```
 
 ### GET /classrooms/ _:id_
