@@ -34,7 +34,7 @@ _Request Header_
 
 _Response (200)_
 ```
-Classroom: {
+{
     id: 1,
     name: "English class",
     teacher_id: 1,
