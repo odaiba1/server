@@ -10,5 +10,6 @@
 #  updated_at      :datetime         not null
 #
 class Worksheet < ApplicationRecord
+  has_many :group_work_sheets
   has_many :work_groups, through: :group_work_sheets
 end
