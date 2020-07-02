@@ -3099,3 +3099,102 @@ Migrating to AddNameToWorksheets (20200702065757)
   [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(4902796523402395170)[0m
   [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2020-07-02 15:25:00 +0800
+  [1m[35m (7.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ArgumentError (Before process_action callback :authenticate_user! has not been defined):
+  
+app/controllers/pages_controller.rb:2:in `<class:PagesController>'
+app/controllers/pages_controller.rb:1:in `<main>'
+Started GET "/users/sign_up" for ::1 at 2020-07-02 15:25:20 +0800
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_error_messages.html.erb (Duration: 1.3ms | Allocations: 214)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_links.html.erb (Duration: 1.3ms | Allocations: 555)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 2348.2ms | Allocations: 872227)
+  Rendered pages/_navbar.html.erb (Duration: 1.5ms | Allocations: 141)
+  Rendered pages/_footer.html.erb (Duration: 0.8ms | Allocations: 98)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /Users/annkoh/code/server/public/packs
+[Webpacker] Hash: 94287b34f5b2499150c7
+Version: webpack 4.43.0
+Time: 12216ms
+Built at: 07/02/2020 3:25:42 PM
+                                     Asset       Size       Chunks                         Chunk Names
+    js/application-7f2cf4021ec6c21e0dfc.js   2.49 MiB  application  [emitted] [immutable]  application
+js/application-7f2cf4021ec6c21e0dfc.js.map   2.62 MiB  application  [emitted] [dev]        application
+                             manifest.json  364 bytes               [emitted]              
+Entrypoint application = js/application-7f2cf4021ec6c21e0dfc.js js/application-7f2cf4021ec6c21e0dfc.js.map
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/application.js] 785 bytes {application} [built]
+[./app/javascript/stylesheets/application.scss] 664 bytes {application} [built]
+[./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./app/javascript/stylesheets/application.scss] ./node_modules/css-loader/dist/cjs.js??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./app/javascript/stylesheets/application.scss 2.35 MiB {application} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} [built]
+    + 5 hidden modules
+
+Completed 200 OK in 22282ms (Views: 22209.1ms | ActiveRecord: 35.1ms | Allocations: 1025376)
+
+
+Started GET "/users/sign_in" for ::1 at 2020-07-02 15:27:54 +0800
+Processing by Devise::SessionsController#new as HTML
+  Rendering /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_links.html.erb (Duration: 0.5ms | Allocations: 215)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 11.7ms | Allocations: 2040)
+  Rendered pages/_navbar.html.erb (Duration: 0.0ms | Allocations: 5)
+  Rendered pages/_footer.html.erb (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 33ms (Views: 31.6ms | ActiveRecord: 0.0ms | Allocations: 9587)
+
+
+Started POST "/users/sign_in" for ::1 at 2020-07-02 15:28:11 +0800
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"zCUZMj0Q6ehoIYLkzx5XW0mmZPYfZ3XkRGmhrBeWpRd9MOTbzYpcfNmtObRW1QSyyVGbWfneyXNhIAh2r5cqPA==", "user"=>{"email"=>"ann@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (4.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "ann@gmail.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 20ms (ActiveRecord: 5.0ms | Allocations: 3147)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"zCUZMj0Q6ehoIYLkzx5XW0mmZPYfZ3XkRGmhrBeWpRd9MOTbzYpcfNmtObRW1QSyyVGbWfneyXNhIAh2r5cqPA==", "user"=>{"email"=>"ann@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendering /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | Allocations: 134)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.8ms | Allocations: 1060)
+  Rendered pages/_navbar.html.erb (Duration: 0.0ms | Allocations: 5)
+  Rendered pages/_footer.html.erb (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 362ms (Views: 16.2ms | ActiveRecord: 0.0ms | Allocations: 8910)
+
+
+Started GET "/users/sign_up" for ::1 at 2020-07-02 15:28:16 +0800
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.1ms | Allocations: 15)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | Allocations: 79)
+  Rendered /Users/annkoh/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/devise-4.7.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 4.8ms | Allocations: 1071)
+  Rendered pages/_navbar.html.erb (Duration: 0.1ms | Allocations: 5)
+  Rendered pages/_footer.html.erb (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 25.6ms | ActiveRecord: 0.0ms | Allocations: 7735)
+
+
+Started POST "/users" for ::1 at 2020-07-02 15:28:27 +0800
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"authenticity_token"=>"hvPBzuySqFfnPUSMRTRkstD90b7t7oHNkSuH792xxgsDNOLMyuy9acORZX8Os1wf79qdxfgKN7+grauMZLA5VA==", "user"=>{"email"=>"ann@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "ann@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (39.0ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "ann@gmail.com"], ["encrypted_password", "$2a$12$mqUA1V2P9PQSn0z/quo2TO0JwU3AZ9Y74NC8BPn3rQXa5FQPuhpzu"], ["created_at", "2020-07-02 07:28:28.202589"], ["updated_at", "2020-07-02 07:28:28.202589"]]
+  [1m[35m (7.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 426ms (ActiveRecord: 47.8ms | Allocations: 8746)
+
+
+Started GET "/" for ::1 at 2020-07-02 15:28:28 +0800
+Processing by PagesController#home as HTML
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.7ms | Allocations: 99)
+  Rendered pages/_navbar.html.erb (Duration: 0.0ms | Allocations: 6)
+  Rendered pages/_footer.html.erb (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 22ms (Views: 20.4ms | ActiveRecord: 0.0ms | Allocations: 7259)
+
+
