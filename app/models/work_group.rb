@@ -29,5 +29,6 @@ class WorkGroup < ApplicationRecord
   aasm do
   end
   belongs_to :classroom
+  has_many :group_work_sheets
   has_many :worksheets, through: :group_work_sheets
 end
