@@ -21,6 +21,8 @@
 #  fk_rails_...  (work_group_id => work_groups.id)
 #
 class StudentWorkGroup < ApplicationRecord
-  belongs_to :student
+  alias_attribute :student, :user
+
+  belongs_to :user
   belongs_to :work_group
 end

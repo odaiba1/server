@@ -41,7 +41,11 @@ class WorkGroup < ApplicationRecord
       transitions from: %i[next_up in_progress], to: :canceled
     end
   end
+  alias_attribute :students, :users
+
   belongs_to :classroom
   has_many :group_work_sheets
   has_many :worksheets, through: :group_work_sheets
+  has_many :student_work_groups
+  has_many :users, through: :student_work_groups
 end
