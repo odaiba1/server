@@ -48,7 +48,7 @@ p 'creating work groups'
     name: "Group #{number}",
     video_call_code: 'abc',
     classroom: Classroom.first,
-    session_time: 900_000,
+    session_time: 1_200_000,
     turn_time: 3000,
     score: 0,
     answered: 0,
@@ -67,7 +67,7 @@ students.each_with_index do |student, index|
     student: student,
     work_group: work_groups[index / 4],
     joined: true,
-    turn: (index % 5).zero?
+    turn: (index % 4).zero?
   )
 end
 
