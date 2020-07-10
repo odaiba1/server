@@ -17,8 +17,11 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Classroom < ApplicationRecord
-  belongs_to :teacher
+  alias_attribute :students, :users
+  alias_attribute :teacher, :user
+
+  belongs_to :user
   has_many :work_groups, dependent: :destroy
   has_many :student_classrooms
-  has_many :students, through: :student_classrooms
+  has_many :users, through: :student_classrooms
 end

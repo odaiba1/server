@@ -19,6 +19,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class StudentClassroom < ApplicationRecord
-  belongs_to :student
+  alias_attribute :student, :user
+
+  belongs_to :user
   belongs_to :classroom
 end
