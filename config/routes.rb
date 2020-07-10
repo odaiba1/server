@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  # devise_for :users
+  scope :api, defaults: { format: :json } do
+    devise_for :users, controllers: { sessions: :sessions },
+                       path_names: { sign_in: :login }
+  end
+
   root to: 'pages#home'
 
-  resources :sessions, only: [:create, :destroy]
+
+  resources :user, only: [:show, :update]
 
   resources :classrooms, only: [:show] do
     resources :work_groups, only: [:index, :show, :new, :create] do
