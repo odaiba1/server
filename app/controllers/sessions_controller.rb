@@ -3,13 +3,11 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
 
     if user && user.valid_password?(params[:password])
-      @current_user = user
-
       render json: {
-        id: @current_user.id,
-        name: @current_user.name,
-        role: @current_user.role,
-        token: generate_jwt(@current_user.id)
+        id: user.id,
+        name: user.name,
+        role: user.role,
+        token: generate_jwt(user.id)
       }
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
