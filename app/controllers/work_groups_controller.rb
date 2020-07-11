@@ -1,5 +1,4 @@
 class WorkGroupsController < ApplicationController
-
   def index
     @classroom = Classroom.find(params[:classroom_id])
     @work_groups = WorkGroup.all
@@ -17,7 +16,6 @@ class WorkGroupsController < ApplicationController
       format.json { render json: @work_group.to_json }
     end
   end
-
 
   def new
     @classroom = Classroom.find(params[:classroom_id])
@@ -43,11 +41,9 @@ class WorkGroupsController < ApplicationController
     end
   end
 
-
-   private
+  private
 
   def work_group_params
     params.require(:work_group).permit(:name, :video_call_code, :classroom_id)
   end
-
 end

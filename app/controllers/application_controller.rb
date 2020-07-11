@@ -10,24 +10,24 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :role])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email password role])
   end
 
   def authenticate_user
-    if request.headers['Authorization'].present?
-      authenticate_or_request_with_http_token do |token|
-        begin
-          jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+    return unless request.headers['Authorization'].present?
 
-          @current_user_id = jwt_payload['id']
-        rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-          head :unauthorized
-        end
+    authenticate_or_request_with_http_token do |token|
+      begin
+        jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+
+        @current_user_id = jwt_payload['id']
+      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+        head :unauthorized
       end
     end
   end
 
-  def authenticate_user!(options = {})
+  def authenticate_user!
     head :unauthorized unless signed_in?
   end
 

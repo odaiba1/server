@@ -17,9 +17,6 @@ class SessionsController < ApplicationController
   private
 
   def generate_jwt(user_id)
-    JWT.encode({id: user_id,
-                exp: 60.days.from_now.to_i},'secret')
+    JWT.encode({ id: user_id, exp: 60.days.from_now.to_i }, 'secret')
   end
 end
-
-
