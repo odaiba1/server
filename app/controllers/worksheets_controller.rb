@@ -1,5 +1,4 @@
 class WorksheetsController < ApplicationController
-
   def show
     @worksheet = Worksheet.find(params[:id])
     # authorize @worksheet
@@ -14,11 +13,10 @@ class WorksheetsController < ApplicationController
     @work_group = WorkGroup.find(params[:work_group_id])
     @worksheet = Worksheet.find(params[:id])
     respond_to do |format|
-       # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1/worksheets/1/edit.json
+      # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1/worksheets/1/edit.json
       format.json { render json: @worksheet.to_json }
     end
   end
-
 
   def update
     @classroom = Classroom.find(params[:classroom_id])
@@ -39,5 +37,4 @@ class WorksheetsController < ApplicationController
   def worksheet_params
     params.require(:worksheet).permit(:work_group_id)
   end
-
 end
