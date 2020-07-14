@@ -190,7 +190,7 @@ _Response (200)_
 ```
 
 
-GET /classrooms/_:id_/work_groups/_:id_/worksheet/_:id_
+### GET /classrooms/_:id_/work_groups/_:id_/worksheet/_:id_
 
 _Request Header_
 ```
@@ -251,7 +251,7 @@ _Response (200)_
 }
 ```
 
-PUT /classrooms/_:id_/work_groups/_:id_/worksheets/_:id_
+### PUT /classrooms/_:id_/work_groups/_:id_/worksheets/_:id_
 
 
 _Request Header_
@@ -279,7 +279,7 @@ _Response (200)_
 ```
 
 
-PUT /classrooms/_:id_/work_groups/_:id_/students/_:id_
+### PUT /classrooms/_:id_/work_groups/_:id_/students/_:id_
 
 _Request Header_
 ```
