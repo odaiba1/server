@@ -9,7 +9,12 @@ RSpec.describe WorksheetsController, type: :controller do
 
   describe '#show' do
     it 'returns selected worksheet' do
-      get :show, params: { id: Worksheet.first.id }
+      get :show, params: {
+        # classroom_id: Classroom.first.id,
+        # workgroup_id: WorkGroup.first.id,
+        id: Worksheet.first.id,
+        format: :json
+      }
       expect(response).to have_http_status(200)
       expect(response.body).to eq(Worksheet.first.to_json)
     end
