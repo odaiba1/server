@@ -7,7 +7,7 @@ RSpec.describe ClassroomsController, type: :controller do
     sign_in @user
   end
 
-  context '#index' do
+  describe '#index' do
     it 'returns all classrooms' do
       get :index
       expect(response).to have_http_status(200)
