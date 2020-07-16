@@ -6,15 +6,12 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
-
   resources :user, only: [:show, :update]
 
   resources :classrooms, only: [:show] do
-    resources :work_groups, only: [:index, :show, :new, :create] do
-      resources :worksheets, only: [:edit, :update]
-    end
+    resources :work_groups, only: [:index, :show, :new, :create]
   end
 
-  resources :worksheets, only: [:show]
+  resources :worksheets, only: [:show, :edit, :update]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
