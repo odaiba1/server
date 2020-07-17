@@ -49,6 +49,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'autoprefixer-rails'
+gem 'factory_bot'
 gem 'faker'
 gem 'font-awesome-sass', '~> 5.12.0'
 gem 'friendly_id', '~> 5.3'
@@ -64,4 +65,5 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec'
+  gem 'rspec-rails'
 end
