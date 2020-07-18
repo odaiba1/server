@@ -53,7 +53,7 @@ p 'creating work groups'
     score: 0,
     answered: 0,
     aasm_state: 'in_progress',
-    start_at: DateTime.new(2020, 1, 1, 10, 30)
+    start_at: DateTime.new(2030, 1, 1, 10, 30)
   )
 end
 
