@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :classrooms do
+  factory :classroom do
     name { 'Test Classroom' }
-    user
+    user { create(:teacher) }
   end
 end
