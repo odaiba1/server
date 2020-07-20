@@ -7,6 +7,16 @@ FactoryBot.define do
   end
 
   factory :student, class: User do
-    role { 2 }
+    name     { 'Taro' }
+    password { 'password' }
+    role     { 0 }
+    sequence(:email) { |n| "taro#{n}@student.com" }
+  end
+
+  factory :admin, class: User do
+    name     { 'Dzakki' }
+    password { 'password' }
+    role     { 2 }
+    sequence(:email) { |n| "dzakki#{n}@admin.com" }
   end
 end

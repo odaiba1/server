@@ -15,6 +15,6 @@ FactoryBot.define do
         1 => ['走る', 'run', 'ran', 'run']
       }.to_json
     end
-    user
+    association :user
   end
 end
