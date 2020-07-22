@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :photos
   scope :api, defaults: { format: :json } do
     devise_for :users, controllers: { sessions: :sessions },
                        path_names: { sign_in: :login }
@@ -13,5 +14,6 @@ Rails.application.routes.draw do
   end
 
   resources :worksheets, only: [:show, :edit, :update]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :images, only: [:new, :create, :destroy]
 end
