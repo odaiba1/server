@@ -58,16 +58,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_064227) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
-  end
-
   create_table "student_classrooms", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "classroom_id", null: false

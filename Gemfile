@@ -49,6 +49,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'autoprefixer-rails'
+gem 'cloudinary', '~> 1.12.0'
 gem 'factory_bot'
 gem 'faker'
 gem 'font-awesome-sass', '~> 5.12.0'
