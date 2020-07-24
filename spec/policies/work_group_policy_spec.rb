@@ -48,7 +48,7 @@ RSpec.describe WorkGroupPolicy do
       let(:classroom)         { create(:classroom, user: user) }
       let(:student_classroom) { create(:student_classroom, classroom: classroom, user: user) }
       let(:work_group)        { build(:work_group, classroom: classroom) }
-      it { should_not permit(:index) }
+      it { should permit(:index) }
       it { should permit(:show) }
       it { should_not permit(:new) }
       it { should_not permit(:create) }

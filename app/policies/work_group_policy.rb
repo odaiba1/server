@@ -1,8 +1,8 @@
-class ClassroomPolicy < ApplicationPolicy
+class WorkGroupPolicy < ApplicationPolicy
   def index?
     case @user.role
     when 'admin'   then true
-    when 'teacher' then @record.user_id == @user.id
+    when 'teacher' then @record.classroom.user_id == @user.id
     when 'student' then @record.students.include?(@user)
     else false
     end
@@ -15,7 +15,7 @@ class ClassroomPolicy < ApplicationPolicy
   def update?
     case @user.role
     when 'admin'   then true
-    when 'teacher' then @record.user_id == @user.id
+    when 'teacher' then @record.classroom.user_id == @user.id
     else false
     end
   end
@@ -25,12 +25,12 @@ class ClassroomPolicy < ApplicationPolicy
   alias edit? update?
   alias delete? update?
 
-  class ClassroomScope < Scope
+  class WorkGroupScope < Scope
     def resolve
       case @user.role
       when 'admin'   then @scope.all
-      when 'teacher' then @scope.where(user_id: @user.id)
-      when 'student' then @scope.where(id: @user.classrooms.ids)
+      when 'teacher' then @scope.joins(:classroom).where(classroom: { user_id: @user.id } )
+      when 'student' then @scope.where(id: @user.work_groups.ids)
       else @scope.where(id: -1)
       end
     end
