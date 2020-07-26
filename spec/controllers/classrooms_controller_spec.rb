@@ -37,7 +37,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
       it 'restricts classroom belonging to other teacher' do
         get :show, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
       it 'restricts classroom belonging to other teacher' do
         get :edit, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe ClassroomsController, type: :controller do
   describe '#update' do
     context 'success' do
       it 'changes selected classroom' do
-        get :update, params: { id: classroom1.id, name: 'New Test Classroom', format: :json }
+        get :update, params: { id: classroom1.id, classroom: { name: 'New Test Classroom' }, format: :json }
         expect(response).to have_http_status(200)
         expect(response.body).to include('New Test')
       end
@@ -75,19 +75,19 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'failure' do
       it 'returns 404 for missing classroom' do
-        get :edit, params: { id: 999, name: 'New Test', format: :json }
+        get :update, params: { id: 999, classroom: { name: 'New Test Classroom' }, format: :json }
         expect(response).to have_http_status(404)
       end
 
       it 'restricts classroom belonging to other teacher' do
-        get :update, params: { id: classroom2.id, name: 'New Test Classroom', format: :json }
-        expect(response).to have_http_status(403)
+        get :update, params: { id: classroom2.id, classroom: { name: 'New Test Classroom' }, format: :json }
+        expect(response).to have_http_status(401)
       end
 
       it 'raises an error with missing data' do
-        get :update, params: { id: classroom1.id, name: nil, format: :json }
-        expect(response).to have_http_status(400)
-        expecte(response.body).to include('error')
+        get :update, params: { id: classroom1.id, classroom: { name: nil }, format: :json }
+        expect(response).to have_http_status(422)
+        expect(response.body).to include('error')
       end
     end
   end
@@ -111,7 +111,7 @@ RSpec.describe ClassroomsController, type: :controller do
     context 'failure' do
       it 'raises an error with missing data' do
         get :create, params: { name: nil, format: :json }
-        expect(response).to have_http_status(400)
+        expect(response).to have_http_status(422)
         expecte(response.body).to include('error')
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe ClassroomsController, type: :controller do
     context 'failure' do
       it 'restricts classroom belonging to other teacher' do
         get :delete, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
   end
