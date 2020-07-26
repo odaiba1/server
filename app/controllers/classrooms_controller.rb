@@ -23,6 +23,9 @@ class ClassroomsController < ApplicationController
   end
 
   def new
+    @classroom = Classroom.new
+    authorize @classroom
+    render json: @classroom.to_json
   end
 
   def create
