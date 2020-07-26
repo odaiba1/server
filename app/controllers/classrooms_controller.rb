@@ -1,5 +1,5 @@
 class ClassroomsController < ApplicationController
-  before_action :set_classroom, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_classroom, only: %i[show edit update destroy]
 
   def index
     @classrooms = policy_scope(Classroom)
@@ -48,7 +48,7 @@ class ClassroomsController < ApplicationController
 
   def set_classroom
     @classroom = Classroom.find(params[:id])
-    authorize @classroom  # For Pundit
+    authorize @classroom
   end
 
   def classroom_params
@@ -57,7 +57,6 @@ class ClassroomsController < ApplicationController
 
   def render_error
     render json: { errors: @classroom.errors.full_messages },
-      status: :unprocessable_entity
+           status: :unprocessable_entity
   end
-
 end

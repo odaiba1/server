@@ -25,11 +25,11 @@ class WorkGroupPolicy < ApplicationPolicy
   alias edit? update?
   alias destroy? update?
 
-  class WorkGroupScope < Scope
+  class Scope < Scope
     def resolve
       case @user.role
       when 'admin'   then @scope.all
-      when 'teacher' then @scope.joins(:classroom).where(classroom: { user_id: @user.id } )
+      when 'teacher' then @scope.joins(:classroom).where(classroom: { user_id: @user.id })
       when 'student' then @scope.where(id: @user.work_groups.ids)
       else @scope.where(id: -1)
       end
