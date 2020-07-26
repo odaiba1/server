@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def internal_server_error(exception)
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       response = { type: exception.class.to_s, message: exception.message, backtrace: exception.backtrace }
     else
       response = { error: "Internal Server Error" }
