@@ -102,7 +102,7 @@ RSpec.describe ClassroomsController, type: :controller do
   describe '#create' do
     context 'success' do
       it 'saves a new classroom' do
-        get :create, params: { name: 'Test Classroom 1', format: :json }
+        get :create, params: { classroom: { name: 'Test Classroom 1' }, format: :json }
         expect(response).to have_http_status(200)
         expect(Classroom.find_by_name('Test Classroom 1')).to be_instance_of(Classroom)
       end
@@ -110,9 +110,9 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'failure' do
       it 'raises an error with missing data' do
-        get :create, params: { name: nil, format: :json }
+        get :create, params: { classroom: { name: nil }, format: :json }
         expect(response).to have_http_status(422)
-        expecte(response.body).to include('error')
+        expect(response.body).to include('error')
       end
     end
   end

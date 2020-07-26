@@ -29,6 +29,14 @@ class ClassroomsController < ApplicationController
   end
 
   def create
+    @classroom = Classroom.new(classroom_params)
+    @classroom.user = current_user
+    authorize @classroom
+    if @classroom.save
+      render json: @classroom.to_json
+    else
+      render_error
+    end
   end
 
   def delete
