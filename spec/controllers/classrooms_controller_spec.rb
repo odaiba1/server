@@ -117,10 +117,10 @@ RSpec.describe ClassroomsController, type: :controller do
     end
   end
 
-  describe '#delete' do
+  describe '#destroy' do
     context 'success' do
       it 'deletes selected classroom' do
-        get :delete, params: { id: classroom1.id, format: :json }
+        delete :destroy, params: { id: classroom1.id, format: :json }
         expect(response).to have_http_status(200)
         expect(Classroom.all).not_to include(classroom1)
       end
@@ -128,7 +128,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'failure' do
       it 'restricts classroom belonging to other teacher' do
-        get :delete, params: { id: classroom2.id, format: :json }
+        delete :destroy, params: { id: classroom2.id, format: :json }
         expect(response).to have_http_status(401)
       end
     end

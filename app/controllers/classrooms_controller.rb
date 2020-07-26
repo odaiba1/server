@@ -1,5 +1,5 @@
 class ClassroomsController < ApplicationController
-  before_action :set_classroom, only: [ :show, :edit, :update ]
+  before_action :set_classroom, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @classrooms = policy_scope(Classroom)
@@ -39,7 +39,9 @@ class ClassroomsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
+    @classroom.destroy
+    render json: {}
   end
 
   private
