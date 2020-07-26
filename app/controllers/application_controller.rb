@@ -5,9 +5,19 @@ class ApplicationController < ActionController::Base
 
   # before_action :underscore_params!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user
+  before_action :authenticate
 
   private
+
+  def authenticate
+    authenticate_or_request_with_http_token do |token, _options|
+      User.find_by(token: token)
+    end
+  end
+
+  def current_user
+    @current_user ||= authenticate
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email password role])

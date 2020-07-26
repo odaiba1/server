@@ -1,4 +1,6 @@
 class WorkGroupsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @classroom = Classroom.find(params[:classroom_id])
     @work_groups = WorkGroup.all
