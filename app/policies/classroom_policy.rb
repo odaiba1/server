@@ -23,7 +23,7 @@ class ClassroomPolicy < ApplicationPolicy
   alias show? index?
   alias new? create?
   alias edit? update?
-  alias delete? update?
+  alias destroy? update?
 
   class Scope < Scope
     def resolve
