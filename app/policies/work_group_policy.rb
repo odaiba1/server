@@ -23,7 +23,7 @@ class WorkGroupPolicy < ApplicationPolicy
   alias show? index?
   alias new? create?
   alias edit? update?
-  alias delete? update?
+  alias destroy? update?
 
   class WorkGroupScope < Scope
     def resolve
