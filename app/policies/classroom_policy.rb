@@ -25,7 +25,7 @@ class ClassroomPolicy < ApplicationPolicy
   alias edit? update?
   alias delete? update?
 
-  class ClassroomScope < Scope
+  class Scope < Scope
     def resolve
       case @user.role
       when 'admin'   then @scope.all

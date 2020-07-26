@@ -12,9 +12,11 @@ RSpec.describe ClassroomsController, type: :controller do
 
   describe '#index' do
     it 'lists classrooms belonging to teacher' do
+      classroom1
+      classroom2
       get :index, format: :json
       expect(response).to have_http_status(200)
-      expect(response.body.size).to eq(1)
+      expect(JSON.parse(response.body).size).to eq(1)
     end
   end
 
