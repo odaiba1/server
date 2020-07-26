@@ -1,5 +1,5 @@
 class ClassroomsController < ApplicationController
-  before_action :set_classroom, only: [ :show, :update ]
+  before_action :set_classroom, only: [ :show, :edit, :update ]
 
   def index
     @classrooms = policy_scope(Classroom)
@@ -11,7 +11,7 @@ class ClassroomsController < ApplicationController
   end
 
   def edit
-
+    render json: @classroom.to_json
   end
 
   def update
