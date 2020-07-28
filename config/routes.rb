@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :user, only: [:show, :update]
 
-  resources :classrooms, only: [:show] do
+  resources :classrooms, defaults: { format: :json } do
     resources :work_groups, only: [:index, :show, :new, :create]
   end
 

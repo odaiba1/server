@@ -92,6 +92,14 @@ ActiveRecord::Schema.define(version: 2020_07_22_064227) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
   create_table "work_groups", force: :cascade do |t|
     t.string "name"
     t.string "video_call_code"
