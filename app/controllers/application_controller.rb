@@ -3,15 +3,16 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  respond_to :json
+  # respond_to :json
 
   # before_action :underscore_params!
-  before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate
-
+  # before_action :configure_permitted_parameters, if: :devise_controller?
+  # before_action :authenticate
 
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
+
+  before_action :authenticate_user!
 
   rescue_from StandardError,                with: :internal_server_error
   rescue_from Pundit::NotAuthorizedError,   with: :user_not_authorized
@@ -19,15 +20,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def authenticate
-    authenticate_or_request_with_http_token do |token, _options|
-      User.find_by(token: token)
-    end
-  end
+  # def authenticate
+  #   authenticate_or_request_with_http_token do |token, _options|
+  #     User.find_by(token: token)
+  #   end
+  # end
 
-  def current_user
-    @current_user ||= authenticate
-  end
+  # def current_user
+  #   @current_user ||= authenticate
+  # end
 
   def user_not_authorized(exception)
     render json: {
@@ -48,33 +49,33 @@ class ApplicationController < ActionController::Base
     render json: response, status: :internal_server_error
   end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email password role])
-  end
+  # def configure_permitted_parameters
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email password role])
+  # end
 
-  def authenticate_user
-    return unless request.headers['Authorization'].present?
+  # def authenticate_user
+  #   return unless request.headers['Authorization'].present?
 
-    authenticate_or_request_with_http_token do |token|
-      begin
-        jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+  #   authenticate_or_request_with_http_token do |token|
+  #     begin
+  #       jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
 
-        @current_user_id = jwt_payload['id']
-      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-        head :unauthorized
-      end
-    end
-  end
+  #       @current_user_id = jwt_payload['id']
+  #     rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+  #       head :unauthorized
+  #     end
+  #   end
+  # end
 
-  def authenticate_user!
-    head :unauthorized unless signed_in?
-  end
+  # def authenticate_user!
+  #   head :unauthorized unless signed_in?
+  # end
 
-  def current_user
-    @current_user ||= super || User.find(@current_user_id)
-  end
+  # def current_user
+  #   @current_user ||= super || User.find(@current_user_id)
+  # end
 
-  def signed_in?
-    @current_user_id.present?
-  end
+  # def signed_in?
+  #   @current_user_id.present?
+  # end
 end
