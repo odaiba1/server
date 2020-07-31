@@ -23,6 +23,12 @@ end
 
 p "Finished creating #{User.where(role: 0).size} students"
 
+p 'generating tokens'
+
+User.all.each { |user| user.save }
+
+p "Finished generating tokens for #{User.size} users"
+
 p 'creating classroom'
 
 Classroom.create!(
