@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   # before_action :configure_permitted_parameters, if: :devise_controller?
   # before_action :authenticate
 
-  after_action :verify_authorized, except: :index
+  # after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 
   before_action :authenticate_user!
@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     else
       response = { error: "Internal Server Error" }
     end
+    # try responding to format
     render json: response, status: :internal_server_error
   end
 
