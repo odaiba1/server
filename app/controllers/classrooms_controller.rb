@@ -1,17 +1,21 @@
 class ClassroomsController < ApplicationController
+  acts_as_token_authentication_handler_for User
   before_action :set_classroom, only: %i[show edit update destroy]
 
   def index
     @classrooms = policy_scope(Classroom)
     render json: @classrooms.to_json
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @classroom.to_json
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @classroom.to_json
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -26,6 +30,7 @@ class ClassroomsController < ApplicationController
     @classroom = Classroom.new
     authorize @classroom
     render json: @classroom.to_json
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create

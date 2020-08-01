@@ -1,9 +1,13 @@
 class WorkGroupsController < ApplicationController
+  acts_as_token_authentication_handler_for User
+  before_action :authenticate_user!
+
   def index
     @classroom = Classroom.find(params[:classroom_id])
     @work_groups = WorkGroup.all
     # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups.json
     format.json { render json: @work_groups.to_json }
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
@@ -11,6 +15,7 @@ class WorkGroupsController < ApplicationController
     # authorize @work_group
     # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1.json
     format.json { render json: @work_group.to_json }
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
@@ -19,6 +24,7 @@ class WorkGroupsController < ApplicationController
     # authorize @work_group
     # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/new.json
     format.json { render json: @work_group.to_json }
+    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
