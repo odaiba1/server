@@ -47,5 +47,7 @@
     <a href="#" class="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor">
       <img class="rounded-full w-10 h-10 border-2 border-transparent hover:border-indigo-400" src="https://avatars3.githubusercontent.com/u/49295880?s=460&u=68356dea758480dd77e03a8e1a24dd6d6291adc5&v=4" alt="Naokimi">
     </a>
+    <%= link_to "Login", new_user_session_path %>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete %>
   </div>
 </header>
