@@ -8,13 +8,19 @@ WorkGroup.destroy_all
 Classroom.destroy_all
 User.destroy_all
 
-p 'creating teacher'
+p 'creating teachers'
 
 User.create!(name: Faker::Name.name, email: 'teacher@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: Faker::Name.name, email: 'sub-teacher@gmail.com', password: 'supersecret', role: 1)
 
 p "Finished creating #{User.where(role: 1).size} Teachers"
 
 p 'creating students'
+
+User.create!(name: 'Paulo', email: 'paulo@gmail.com', password: 'secret')
+User.create!(name: 'Dzakki', email: 'dzakki@gmail.com', password: 'secret')
+User.create!(name: 'Ann', email: 'ann@gmail.com', password: 'secret')
+User.create!(name: 'Myra', email: 'myra@gmail.com', password: 'secret')
 
 20.times do
   name = Faker::Name.name
@@ -27,7 +33,7 @@ p 'generating tokens'
 
 User.all.each { |user| user.save }
 
-p "Finished generating tokens for #{User.size} users"
+p "Finished generating tokens for #{User.all.size} users"
 
 p 'creating classroom'
 
@@ -35,14 +41,22 @@ Classroom.create!(
   user_id: User.where(role: 1).first.id,
   name: '4B English'
 )
+Classroom.create!(
+  user_id: User.where(role: 1).last.id,
+  name: '1C Math'
+)
 
 p "Finished creating #{Classroom.count} classrooms"
 
 p 'assigning students to classrooms'
 
-students = User.where(role: 0)
+students = User.where(role: 0).limit(20)
 students.each do |user|
   StudentClassroom.create!(user: user, classroom: Classroom.first)
+end
+
+(User.where(role: 0) - students).each do |user|
+  StudentClassroom.create!(user: user, classroom: Classroom.last)
 end
 
 p 'Finished assigning students to classrooms'
@@ -63,6 +77,18 @@ p 'creating work groups'
   )
 end
 
+WorkGroup.create!(
+  name: "Group 1",
+  video_call_code: 'xyz',
+  classroom: Classroom.last,
+  session_time: 1_200_000,
+  turn_time: 3000,
+  score: 0,
+  answered: 0,
+  aasm_state: 'in_progress',
+  start_at: DateTime.new(2030, 1, 1, 10, 30)
+)
+
 p "Finished creating #{WorkGroup.count} work groups"
 
 p 'assigning students to workgroups'
@@ -72,6 +98,14 @@ students.each_with_index do |student, index|
   StudentWorkGroup.create!(
     student: student,
     work_group: work_groups[index / 4],
+    joined: true,
+    turn: (index % 4).zero?
+  )
+end
+(User.where(role: 0) - students).each_with_index do |student, index|
+  StudentWorkGroup.create!(
+    student: student,
+    work_group: WorkGroup.last,
     joined: true,
     turn: (index % 4).zero?
   )
