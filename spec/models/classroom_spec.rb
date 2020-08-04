@@ -24,22 +24,26 @@ RSpec.describe Classroom, type: :model do
     described_class.new(name: 'Test Classroom', user: teacher)
   end
 
-  it 'is valid with valid attributes' do
-    expect(subject).to be_valid
+  context 'valid' do
+    it 'with valid attributes' do
+      expect(subject).to be_valid
+    end
   end
 
-  it 'is not valid without a name' do
-    subject.name = nil
-    expect(subject).not_to be_valid
-  end
+  context 'not valid' do
+    it 'without a name' do
+      subject.name = nil
+      expect(subject).not_to be_valid
+    end
 
-  it 'is not valid without a user' do
-    subject.user = nil
-    expect(subject).not_to be_valid
-  end
+    it 'without a user' do
+      subject.user = nil
+      expect(subject).not_to be_valid
+    end
 
-  it 'is not valid with a student' do
-    subject.user = create(:student)
-    expect(subject).not_to be_valid
+    it 'with a student' do
+      subject.user = create(:student)
+      expect(subject).not_to be_valid
+    end
   end
 end
