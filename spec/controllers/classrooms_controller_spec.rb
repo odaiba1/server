@@ -67,7 +67,7 @@ RSpec.describe ClassroomsController, type: :controller do
   describe '#update' do
     context 'success' do
       it 'changes selected classroom' do
-        get :update, params: { id: classroom1.id, classroom: { name: 'New Test Classroom' }, format: :json }
+        patch :update, params: { id: classroom1.id, classroom: { name: 'New Test Classroom' }, format: :json }
         expect(response).to have_http_status(200)
         expect(response.body).to include('New Test')
       end
@@ -75,17 +75,17 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'failure' do
       it 'returns 404 for missing classroom' do
-        get :update, params: { id: 999, classroom: { name: 'New Test Classroom' }, format: :json }
+        patch :update, params: { id: 999, classroom: { name: 'New Test Classroom' }, format: :json }
         expect(response).to have_http_status(404)
       end
 
       it 'restricts classroom belonging to other teacher' do
-        get :update, params: { id: classroom2.id, classroom: { name: 'New Test Classroom' }, format: :json }
+        patch :update, params: { id: classroom2.id, classroom: { name: 'New Test Classroom' }, format: :json }
         expect(response).to have_http_status(401)
       end
 
       it 'raises an error with missing data' do
-        get :update, params: { id: classroom1.id, classroom: { name: nil }, format: :json }
+        patch :update, params: { id: classroom1.id, classroom: { name: nil }, format: :json }
         expect(response).to have_http_status(422)
         expect(response.body).to include('error')
       end
@@ -102,7 +102,7 @@ RSpec.describe ClassroomsController, type: :controller do
   describe '#create' do
     context 'success' do
       it 'saves a new classroom' do
-        get :create, params: { classroom: { name: 'Test Classroom 1' }, format: :json }
+        put :create, params: { classroom: { name: 'Test Classroom 1' }, format: :json }
         expect(response).to have_http_status(200)
         expect(Classroom.find_by_name('Test Classroom 1')).to be_instance_of(Classroom)
       end
@@ -110,7 +110,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'failure' do
       it 'raises an error with missing data' do
-        get :create, params: { classroom: { name: nil }, format: :json }
+        put :create, params: { classroom: { name: nil }, format: :json }
         expect(response).to have_http_status(422)
         expect(response.body).to include('error')
       end
@@ -130,6 +130,11 @@ RSpec.describe ClassroomsController, type: :controller do
       it 'restricts classroom belonging to other teacher' do
         delete :destroy, params: { id: classroom2.id, format: :json }
         expect(response).to have_http_status(401)
+      end
+
+      it 'returns 404 for missing classroom' do
+        delete :destroy, params: { id: 999, format: :json }
+        expect(response).to have_http_status(404)
       end
     end
   end
