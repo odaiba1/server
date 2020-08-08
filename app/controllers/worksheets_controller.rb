@@ -1,4 +1,4 @@
-# class WorksheetsController < ApplicationController
+class WorksheetsController < ApplicationController
 #   def show
 #     @worksheet = Worksheet.find(params[:id])
 #     # authorize @worksheet
@@ -37,4 +37,4 @@
 #   def worksheet_params
 #     params.require(:worksheet).permit(:work_group_id)
 #   end
-# end
+end
