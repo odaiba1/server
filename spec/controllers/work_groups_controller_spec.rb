@@ -177,7 +177,7 @@ RSpec.describe WorkGroupsController, type: :controller do
   describe '#destroy' do
     context 'success' do
       it 'deletes selected work_group' do
-        delete :destroy, params: { classroom_id: classroom1.id, id: work_group1.id, format: :json }
+        delete :destroy, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
         expect(work_group.all).not_to include(work_group1)
       end
@@ -185,12 +185,12 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'failure' do
       it 'restricts work_group belonging to other teacher' do
-        delete :destroy, params: { classroom_id: classroom2.id, id: work_group2.id, format: :json }
+        delete :destroy, params: { id: work_group2.id, format: :json }
         expect(response).to have_http_status(401)
       end
 
       it 'returns 404 for missing classroom' do
-        delete :destroy, params: { classroom_id: classroom1.id, id: 999, format: :json }
+        delete :destroy, params: { id: 999, format: :json }
         expect(response).to have_http_status(404)
       end
     end
