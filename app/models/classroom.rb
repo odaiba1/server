@@ -26,4 +26,12 @@ class Classroom < ApplicationRecord
   has_many :users, through: :student_classrooms
 
   validates :name, presence: true
+  validate :is_teacher, on: :create 
+ 
+  def is_teacher
+    user = User.find_by_id(user_id)
+    if user.nil? || user.student?
+      errors.add(:not_teacher, "Only a Teacher can create a Classroom")
+    end
+  end
 end
