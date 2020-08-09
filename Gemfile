@@ -62,6 +62,7 @@ gem 'simple_form'
 gem 'sitemap_generator'
 gem 'uglifier'
 gem 'whenever', require: false
+
 group :development, :test do
   gem 'annotate'
   gem 'dotenv-rails'
@@ -69,4 +70,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec'
   gem 'rspec-rails'
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
 end
