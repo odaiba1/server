@@ -23,10 +23,9 @@ class StudentClassroom < ApplicationRecord
 
   belongs_to :user
   belongs_to :classroom
-  validate :is_student, on: :create 
+  validate :is_student
  
   def is_student
-    user = User.find_by_id(user_id)
     if user.nil? || user.teacher?
       errors.add(:not_student, "Only a Student can create a Student Classroom")
     end
