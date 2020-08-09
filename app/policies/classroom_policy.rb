@@ -9,7 +9,8 @@ class ClassroomPolicy < ApplicationPolicy
   end
 
   def create?
-    %w[admin teacher].include?(@user.role)
+    @user.teacher?
+    %w[admin teacher].include?(@user.role) && user.teacher?
   end
 
   def update?
