@@ -30,9 +30,9 @@ RSpec.describe WorkGroup, type: :model do
   subject do
     described_class.new(
       aasm_state: 'next_up',
-      answered: 0,
+      # answered: 0,
       name: 'Test Group',
-      score: 0,
+      # score: 0,
       session_time: 1_000_000,
       start_at: DateTime.now + 1.hour,
       turn_time: 1000,
