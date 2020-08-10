@@ -25,4 +25,8 @@ class StudentWorkGroup < ApplicationRecord
 
   belongs_to :user
   belongs_to :work_group
+  validate :user_role
+  def user_role
+    errors.add(:not_student, 'Teachers cannot create Student Work Groups') if user&.teacher?
+  end
 end
