@@ -4,7 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  canvas                :string
-#  name                  :string
+#  title                 :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  work_group_id         :bigint

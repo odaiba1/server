@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_132905) do
   create_table "worksheets", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
+    t.string "title"
     t.string "canvas"
     t.bigint "worksheet_template_id"
     t.bigint "work_group_id"
