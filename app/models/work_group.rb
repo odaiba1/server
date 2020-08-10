@@ -49,5 +49,21 @@ class WorkGroup < ApplicationRecord
   has_many :student_work_groups
   has_many :users, through: :student_work_groups
 
-  validates :aasm_state, :video_call_code, :session_time, :turn_time, :start_at, :created_at, presence: true
+  validates :aasm_state, :video_call_code, :session_time, :turn_time, :start_at, presence: true
+  validate :start_time_after_current_time
+  validate :turn_time_less_than_session_time
+
+  private
+
+  def start_time_after_current_time
+    return if start_at.nil?
+
+    errors.add(:start_at, 'Start time must not be in the past') if Time.now >= start_at
+  end
+
+  def turn_time_less_than_session_time
+    return if turn_time.nil? || session_time.nil?
+
+    errors.add(:turn_time, 'Must be less than session time') if turn_time >= session_time
+  end
 end
