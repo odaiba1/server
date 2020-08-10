@@ -27,5 +27,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   enum role: { student: 0, teacher: 1, admin: 2 }
+  validates :role, :name, presence: true
   validates :email, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false
 end
