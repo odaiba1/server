@@ -2,8 +2,7 @@ class ModifyWorksheetTable < ActiveRecord::Migration[6.0]
   def change
     remove_column :worksheets, :correct_content
     remove_column :worksheets, :display_content
-    remove_column :worksheets, :name
-    add_column :worksheets, :title, :string
+    rename_column :worksheets, :name, :title
     add_column :worksheets, :canvas, :string
     add_reference :worksheets, :worksheet_template, index: true
     add_reference :worksheets, :work_group, index: true
