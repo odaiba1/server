@@ -23,4 +23,8 @@ class StudentClassroom < ApplicationRecord
 
   belongs_to :user
   belongs_to :classroom
+  validate :user_role
+  def user_role
+    errors.add(:not_authorized, 'Teachers cannot create studen classrooms') if user&.teacher?
+  end
 end
