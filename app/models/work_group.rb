@@ -48,4 +48,6 @@ class WorkGroup < ApplicationRecord
   has_many :worksheets, through: :group_work_sheets
   has_many :student_work_groups
   has_many :users, through: :student_work_groups
+
+  validates :aasm_state, :video_call_code, :session_time, :turn_time, :start_at, :created_at, presence: true
 end
