@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_133821) do
+ActiveRecord::Schema.define(version: 2020_08_10_132905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,15 +42,6 @@ ActiveRecord::Schema.define(version: 2020_07_31_133821) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_classrooms_on_user_id"
-  end
-
-  create_table "group_work_sheets", force: :cascade do |t|
-    t.bigint "worksheet_id", null: false
-    t.bigint "work_group_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["work_group_id"], name: "index_group_work_sheets_on_work_group_id"
-    t.index ["worksheet_id"], name: "index_group_work_sheets_on_worksheet_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -109,21 +100,33 @@ ActiveRecord::Schema.define(version: 2020_07_31_133821) do
     t.index ["classroom_id"], name: "index_work_groups_on_classroom_id"
   end
 
+  create_table "worksheet_templates", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_worksheet_templates_on_user_id"
+  end
+
   create_table "worksheets", force: :cascade do |t|
-    t.json "display_content"
-    t.json "correct_content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.string "canvas"
+    t.bigint "worksheet_template_id"
+    t.bigint "work_group_id"
+    t.index ["work_group_id"], name: "index_worksheets_on_work_group_id"
+    t.index ["worksheet_template_id"], name: "index_worksheets_on_worksheet_template_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "classrooms", "users"
-  add_foreign_key "group_work_sheets", "work_groups"
-  add_foreign_key "group_work_sheets", "worksheets"
   add_foreign_key "student_classrooms", "classrooms"
   add_foreign_key "student_classrooms", "users"
   add_foreign_key "student_work_groups", "users"
   add_foreign_key "student_work_groups", "work_groups"
   add_foreign_key "work_groups", "classrooms"
+  add_foreign_key "worksheet_templates", "users"
+  add_foreign_key "worksheets", "work_groups"
+  add_foreign_key "worksheets", "worksheet_templates"
 end
