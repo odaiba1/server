@@ -18,4 +18,8 @@
 #
 class WorksheetTemplate < ApplicationRecord
   belongs_to :user
+  has_many :worksheets
+  has_many :work_groups, through: :worksheets
+
+  has_one_attached :photo
 end

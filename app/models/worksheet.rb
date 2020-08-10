@@ -21,6 +21,8 @@
 #  fk_rails_...  (worksheet_template_id => worksheet_templates.id)
 #
 class Worksheet < ApplicationRecord
-  has_many :group_work_sheets
-  has_many :work_groups, through: :group_work_sheets
+  belongs_to :worksheet_template
+  belongs_to :work_group
+
+  has_one_attached :photo
 end
