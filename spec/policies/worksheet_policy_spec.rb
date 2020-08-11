@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe WorkGroupPolicy do
-  subject { WorkGroupPolicy.new(user, work_group) }
-  let(:work_group) { build(:work_group) }
+RSpec.describe WorksheetPolicy do
+  subject { WorksheetPolicy.new(user, worksheet) }
+  let(:worksheet) { build(:worksheet) }
 
   context 'admin user' do
     let(:user) { create(:admin) }
@@ -18,19 +18,19 @@ RSpec.describe WorkGroupPolicy do
   context 'teacher user' do
     let(:user) { create(:teacher) }
 
-    context 'own work group' do
-      let(:classroom)  { create(:classroom, user: user) }
-      let(:work_group) { build(:work_group, classroom: classroom) }
+    context 'own worksheet' do
+      let(:worksheet_template) { create(:worksheet_template, user: user) }
+      let(:worksheet)          { build(:worksheet, worksheet_template: worksheet_template) }
       it { should permit(:index) }
       it { should permit(:show) }
       it { should permit(:new) }
       it { should permit(:create) }
       it { should permit(:edit) }
       it { should permit(:update) }
-      it { should permit(:delete) }
+      it { should_not permit(:delete) }
     end
 
-    context 'foreign work group' do
+    context 'foreign worksheet' do
       it { should_not permit(:index) }
       it { should_not permit(:show) }
       it { should_not permit(:new) }
@@ -42,21 +42,22 @@ RSpec.describe WorkGroupPolicy do
   end
 
   context 'student user' do
-    let(:user) { create(:student) }
+    let(:user)               { create(:student) }
+    let(:work_group)         { create(:work_group) }
+    let(:student_work_group) { create(:student_work_group, user: user, work_group: work_group) }
 
-    context 'own work group' do
-      let(:work_group)          { create(:work_group) }
-      let!(:student_work_group) { create(:student_work_group, user: user, work_group: work_group) }
+    context 'own worksheet' do
+      let(:worksheet) { build(:worksheet, work_group: work_group) }
       it { should permit(:index) }
       it { should permit(:show) }
       it { should_not permit(:new) }
       it { should_not permit(:create) }
-      it { should_not permit(:edit) }
-      it { should_not permit(:update) }
+      it { should permit(:edit) }
+      it { should permit(:update) }
       it { should_not permit(:delete) }
     end
 
-    context 'foreign work group' do
+    context 'foreign worksheet' do
       it { should_not permit(:index) }
       it { should_not permit(:show) }
       it { should_not permit(:new) }
