@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe WorkGroupsController, type: :controller do
-  let(:teacher1)    { create(:teacher) }
-  let(:teacher2)    { create(:teacher) }
-  let(:classroom1)  { create(:classroom, user: teacher1) }
-  let(:classroom2)  { create(:classroom, user: teacher2) }
-  let(:work_group1) { create(:work_group, classroom: classroom1) }
-  let(:work_group2) { create(:work_group, classroom: classroom2) }
+  let(:teacher)     { create(:teacher) }
+  let(:classroom)   { create(:classroom, user: teacher) }
+  let(:work_group1) { create(:work_group, classroom: classroom) }
+  let(:work_group2) { create(:work_group) }
 
   before do
-    sign_in teacher1
+    sign_in teacher
   end
 
   describe '#index' do
@@ -17,7 +15,7 @@ RSpec.describe WorkGroupsController, type: :controller do
       it 'lists work groups belonging to teacher' do
         work_group1
         work_group2
-        get :index, format: :json, params: { classroom_id: classroom1.id }
+        get :index, format: :json, params: { classroom_id: classroom.id }
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body).size).to eq(1)
       end
@@ -25,7 +23,7 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'failure' do
       it 'restricts work groups belonging to other teacher' do
-        get :index, format: :json, params: { classroom_id: classroom2.id }
+        get :index, format: :json, params: { classroom_id: work_group2.classroom.id }
         expect(response).to have_http_status(401)
       end
     end
@@ -122,7 +120,7 @@ RSpec.describe WorkGroupsController, type: :controller do
   describe '#new' do
     context 'success' do
       it 'returns blank work group' do
-        get :new, format: :json, params: { classroom_id: classroom1.id }
+        get :new, format: :json, params: { classroom_id: classroom.id }
         expect(response).to have_http_status(200)
         expect(response.body).to eq(WorkGroup.new.to_json)
       end
@@ -130,7 +128,7 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'failure' do
       it 'restricts creating a work group to a classroom belonging to other teacher' do
-        get :new, format: :json, params: { classroom_id: classroom2.id }
+        get :new, format: :json, params: { classroom_id: work_group2.classroom.id }
         expect(response).to have_http_status(401)
       end
     end
@@ -140,7 +138,7 @@ RSpec.describe WorkGroupsController, type: :controller do
     context 'success' do
       it 'saves a new work_group' do
         put :create, params: {
-          classroom_id: classroom1.id,
+          classroom_id: classroom.id,
           work_group: { name: 'Test work group 1' },
           format: :json
         }
@@ -152,7 +150,7 @@ RSpec.describe WorkGroupsController, type: :controller do
     context 'failure' do
       it 'raises an error with missing data' do
         put :create, params: {
-          classroom_id: classroom1.id,
+          classroom_id: classroom.id,
           work_group: { name: nil },
           format: :json
         }
@@ -162,7 +160,7 @@ RSpec.describe WorkGroupsController, type: :controller do
 
       it 'restricts creating a work group to a classroom belonging to other teacher' do
         put :create, params: {
-          classroom_id: classroom2.id,
+          classroom_id: work_group2.classroom.id,
           work_group: { name: 'Test work group 2' },
           format: :json
         }

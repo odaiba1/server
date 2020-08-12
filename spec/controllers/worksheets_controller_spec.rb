@@ -1,22 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe WorksheetsController, type: :controller do
-#   let(:teacher1)   { create(:teacher) }
-#   let(:teacher2)   { create(:teacher) }
-#   let(:worksheet1) { create(:worksheet, user: teacher1) }
-#   let(:worksheet2) { create(:worksheet, user: teacher2) }
-  let(:student1)            { create(:student) }
-  let(:student2)            { create(:student) }
-  let(:work_group1)         { create(:work_group) }
-  let(:work_group2)         { create(:work_group) }
-  let(:student_work_group1) { create(:student_work_group, user: student1, work_group: work_group1) }
-  let(:student_work_group2) { create(:student_work_group, user: student2, work_group: work_group2) }
-  let(:worksheet1)          { create(:worksheet, work_group: work_group1) }
-  let(:worksheet2)          { create(:worksheet, work_group: work_group2) }
+  let(:teacher)            { create(:teacher) }
+  let(:student)            { create(:student) }
+  let(:worksheet_template) { create(:worksheet, user: teacher) }
+  let(:work_group)         { create(:work_group) }
+  let(:student_work_group) { create(:student_work_group, user: student, work_group: work_group) }
+  let(:worksheet1)         { create(:worksheet, work_group: work_group, worksheet_template: worksheet_template) }
+  let(:worksheet2)         { create(:worksheet) }
 
   context 'student' do
     before do
-      sign_in student1
+      sign_in student
     end
 
     describe '#index' do
@@ -24,7 +19,7 @@ RSpec.describe WorksheetsController, type: :controller do
         it "lists worksheets belonging to student's work group" do
           worksheet1
           worksheet2
-          get :index, format: :json, params: { work_group_id: work_group1.id }
+          get :index, format: :json, params: { work_group_id: work_group.id }
           expect(response).to have_http_status(200)
           expect(JSON.parse(response.body).size).to eq(1)
         end
@@ -32,7 +27,7 @@ RSpec.describe WorksheetsController, type: :controller do
 
       context 'failure' do
         it 'restricts worksheets belonging to other work groups' do
-          get :index, format: :json, params: { work_group_id: work_group2.id }
+          get :index, format: :json, params: { work_group_id: worksheet2.work_group.id }
           expect(response).to have_http_status(401)
         end
       end
@@ -113,7 +108,7 @@ RSpec.describe WorksheetsController, type: :controller do
     describe '#new' do
       context 'success' do
         it 'returns blank worksheet' do
-          get :new, format: :json, params: { work_group_id: work_group1.id }
+          get :new, format: :json, params: { work_group_id: work_group.id }
           expect(response).to have_http_status(200)
           expect(response.body).to eq(Worksheet.new.to_json)
         end
@@ -121,7 +116,7 @@ RSpec.describe WorksheetsController, type: :controller do
 
       context 'failure' do
         it 'restricts creating a worksheet from a foreign work group' do
-          get :new, format: :json, params: { work_group_id: work_group2.id }
+          get :new, format: :json, params: { work_group_id: worksheet2.work_group.id }
           expect(response).to have_http_status(401)
         end
       end
@@ -131,7 +126,7 @@ RSpec.describe WorksheetsController, type: :controller do
       context 'success' do
         it 'saves a new worksheet' do
           put :create, params: {
-            work_group_id: work_group1.id,
+            work_group_id: work_group.id,
             worksheet: { name: 'Test Worksheet 1' },
             format: :json
           }
@@ -143,7 +138,7 @@ RSpec.describe WorksheetsController, type: :controller do
       context 'failure' do
         it 'raises an error with missing data' do
           put :create, params: {
-            work_group_id: work_group1.id,
+            work_group_id: work_group.id,
             worksheet: { name: nil },
             format: :json
           }
@@ -153,7 +148,7 @@ RSpec.describe WorksheetsController, type: :controller do
 
         it 'restricts creating a worksheet from a foreign work group' do
           put :create, params: {
-            work_group_id: work_group2.id,
+            work_group_id: worksheet2.work_group.id,
             worksheet: { name: 'Test Worksheet 2' },
             format: :json
           }

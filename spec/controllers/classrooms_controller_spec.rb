@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ClassroomsController, type: :controller do
-  let(:teacher1)   { create(:teacher) }
-  let(:teacher2)   { create(:teacher) }
-  let(:classroom1) { create(:classroom, user: teacher1) }
-  let(:classroom2) { create(:classroom, user: teacher2) }
+  let(:teacher)    { create(:teacher) }
+  let(:classroom1) { create(:classroom, user: teacher) }
+  let(:classroom2) { create(:classroom) }
 
   before do
-    sign_in teacher1
+    sign_in teacher
   end
 
   describe '#index' do
