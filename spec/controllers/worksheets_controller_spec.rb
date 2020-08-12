@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe WorksheetsController, type: :controller do
   let(:teacher)            { create(:teacher) }
   let(:student)            { create(:student) }
-  let(:worksheet_template) { create(:worksheet, user: teacher) }
+  let(:worksheet_template) { create(:worksheet_template, user: teacher) }
   let(:work_group)         { create(:work_group) }
   let(:student_work_group) { create(:student_work_group, user: student, work_group: work_group) }
   let(:worksheet1)         { create(:worksheet, work_group: work_group, worksheet_template: worksheet_template) }
@@ -17,6 +17,7 @@ RSpec.describe WorksheetsController, type: :controller do
     describe '#index' do
       context 'success' do
         it "lists worksheets belonging to student's work group" do
+          student_work_group
           worksheet1
           worksheet2
           get :index, format: :json, params: { work_group_id: work_group.id }
