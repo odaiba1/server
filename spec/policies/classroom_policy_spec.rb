@@ -12,7 +12,7 @@ RSpec.describe ClassroomPolicy do
     it { should permit(:create) }
     it { should permit(:edit) }
     it { should permit(:update) }
-    it { should permit(:delete) }
+    it { should permit(:destroy) }
   end
 
   context 'teacher user' do
@@ -26,7 +26,7 @@ RSpec.describe ClassroomPolicy do
       it { should permit(:create) }
       it { should permit(:edit) }
       it { should permit(:update) }
-      it { should permit(:delete) }
+      it { should permit(:destroy) }
     end
 
     context 'foreign classroom' do
@@ -36,7 +36,7 @@ RSpec.describe ClassroomPolicy do
       it { should_not permit(:create) }
       it { should_not permit(:edit) }
       it { should_not permit(:update) }
-      it { should_not permit(:delete) }
+      it { should_not permit(:destroy) }
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe ClassroomPolicy do
       it { should_not permit(:create) }
       it { should_not permit(:edit) }
       it { should_not permit(:update) }
-      it { should_not permit(:delete) }
+      it { should_not permit(:destroy) }
     end
 
     context 'foreign classroom' do
@@ -62,7 +62,7 @@ RSpec.describe ClassroomPolicy do
       it { should_not permit(:create) }
       it { should_not permit(:edit) }
       it { should_not permit(:update) }
-      it { should_not permit(:delete) }
+      it { should_not permit(:destroy) }
     end
   end
 end
