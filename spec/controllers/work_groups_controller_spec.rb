@@ -34,7 +34,7 @@ RSpec.describe WorkGroupsController, type: :controller do
   describe '#show' do
     context 'success' do
       it 'returns selected work group' do
-        get :show, params: { classroom_id: classroom1.id, id: work_group1.id, format: :json }
+        get :show, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
         expect(response.body).to eq(work_group1.to_json)
       end
@@ -42,12 +42,12 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'failure' do
       it 'returns 404 for missing work group' do
-        get :show, params: { classroom_id: classroom1.id, id: 999, format: :json }
+        get :show, params: { id: 999, format: :json }
         expect(response).to have_http_status(404)
       end
 
       it 'restricts work group belonging to other teacher' do
-        get :show, params: { classroom_id: classroom2.id, id: work_group2.id, format: :json }
+        get :show, params: { id: work_group2.id, format: :json }
         expect(response).to have_http_status(401)
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe WorkGroupsController, type: :controller do
   describe '#edit' do
     context 'success' do
       it 'returns selected work group to modify' do
-        get :edit, params: { classroom_id: classroom1.id, id: work_group1.id, format: :json }
+        get :edit, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
         expect(response.body).to eq(work_group1.to_json)
       end
@@ -64,12 +64,12 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'failure' do
       it 'returns 404 for missing work group' do
-        get :edit, params: { classroom_id: classroom1.id, id: 999, format: :json }
+        get :edit, params: { id: 999, format: :json }
         expect(response).to have_http_status(404)
       end
 
       it 'restricts work group belonging to other teacher' do
-        get :edit, params: { classroom_id: classroom2.id, id: work_group2.id, format: :json }
+        get :edit, params: { id: work_group2.id, format: :json }
         expect(response).to have_http_status(401)
       end
     end
@@ -79,7 +79,6 @@ RSpec.describe WorkGroupsController, type: :controller do
     context 'success' do
       it 'changes selected work group' do
         patch :update, params: {
-          classroom_id: classroom1.id,
           id: work_group1.id,
           work_group: { name: 'New Test work_group' },
           format: :json
@@ -92,7 +91,6 @@ RSpec.describe WorkGroupsController, type: :controller do
     context 'failure' do
       it 'returns 404 for missing work group' do
         patch :update, params: {
-          classroom_id: classroom1.id,
           id: 999,
           work_group: { name: 'New Test work_group' },
           format: :json
@@ -102,7 +100,6 @@ RSpec.describe WorkGroupsController, type: :controller do
 
       it 'restricts work group belonging to other teacher' do
         patch :update, params: {
-          classroom_id: classroom2.id,
           id: work_group2.id,
           work_group: { name: 'New Test work_group' },
           format: :json
@@ -112,7 +109,6 @@ RSpec.describe WorkGroupsController, type: :controller do
 
       it 'raises an error with missing data' do
         patch :update, params: {
-          classroom_id: classroom1.id,
           id: work_group1.id,
           work_group: { name: nil },
           format: :json
