@@ -145,7 +145,7 @@ RSpec.describe WorkGroupsController, type: :controller do
           format: :json
         }
         expect(response).to have_http_status(200)
-        expect(work_group.find_by_name('Test work group 1')).to be_instance_of(WorkGroup)
+        expect(Work_group.find_by_name('Test work group 1')).to be_instance_of(WorkGroup)
       end
     end
 
@@ -176,7 +176,7 @@ RSpec.describe WorkGroupsController, type: :controller do
       it 'deletes selected work_group' do
         delete :destroy, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(work_group.all).not_to include(work_group1)
+        expect(Work_group.all).not_to include(work_group1)
       end
     end
 

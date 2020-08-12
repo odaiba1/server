@@ -127,44 +127,61 @@ RSpec.describe WorksheetsController, type: :controller do
       end
     end
 
-    # describe '#create' do
-    #   context 'success' do
-    #     it 'saves a new classroom' do
-    #       put :create, params: { classroom: { name: 'Test Classroom 1' }, format: :json }
-    #       expect(response).to have_http_status(200)
-    #       expect(Classroom.find_by_name('Test Classroom 1')).to be_instance_of(Classroom)
-    #     end
-    #   end
+    describe '#create' do
+      context 'success' do
+        it 'saves a new worksheet' do
+          put :create, params: {
+            work_group_id: work_group1.id,
+            worksheet: { name: 'Test Worksheet 1' },
+            format: :json
+          }
+          expect(response).to have_http_status(200)
+          expect(Worksheet.find_by_name('Test Worksheet 1')).to be_instance_of(Worksheet)
+        end
+      end
 
-    #   context 'failure' do
-    #     it 'raises an error with missing data' do
-    #       put :create, params: { classroom: { name: nil }, format: :json }
-    #       expect(response).to have_http_status(422)
-    #       expect(response.body).to include('error')
-    #     end
-    #   end
-    # end
+      context 'failure' do
+        it 'raises an error with missing data' do
+          put :create, params: {
+            work_group_id: work_group1.id,
+            worksheet: { name: nil },
+            format: :json
+          }
+          expect(response).to have_http_status(422)
+          expect(response.body).to include('error')
+        end
 
-    # describe '#destroy' do
-    #   context 'success' do
-    #     it 'deletes selected classroom' do
-    #       delete :destroy, params: { id: classroom1.id, format: :json }
-    #       expect(response).to have_http_status(200)
-    #       expect(Classroom.all).not_to include(classroom1)
-    #     end
-    #   end
+        it 'restricts creating a worksheet from a foreign work group' do
+          put :create, params: {
+            work_group_id: work_group2.id,
+            worksheet: { name: 'Test Worksheet 2' },
+            format: :json
+          }
+          expect(response).to have_http_status(401)
+        end
+      end
+    end
 
-    #   context 'failure' do
-    #     it 'restricts classroom belonging to other teacher' do
-    #       delete :destroy, params: { id: classroom2.id, format: :json }
-    #       expect(response).to have_http_status(401)
-    #     end
+    describe '#destroy' do
+      context 'success' do
+        it 'deletes selected worksheet' do
+          delete :destroy, params: { id: worksheet1.id, format: :json }
+          expect(response).to have_http_status(200)
+          expect(Worksheet.all).not_to include(worksheet1)
+        end
+      end
 
-    #     it 'returns 404 for missing classroom' do
-    #       delete :destroy, params: { id: 999, format: :json }
-    #       expect(response).to have_http_status(404)
-    #     end
-    #   end
-    # end
+      context 'failure' do
+        it 'restricts worksheet belonging to other teacher' do
+          delete :destroy, params: { id: worksheet2.id, format: :json }
+          expect(response).to have_http_status(401)
+        end
+
+        it 'returns 404 for missing worksheet' do
+          delete :destroy, params: { id: 999, format: :json }
+          expect(response).to have_http_status(404)
+        end
+      end
+    end
   end
 end
