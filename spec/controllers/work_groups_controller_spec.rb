@@ -124,6 +124,7 @@ RSpec.describe WorkGroupsController, type: :controller do
       it 'returns blank work group' do
         get :new, format: :json, params: { classroom_id: classroom1.id }
         expect(response).to have_http_status(200)
+        expect(response.body).to eq(WorkGroup.new.to_json)
       end
     end
 

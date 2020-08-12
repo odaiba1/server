@@ -96,6 +96,7 @@ RSpec.describe ClassroomsController, type: :controller do
     it 'returns blank classroom' do
       get :new, format: :json
       expect(response).to have_http_status(200)
+      expect(response.body).to eq(Classroom.new.to_json)
     end
   end
 

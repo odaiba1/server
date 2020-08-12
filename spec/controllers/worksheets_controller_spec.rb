@@ -20,93 +20,112 @@ RSpec.describe WorksheetsController, type: :controller do
     end
 
     describe '#index' do
-      it "lists worksheets belonging to student's work group" do
-        worksheet1
-        worksheet2
-        get :index, format: :json
-        expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body).size).to eq(1)
+      context 'success' do
+        it "lists worksheets belonging to student's work group" do
+          worksheet1
+          worksheet2
+          get :index, format: :json, params: { work_group_id: work_group1.id }
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body).size).to eq(1)
+        end
+      end
+
+      context 'failure' do
+        it 'restricts worksheets belonging to other work groups' do
+          get :index, format: :json, params: { work_group_id: work_group2.id }
+          expect(response).to have_http_status(401)
+        end
       end
     end
 
-    # describe '#show' do
-    #   context 'success' do
-    #     it 'returns selected classroom' do
-    #       get :show, params: { id: classroom1.id, format: :json }
-    #       expect(response).to have_http_status(200)
-    #       expect(response.body).to eq(classroom1.to_json)
-    #     end
-    #   end
+    describe '#show' do
+      context 'success' do
+        it 'returns selected worksheet' do
+          get :show, params: { id: worksheet1.id, format: :json }
+          expect(response).to have_http_status(200)
+          expect(response.body).to eq(worksheet1.to_json)
+        end
+      end
 
-    #   context 'failure' do
-    #     it 'returns 404 for missing classroom' do
-    #       get :show, params: { id: 999, format: :json }
-    #       expect(response).to have_http_status(404)
-    #     end
+      context 'failure' do
+        it 'returns 404 for missing worksheet' do
+          get :show, params: { id: 999, format: :json }
+          expect(response).to have_http_status(404)
+        end
 
-    #     it 'restricts classroom belonging to other teacher' do
-    #       get :show, params: { id: classroom2.id, format: :json }
-    #       expect(response).to have_http_status(401)
-    #     end
-    #   end
-    # end
+        it 'restricts worksheet belonging to other work group' do
+          get :show, params: { id: worksheet2.id, format: :json }
+          expect(response).to have_http_status(401)
+        end
+      end
+    end
 
-    # describe '#edit' do
-    #   context 'success' do
-    #     it 'returns selected classroom to modify' do
-    #       get :edit, params: { id: classroom1.id, format: :json }
-    #       expect(response).to have_http_status(200)
-    #       expect(response.body).to eq(classroom1.to_json)
-    #     end
-    #   end
+    describe '#edit' do
+      context 'success' do
+        it 'returns selected worksheet to modify' do
+          get :edit, params: { id: worksheet1.id, format: :json }
+          expect(response).to have_http_status(200)
+          expect(response.body).to eq(worksheet1.to_json)
+        end
+      end
 
-    #   context 'failure' do
-    #     it 'returns 404 for missing classroom' do
-    #       get :edit, params: { id: 999, format: :json }
-    #       expect(response).to have_http_status(404)
-    #     end
+      context 'failure' do
+        it 'returns 404 for missing worksheet' do
+          get :edit, params: { id: 999, format: :json }
+          expect(response).to have_http_status(404)
+        end
 
-    #     it 'restricts classroom belonging to other teacher' do
-    #       get :edit, params: { id: classroom2.id, format: :json }
-    #       expect(response).to have_http_status(401)
-    #     end
-    #   end
-    # end
+        it 'restricts worksheet belonging to other work group' do
+          get :edit, params: { id: worksheet2.id, format: :json }
+          expect(response).to have_http_status(401)
+        end
+      end
+    end
 
-    # describe '#update' do
-    #   context 'success' do
-    #     it 'changes selected classroom' do
-    #       patch :update, params: { id: classroom1.id, classroom: { name: 'New Test Classroom' }, format: :json }
-    #       expect(response).to have_http_status(200)
-    #       expect(response.body).to include('New Test')
-    #     end
-    #   end
+    describe '#update' do
+      context 'success' do
+        it 'changes selected worksheet' do
+          patch :update, params: { id: worksheet1.id, worksheet: { name: 'New Test worksheet' }, format: :json }
+          expect(response).to have_http_status(200)
+          expect(response.body).to include('New Test')
+        end
+      end
 
-    #   context 'failure' do
-    #     it 'returns 404 for missing classroom' do
-    #       patch :update, params: { id: 999, classroom: { name: 'New Test Classroom' }, format: :json }
-    #       expect(response).to have_http_status(404)
-    #     end
+      context 'failure' do
+        it 'returns 404 for missing worksheet' do
+          patch :update, params: { id: 999, worksheet: { name: 'New Test worksheet' }, format: :json }
+          expect(response).to have_http_status(404)
+        end
 
-    #     it 'restricts classroom belonging to other teacher' do
-    #       patch :update, params: { id: classroom2.id, classroom: { name: 'New Test Classroom' }, format: :json }
-    #       expect(response).to have_http_status(401)
-    #     end
+        it 'restricts worksheet belonging to other work group' do
+          patch :update, params: { id: worksheet2.id, worksheet: { name: 'New Test worksheet' }, format: :json }
+          expect(response).to have_http_status(401)
+        end
 
-    #     it 'raises an error with missing data' do
-    #       patch :update, params: { id: classroom1.id, classroom: { name: nil }, format: :json }
-    #       expect(response).to have_http_status(422)
-    #       expect(response.body).to include('error')
-    #     end
-    #   end
-    # end
+        it 'raises an error with missing data' do
+          patch :update, params: { id: worksheet1.id, worksheet: { name: nil }, format: :json }
+          expect(response).to have_http_status(422)
+          expect(response.body).to include('error')
+        end
+      end
+    end
 
-    # describe '#new' do
-    #   it 'returns blank classroom' do
-    #     get :new, format: :json
-    #     expect(response).to have_http_status(200)
-    #   end
-    # end
+    describe '#new' do
+      context 'success' do
+        it 'returns blank worksheet' do
+          get :new, format: :json, params: { work_group_id: work_group1.id }
+          expect(response).to have_http_status(200)
+          expect(response.body).to eq(Worksheet.new.to_json)
+        end
+      end
+
+      context 'failure' do
+        it 'restricts creating a worksheet from a foreign work group' do
+          get :new, format: :json, params: { work_group_id: work_group2.id }
+          expect(response).to have_http_status(401)
+        end
+      end
+    end
 
     # describe '#create' do
     #   context 'success' do
