@@ -2,8 +2,8 @@ class WorksheetPolicy < ApplicationPolicy
   def index?
     case @user.role
     when 'admin'   then true
-    when 'teacher' then @record.classroom.user_id == @user.id
-    when 'student' then @record.students.include?(@user)
+    when 'teacher' then @record.worksheet_template.user_id == @user.id
+    when 'student' then @record.work_group.students.include?(@user)
     else false
     end
   end
@@ -12,18 +12,10 @@ class WorksheetPolicy < ApplicationPolicy
     %w[admin teacher].include?(@user.role)
   end
 
-  def update?
-    case @user.role
-    when 'admin'   then true
-    when 'teacher' then @record.classroom.user_id == @user.id
-    else false
-    end
-  end
-
   alias show? index?
   alias new? create?
-  alias edit? update?
-  alias destroy? update?
+  alias edit? index?
+  alias update? index?
 
   class Scope < Scope
     def resolve
