@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe WorkGroupsController, type: :controller do
-  let(:teacher1)    { FactoryBot.create(:teacher) }
-  let(:teacher2)    { FactoryBot.create(:teacher) }
-  let(:classroom1)  { FactoryBot.create(:classroom, user: teacher1) }
-  let(:classroom2)  { FactoryBot.create(:classroom, user: teacher2) }
-  let(:work_group1) { FactoryBot.create(:work_group, classroom: classroom1) }
-  let(:work_group2) { FactoryBot.create(:work_group, classroom: classroom2) }
+  let(:teacher1)    { create(:teacher) }
+  let(:teacher2)    { create(:teacher) }
+  let(:classroom1)  { create(:classroom, user: teacher1) }
+  let(:classroom2)  { create(:classroom, user: teacher2) }
+  let(:work_group1) { create(:work_group, classroom: classroom1) }
+  let(:work_group2) { create(:work_group, classroom: classroom2) }
 
   before do
     sign_in teacher1
