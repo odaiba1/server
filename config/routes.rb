@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :worksheet_templates
 
   resources :images, only: [:new, :create, :destroy]
 end
