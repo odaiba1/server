@@ -1,40 +1,59 @@
 class WorksheetsController < ApplicationController
-#   def show
-#     @worksheet = Worksheet.find(params[:id])
-#     # authorize @worksheet
-#     respond_to do |format|
-#       # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1/worksheets/1.json
-#       format.json { render json: @worksheet.to_json }
-#     end
-#   end
+  acts_as_token_authentication_handler_for User
+  before_action :set_and_authorize_work_group, only: %i[new create index]
+  before_action :set_and_authorize_worksheet, only: %i[show edit update]
 
-#   def edit
-#     @classroom = Classroom.find(params[:classroom_id])
-#     @work_group = WorkGroup.find(params[:work_group_id])
-#     @worksheet = Worksheet.find(params[:id])
-#     respond_to do |format|
-#       # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1/worksheets/1/edit.json
-#       format.json { render json: @worksheet.to_json }
-#     end
-#   end
+  def index
+    @worksheets = policy_scope(Worksheet)
+    render json: @worksheets.to_json
+  end
 
-#   def update
-#     @classroom = Classroom.find(params[:classroom_id])
-#     @work_group = WorkGroup.find(params[:work_group])
-#     @worksheet = Worksheet.find(params[:id])
-#     if @worksheet.update(worksheet_params)
-#       # redirect to the worksheet show page - please feel free to change where it redirects (Julien)
-#       respond_to do |format|
-#         format.json { render json: @worksheet.to_json }
-#       end
-#     else
-#       render :edit
-#     end
-#   end
+  def show
+    render json: @worksheet.to_json
+  end
 
-#   private
+  def edit
+    render json: @worksheet.to_json
+  end
 
-#   def worksheet_params
-#     params.require(:worksheet).permit(:work_group_id)
-#   end
+  def update
+    if @worksheet.update(worksheet_params)
+      render json: @worksheet.to_json
+    else
+      render_error
+    end
+  end
+
+  def new
+    @worksheet = Worksheet.new
+    authorize @worksheet
+    render json: @worksheet.to_json
+  end
+
+  def create
+    @worksheet = Worksheet.new(worksheet_params)
+    authorize @worksheet
+    render json: @worksheet.to_json
+  end
+
+  private
+
+  def set_and_authorize_worksheet
+    @worksheet = Worksheet.find(params[:id])
+    authorize @worksheet
+  end
+
+  def worksheet_params
+    params.require(:worksheet).permit(:title, :work_group_id, :worksheet_template_id, :photo)
+  end
+
+  def set_and_authorize_work_group
+    @work_group = WorkGroup.find(params[:work_group_id])
+    authorize @work_group, :show?
+  end
+
+  def render_error
+    render json: { errors: @worksheet.errors.full_messages },
+           status: :unprocessable_entity
+  end
 end

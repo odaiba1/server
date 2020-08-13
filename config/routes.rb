@@ -11,10 +11,11 @@ Rails.application.routes.draw do
   resources :user, only: [:show, :update]
 
   resources :classrooms, defaults: { format: :json } do
-    resources :work_groups, only: [:index, :show, :new, :create]
+    resources :work_groups, shallow: true do
+      resources :worksheets, except: :destroy, shallow: true
+    end
   end
 
-  resources :worksheets, only: [:show, :edit, :update]
 
   resources :images, only: [:new, :create, :destroy]
 end

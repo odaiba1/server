@@ -28,4 +28,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   enum role: { student: 0, teacher: 1, admin: 2 }
   validates :email, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false
+
+  has_many :student_work_groups
+  has_many :work_groups, through: :student_work_groups
 end

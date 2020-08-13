@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ClassroomsController, type: :controller do
-  let(:teacher1)   { FactoryBot.create(:teacher) }
-  let(:teacher2)   { FactoryBot.create(:teacher) }
-  let(:classroom1) { FactoryBot.create(:classroom, user: teacher1) }
-  let(:classroom2) { FactoryBot.create(:classroom, user: teacher2) }
+  let(:teacher)    { create(:teacher) }
+  let(:classroom1) { create(:classroom, user: teacher) }
+  let(:classroom2) { create(:classroom) }
 
   before do
-    sign_in teacher1
+    sign_in teacher
   end
 
   describe '#index' do
@@ -96,6 +95,7 @@ RSpec.describe ClassroomsController, type: :controller do
     it 'returns blank classroom' do
       get :new, format: :json
       expect(response).to have_http_status(200)
+      expect(response.body).to eq(Classroom.new.to_json)
     end
   end
 
