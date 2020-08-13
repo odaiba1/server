@@ -21,7 +21,7 @@ class WorksheetPolicy < ApplicationPolicy
     def resolve
       case @user.role
       when 'admin'   then @scope.all
-      when 'teacher' then @scope.joins(:worksheet_template).where(worksheet_template: { user_id: @user.id })
+      when 'teacher' then @scope.where(worksheet_template_id: @user.worksheet_templates.ids)
       when 'student'
         @scope.joins(:work_group).joins(work_group: :users).where(work_group: { users: { id: @user.id } })
       else @scope.where(id: -1)
