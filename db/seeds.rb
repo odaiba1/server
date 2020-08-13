@@ -1,12 +1,16 @@
+require 'database_cleaner/active_record'
 p 'emptying database'
 
 StudentWorkGroup.destroy_all
-GroupWorkSheet.destroy_all
 StudentClassroom.destroy_all
 Worksheet.destroy_all
+WorksheetTemplate.destroy_all
 WorkGroup.destroy_all
 Classroom.destroy_all
 User.destroy_all
+
+DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.clean
 
 p 'creating teachers'
 
@@ -113,46 +117,18 @@ end
 
 p 'Finished assigning students to work groups'
 
-p 'creating worksheets'
+p 'creatin worksheet templates'
 
-Worksheet.create!(
-  display_content: {
-    headers: ['japanese', 'english', 'past', 'past participle'],
-    example: ['始める', 'begin', 'began', 'begun'],
-    1 => ['走る', 'run', false, false],
-    2 => ['言う', 'say', false, false],
-    3 => ['見る', 'see', false, false],
-    4 => ['売る', 'sell', false, false],
-    5 => ['送る', 'send', false, false],
-    6 => ['見せる', 'show', false, false],
-    7 => ['歌う', 'sing', false, false],
-    8 => ['座る', 'sit', false, false],
-    9 => ['話す', 'speak', false, false],
-    10 => ['読む', 'read', false, false]
-  }.to_json,
-  correct_content: {
-    headers: ['japanese', 'english', 'past', 'past participle'],
-    example: ['始める', 'begin', 'began', 'begun'],
-    1 => ['走る', 'run', 'ran', 'run'],
-    2 => ['言う', 'say', 'said', 'said'],
-    3 => ['見る', 'see', 'saw', 'seen'],
-    4 => ['売る', 'sell', 'sold', 'sold'],
-    5 => ['送る', 'send', 'sent', 'sent'],
-    6 => ['見せる', 'show', 'showed', 'shown'],
-    7 => ['歌う', 'sing', 'sang', 'sung'],
-    8 => ['座る', 'sit', 'sat', 'sat'],
-    9 => ['話す', 'speak', 'spoke', 'spoken'],
-    10 => ['読む', 'read', 'read', 'read']
-  }.to_json,
-  name: 'Past Tense'
-)
+WorksheetTemplate.create!(title: 'Template 1', user: User.first)
+WorksheetTemplate.create!(title: 'Template 2', user: User.second)
 
-p "Finished creating #{Worksheet.count} worksheets"
+p "Finished creating #{WorksheetTemplate.count} worksheets"
 
 p 'assigning worksheets to work groups'
 
-work_groups.each do |work_group|
-  GroupWorkSheet.create!(worksheet: Worksheet.first, work_group: work_group)
+work_groups.each_with_index do |work_group, idx|
+  template = idx == WorkGroup.count - 1 ? WorksheetTemplate.last : WorksheetTemplate.first
+  Worksheet.create!(title: "Worksheet #{idx}", worksheet_template: template, work_group: work_group)
 end
 
 p 'Finished assigning worksheets to work groups'
