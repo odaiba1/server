@@ -1,47 +1,64 @@
 class WorkGroupsController < ApplicationController
   acts_as_token_authentication_handler_for User
-  before_action :authenticate_user!
+  before_action :set_and_authorize_classroom, only: %i[new create index]
+  before_action :set_and_authorize_work_group, only: %i[show edit update destroy]
 
   def index
-    @classroom = Classroom.find(params[:classroom_id])
-    @work_groups = WorkGroup.all
-    # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups.json
+    @work_groups = policy_scope(WorkGroup)
     render json: @work_groups.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
-    @work_group = WorkGroup.find(params[:id])
-    # authorize @work_group
-    # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/1.json
     render json: @work_group.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+  end
+
+  def edit
+    render json: @work_group.to_json
+  end
+
+  def update
+    if @work_group.update(work_group_params)
+      render json: @work_group.to_json
+    else
+      render_error
+    end
   end
 
   def new
-    @classroom = Classroom.find(params[:classroom_id])
     @work_group = WorkGroup.new
-    # authorize @work_group
-    # FYI - Test on local host with: http://localhost:3000/classrooms/1/work_groups/new.json
+    authorize @work_group
     render json: @work_group.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
-    @classroom = Classroom.find(params[:classroom_id])
     @work_group = WorkGroup.new(work_group_params)
-    @work_group.classroom = @classroom
-    if @work_group.save
-      # redirect to the index of work_groups - choice made by Julien - please feel free to change where it redirects
-      render json: @work_groups.to_json
-    else
-      render :new
-    end
+    authorize @work_group
+    render json: @work_group.to_json
+  end
+
+  def destroy
+    @work_group.destroy
+    render json: {}
   end
 
   private
 
+  def set_and_authorize_work_group
+    @work_group = WorkGroup.find(params[:id])
+    authorize @work_group
+  end
+
   def work_group_params
-    params.require(:work_group).permit(:name, :video_call_code, :classroom_id)
+    params.require(:work_group).permit(:name, :classroom_id, :session_time, :session_time, :turn_time, :video_call_code)
+  end
+
+  def set_and_authorize_classroom
+    @classroom = Classroom.find(params[:classroom_id])
+    authorize @classroom, :show?
+  end
+
+  def render_error
+    render json: { errors: @work_group.errors.full_messages },
+           status: :unprocessable_entity
   end
 end
