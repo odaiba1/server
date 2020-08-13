@@ -32,4 +32,5 @@ class User < ApplicationRecord
   has_many :student_work_groups
   has_many :work_groups, through: :student_work_groups
   has_many :worksheet_templates
+  has_many :classrooms
 end
