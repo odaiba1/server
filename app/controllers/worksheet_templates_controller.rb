@@ -57,7 +57,7 @@ class WorksheetTemplatesController < ApplicationController
   end
 
   def worksheet_template_params
-    params.require(:worksheet_template).permit(:name)
+    params.require(:worksheet_template).permit(:title)
   end
 
   def render_error

@@ -68,7 +68,7 @@ RSpec.describe WorksheetTemplatesController, type: :controller do
       it 'changes selected worksheet template' do
         patch :update, params: {
           id: worksheet_template1.id,
-          worksheet_template: { name: 'New Test Worksheet Template' },
+          worksheet_template: { title: 'New Test Worksheet Template' },
           format: :json
         }
         expect(response).to have_http_status(200)
@@ -78,21 +78,21 @@ RSpec.describe WorksheetTemplatesController, type: :controller do
 
     context 'failure' do
       it 'returns 404 for missing worksheet template' do
-        patch :update, params: { id: 999, worksheet_template: { name: 'New Test Worksheet Template' }, format: :json }
+        patch :update, params: { id: 999, worksheet_template: { title: 'New Test Worksheet Template' }, format: :json }
         expect(response).to have_http_status(404)
       end
 
       it 'restricts worksheet template belonging to other teacher' do
         patch :update, params: {
           id: worksheet_template2.id,
-          worksheet_template: { name: 'New Test Worksheet Template' },
+          worksheet_template: { title: 'New Test Worksheet Template' },
           format: :json
         }
         expect(response).to have_http_status(401)
       end
 
       it 'raises an error with missing data' do
-        patch :update, params: { id: worksheet_template1.id, worksheet_template: { name: nil }, format: :json }
+        patch :update, params: { id: worksheet_template1.id, worksheet_template: { title: nil }, format: :json }
         expect(response).to have_http_status(422)
         expect(response.body).to include('error')
       end
@@ -110,15 +110,15 @@ RSpec.describe WorksheetTemplatesController, type: :controller do
   describe '#create' do
     context 'success' do
       it 'saves a new worksheet template' do
-        put :create, params: { worksheet_template: { name: 'Test Worksheet Template 1' }, format: :json }
+        put :create, params: { worksheet_template: { title: 'Test Worksheet Template 1' }, format: :json }
         expect(response).to have_http_status(200)
-        expect(WorksheetTemplate.find_by_name('Test Worksheet Template 1')).to be_instance_of(WorksheetTemplate)
+        expect(WorksheetTemplate.find_by_title('Test Worksheet Template 1')).to be_instance_of(WorksheetTemplate)
       end
     end
 
     context 'failure' do
       it 'raises an error with missing data' do
-        put :create, params: { worksheet_template: { name: nil }, format: :json }
+        put :create, params: { worksheet_template: { title: nil }, format: :json }
         expect(response).to have_http_status(422)
         expect(response.body).to include('error')
       end
