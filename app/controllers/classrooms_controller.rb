@@ -5,17 +5,17 @@ class ClassroomsController < ApplicationController
   def index
     @classrooms = policy_scope(Classroom)
     render json: @classrooms.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @classroom.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @classroom.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -30,7 +30,7 @@ class ClassroomsController < ApplicationController
     @classroom = Classroom.new
     authorize @classroom
     render json: @classroom.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
