@@ -51,6 +51,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'autoprefixer-rails'
 gem 'cloudinary', '~> 1.12.0'
+gem 'database_cleaner-active_record'
 gem 'factory_bot'
 gem 'faker'
 gem 'font-awesome-sass', '~> 5.12.0'
@@ -70,8 +71,4 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec'
   gem 'rspec-rails'
-end
-
-group :test do
-  gem 'database_cleaner-active_record'
 end
