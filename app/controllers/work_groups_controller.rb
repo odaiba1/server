@@ -6,14 +6,17 @@ class WorkGroupsController < ApplicationController
   def index
     @work_groups = policy_scope(WorkGroup)
     render json: @work_groups.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @work_group.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @work_group.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -22,23 +25,27 @@ class WorkGroupsController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
     @work_group = WorkGroup.new
     authorize @work_group
     render json: @work_group.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
     @work_group = WorkGroup.new(work_group_params)
     authorize @work_group
     render json: @work_group.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def destroy
     @work_group.destroy
     render json: {}
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private
