@@ -22,4 +22,10 @@ class WorksheetTemplate < ApplicationRecord
   has_many :work_groups, through: :worksheets
 
   has_one_attached :photo
+
+  validates :title, presence: true
+  validate :user_role
+  def user_role
+    errors.add(:user_role, 'Students cannot create worksheet templates') if user&.student?
+  end
 end
