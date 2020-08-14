@@ -25,4 +25,6 @@ class Worksheet < ApplicationRecord
   belongs_to :work_group
 
   has_one_attached :photo
+
+  validates :title, :canvas, presence: true
 end
