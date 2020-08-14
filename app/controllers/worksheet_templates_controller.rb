@@ -5,17 +5,17 @@ class WorksheetTemplatesController < ApplicationController
   def index
     @worksheet_templates = policy_scope(WorksheetTemplate)
     render json: @worksheet_templates.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @worksheet_template.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @worksheet_template.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -24,13 +24,14 @@ class WorksheetTemplatesController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
     @worksheet_template = WorksheetTemplate.new
     authorize @worksheet_template
     render json: @worksheet_template.to_json
-    request.headers['X-AUTH-TOKEN'] = current_user.authentication_token
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
@@ -42,11 +43,13 @@ class WorksheetTemplatesController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def destroy
     @worksheet_template.destroy
     render json: {}
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private

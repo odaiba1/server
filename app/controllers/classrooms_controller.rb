@@ -24,6 +24,7 @@ class ClassroomsController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
@@ -42,11 +43,13 @@ class ClassroomsController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def destroy
     @classroom.destroy
     render json: {}
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private

@@ -6,14 +6,17 @@ class WorksheetsController < ApplicationController
   def index
     @worksheets = policy_scope(Worksheet)
     render json: @worksheets.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @worksheet.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @worksheet.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -22,18 +25,21 @@ class WorksheetsController < ApplicationController
     else
       render_error
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
     @worksheet = Worksheet.new
     authorize @worksheet
     render json: @worksheet.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
     @worksheet = Worksheet.new(worksheet_params)
     authorize @worksheet
     render json: @worksheet.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private

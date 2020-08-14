@@ -11,12 +11,14 @@ class ImagesController < ApplicationController
     else
       render json: @image.errors, status: :unprocessable_entity
     end
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def destroy
     @image = Image.find(params[:id])
     @image.destroy
     render json: { msg: "Image #{params[:id]} successfully deleted" }.to_json
+    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private
