@@ -1,4 +1,4 @@
-class WorksheetsController < ApplicationController
+class Api::V1::WorksheetsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User
   before_action :set_and_authorize_work_group, only: %i[new create index]
   before_action :set_and_authorize_worksheet, only: %i[show edit update]
@@ -6,17 +6,14 @@ class WorksheetsController < ApplicationController
   def index
     @worksheets = policy_scope(Worksheet)
     render json: @worksheets.to_json
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def show
     render json: @worksheet.to_json
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def edit
     render json: @worksheet.to_json
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def update
@@ -25,21 +22,18 @@ class WorksheetsController < ApplicationController
     else
       render_error
     end
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def new
     @worksheet = Worksheet.new
     authorize @worksheet
     render json: @worksheet.to_json
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   def create
     @worksheet = Worksheet.new(worksheet_params)
     authorize @worksheet
     render json: @worksheet.to_json
-    response.headers['X-AUTH-TOKEN'] = current_user.authentication_token
   end
 
   private
