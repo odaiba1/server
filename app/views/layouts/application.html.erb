@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Personal Projects Template</title>
+    <title>Odaiba</title>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= stylesheet_pack_tag 'application' %>
   </head>
   <body class="flex flex-col h-screen font-sans" >
-    <%= render 'pages/navbar' %>
+    <% render 'pages/navbar' %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
-    <%= render 'pages/footer' %>
+    <% render 'pages/footer' %>
 
     <%= javascript_pack_tag 'application' %>
   </body>
