@@ -32,8 +32,14 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
 
   def create
     @worksheet = Worksheet.new(worksheet_params)
+    image = Cloudinary::Uploader.upload(params[:worksheet][:photo])
+    @worksheet.image_url = image
     authorize @worksheet
-    render json: @worksheet.to_json
+    if @worksheet.save
+      render json: @worksheet.to_json
+    else
+      render_error
+    end
   end
 
   private
@@ -44,7 +50,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   def worksheet_params
-    params.require(:worksheet).permit(:title, :work_group_id, :worksheet_template_id, :photo)
+    params.require(:worksheet).permit(:title, :work_group_id, :worksheet_template_id)
   end
 
   def set_and_authorize_work_group
