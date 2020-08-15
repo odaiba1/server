@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
-  root to: 'pages#home'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
 
   resources :user, only: [:show, :update]
 
