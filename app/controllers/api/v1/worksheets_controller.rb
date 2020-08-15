@@ -32,8 +32,13 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
 
   def create
     @worksheet = Worksheet.new(worksheet_params)
+    @worksheet.image_url = params['photo']
     authorize @worksheet
-    render json: @worksheet.to_json
+    if @worksheet.save
+      render json: @worksheet.to_json
+    else
+      render_error
+    end
   end
 
   private

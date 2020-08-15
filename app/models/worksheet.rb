@@ -4,6 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  canvas                :string
+#  image_url             :string
 #  title                 :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -23,8 +24,6 @@
 class Worksheet < ApplicationRecord
   belongs_to :worksheet_template
   belongs_to :work_group
-
-  has_one_attached :photo
 
   validates :title, :canvas, presence: true
 end

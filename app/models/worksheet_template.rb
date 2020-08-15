@@ -3,6 +3,7 @@
 # Table name: worksheet_templates
 #
 #  id         :bigint           not null, primary key
+#  image_url  :string
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -20,8 +21,6 @@ class WorksheetTemplate < ApplicationRecord
   belongs_to :user
   has_many :worksheets
   has_many :work_groups, through: :worksheets
-
-  has_one_attached :photo
 
   validates :title, presence: true
   validate :user_role
