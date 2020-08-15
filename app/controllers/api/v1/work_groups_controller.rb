@@ -9,7 +9,12 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   end
 
   def show
-    render json: @work_group.to_json
+    render json: {
+      work_group: @work_group.to_json,
+      classroom: @work_group.classroom.to_json,
+      students: @work_group.students.to_json,
+      worksheets: @work_group.worksheets.to_json
+    }
   end
 
   def edit
