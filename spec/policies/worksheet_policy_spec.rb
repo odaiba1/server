@@ -33,8 +33,6 @@ RSpec.describe WorksheetPolicy do
     context 'foreign worksheet' do
       it { should_not permit(:index) }
       it { should_not permit(:show) }
-      it { should_not permit(:new) }
-      it { should_not permit(:create) }
       it { should_not permit(:edit) }
       it { should_not permit(:update) }
       it { should_not permit(:destroy) }
@@ -60,8 +58,6 @@ RSpec.describe WorksheetPolicy do
     context 'foreign worksheet' do
       it { should_not permit(:index) }
       it { should_not permit(:show) }
-      it { should_not permit(:new) }
-      it { should_not permit(:create) }
       it { should_not permit(:edit) }
       it { should_not permit(:update) }
       it { should_not permit(:destroy) }
