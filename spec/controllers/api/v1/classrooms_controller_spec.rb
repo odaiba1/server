@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe ClassroomsController, type: :controller do
+RSpec.describe Api::V1::ClassroomsController, type: :controller do
   let(:teacher)    { create(:teacher) }
   let(:classroom1) { create(:classroom, user: teacher) }
   let(:classroom2) { create(:classroom) }
 
   before do
-    sign_in teacher
+    request.headers['X-User-Email'] = teacher.email
+    request.headers['X-User-Token'] = teacher.authentication_token
   end
 
   describe '#index' do
