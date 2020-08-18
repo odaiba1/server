@@ -36,11 +36,6 @@ RSpec.describe User, type: :model do
     it 'with valid attributes' do
       expect(subject).to be_valid
     end
-
-    it 'with authentication token' do
-      subject.authentication_token = 'abc'
-      expect(subject).to be_valid
-    end
   end
 
   context 'not valid' do
@@ -62,6 +57,31 @@ RSpec.describe User, type: :model do
     it 'without a role' do
       subject.role = nil
       expect(subject).not_to be_valid
+    end
+  end
+
+  context 'student-teacher relation' do
+    let(:classroom1)            { create(:classroom) }
+    let(:classroom2)            { create(:classroom) }
+    let(:student_a)             { create(:student) }
+    let(:student_b)             { create(:student) }
+    let!(:student_a_classroom1) { create(:student_classroom, user: student_a, classroom: classroom1) }
+    let!(:student_b_classroom1) { create(:student_classroom, user: student_b, classroom: classroom1) }
+    let!(:student_a_classroom2) { create(:student_classroom, user: student_a, classroom: classroom2) }
+
+    it 'returns students of a teacher' do
+      teacher = classroom1.teacher
+      expect(teacher.students).to include(student_a)
+      expect(teacher.students).to include(student_b)
+      expect(teacher.students.size).to eq(2)
+    end
+
+    it 'return teachers of a student' do
+      teacher1 = classroom1.teacher
+      teacher2 = classroom2.teacher
+      expect(student_a.teachers).to include(teacher1)
+      expect(student_a.teachers).to include(teacher2)
+      expect(student_a.teachers.size).to eq(2)
     end
   end
 end
