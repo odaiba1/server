@@ -27,6 +27,9 @@ class Classroom < ApplicationRecord
 
   validates :name, presence: true
   validate :user_role
+
+  private
+
   def user_role
     errors.add(:not_authorized, 'Students cannot create classrooms') if user&.student?
   end
