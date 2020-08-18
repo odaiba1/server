@@ -60,9 +60,11 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'student-teacher relation' do
-    let(:classroom1)            { create(:classroom) }
+  context 'relations' do
+    let(:teacher)               { create(:teacher) }
+    let(:classroom1)            { create(:classroom, user: teacher) }
     let(:classroom2)            { create(:classroom) }
+    let(:classroom3)            { create(:classroom, user: teacher) }
     let(:student_a)             { create(:student) }
     let(:student_b)             { create(:student) }
     let!(:student_a_classroom1) { create(:student_classroom, user: student_a, classroom: classroom1) }
@@ -70,18 +72,29 @@ RSpec.describe User, type: :model do
     let!(:student_a_classroom2) { create(:student_classroom, user: student_a, classroom: classroom2) }
 
     it 'returns students of a teacher' do
-      teacher = classroom1.teacher
       expect(teacher.students).to include(student_a)
       expect(teacher.students).to include(student_b)
       expect(teacher.students.size).to eq(2)
     end
 
     it 'return teachers of a student' do
-      teacher1 = classroom1.teacher
       teacher2 = classroom2.teacher
-      expect(student_a.teachers).to include(teacher1)
+      expect(student_a.teachers).to include(teacher)
       expect(student_a.teachers).to include(teacher2)
       expect(student_a.teachers.size).to eq(2)
+    end
+
+    it 'returns teacher classroom' do
+      classroom3
+      expect(teacher.classrooms).to include(classroom1)
+      expect(teacher.classrooms).to include(classroom3)
+      expect(teacher.classrooms.size).to eq(2)
+    end
+
+    it 'returns student classrooms' do
+      expect(student_a.classrooms).to include(classroom1)
+      expect(student_a.classrooms).to include(classroom2)
+      expect(student_a.classrooms.size).to eq(2)
     end
   end
 end
