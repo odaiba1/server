@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorksheetsController, type: :controller do
+RSpec.describe Api::V1::WorksheetsController, type: :controller do
   let(:teacher)             { create(:teacher) }
   let(:student)             { create(:student) }
   let(:worksheet_template)  { create(:worksheet_template, user: teacher) }
@@ -11,7 +11,8 @@ RSpec.describe WorksheetsController, type: :controller do
 
   context 'student' do
     before do
-      sign_in student
+      request.headers['X-User-Email'] = student.email
+      request.headers['X-User-Token'] = student.authentication_token
     end
 
     describe '#index' do
