@@ -30,6 +30,7 @@ RSpec.describe Worksheet, type: :model do
     described_class.new(
       title: 'Test Worksheet',
       canvas: 'xyz',
+      image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
       worksheet_template: worksheet_template,
       work_group: work_group
     )
@@ -47,12 +48,18 @@ RSpec.describe Worksheet, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without a photo' do
-      # to be implemented
-    end
-
     it 'without a canvas' do
       subject.canvas = nil
+      expect(subject).not_to be_valid
+    end
+
+    it 'without an image url' do
+      subject.image_url = nil
+      expect(subject).not_to be_valid
+    end
+
+    it 'with an image url in wrong format' do
+      subject.image_url = 'this_isnt_a_url'
       expect(subject).not_to be_valid
     end
 

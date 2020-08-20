@@ -22,7 +22,11 @@ require 'rails_helper'
 RSpec.describe WorksheetTemplate, type: :model do
   let(:teacher) { create(:teacher) }
   subject do
-    described_class.new(title: 'Test Worksheet Template', user: teacher)
+    described_class.new(
+      title: 'Test Worksheet Template',
+      user: teacher,
+      image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
+    )
   end
 
   context 'valid' do
@@ -37,8 +41,14 @@ RSpec.describe WorksheetTemplate, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without a photo' do
-      # to be implemented
+    it 'without an image url' do
+      subject.image_url = nil
+      expect(subject).not_to be_valid
+    end
+
+    it 'with an image url in wrong format' do
+      subject.image_url = 'this_isnt_a_url'
+      expect(subject).not_to be_valid
     end
 
     it 'without a user' do
