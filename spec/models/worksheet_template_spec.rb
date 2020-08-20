@@ -25,7 +25,7 @@ RSpec.describe WorksheetTemplate, type: :model do
     described_class.new(
       title: 'Test Worksheet Template',
       user: teacher,
-      image_url: 'xxx'
+      image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
     )
   end
 
