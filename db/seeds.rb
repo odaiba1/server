@@ -115,8 +115,8 @@ p 'Finished assigning students to work groups'
 
 p 'creatin worksheet templates'
 
-WorksheetTemplate.create!(title: 'Template 1', user: User.first)
-WorksheetTemplate.create!(title: 'Template 2', user: User.second)
+WorksheetTemplate.create!(title: 'Template 1', user: User.first, image_url: 'xxx')
+WorksheetTemplate.create!(title: 'Template 2', user: User.second, image_url: 'xxx')
 
 p "Finished creating #{WorksheetTemplate.count} worksheets"
 
@@ -124,7 +124,7 @@ p 'assigning worksheets to work groups'
 
 work_groups.each_with_index do |work_group, idx|
   template = idx == WorkGroup.count - 1 ? WorksheetTemplate.last : WorksheetTemplate.first
-  Worksheet.create!(title: "Worksheet #{idx}", worksheet_template: template, work_group: work_group)
+  Worksheet.create!(title: "Worksheet #{idx}", worksheet_template: template, work_group: work_group, image_url: 'xxx')
 end
 
 p 'Finished assigning worksheets to work groups'
