@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # include Pundit
 
-  # protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session
 
   # after_action :verify_authorized, except: :index, unless: :devise_controller?
   # after_action :verify_policy_scoped, only: :index
