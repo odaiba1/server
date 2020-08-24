@@ -134,6 +134,7 @@ work_groups.each_with_index do |work_group, idx|
   template = idx == WorkGroup.count - 1 ? WorksheetTemplate.last : WorksheetTemplate.first
   Worksheet.create!(
     title: "Worksheet #{idx}",
+    canvas: 'abc',
     worksheet_template: template,
     work_group: work_group,
     image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
