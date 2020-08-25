@@ -9,16 +9,16 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   end
 
   def show
-    render json: @work_group.to_json
+    render json: work_group_with_relations
   end
 
   def edit
-    render json: @work_group.to_json
+    render json: work_group_with_relations
   end
 
   def update
     if @work_group.update(work_group_params)
-      render json: @work_group.to_json
+      render json: work_group_with_relations
     else
       render_error
     end
@@ -33,7 +33,11 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   def create
     @work_group = WorkGroup.new(work_group_params)
     authorize @work_group
-    render json: @work_group.to_json
+    if @work_group.save
+      render json: work_group_with_relations
+    else
+      render_error
+    end
   end
 
   def destroy
@@ -42,6 +46,14 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   end
 
   private
+
+  def work_group_with_relations
+    {
+      work_group: @work_group.to_json,
+      teacher: @work_group.teacher.to_json,
+      students: @work_group.students.to_json
+    }
+  end
 
   def set_and_authorize_work_group
     @work_group = WorkGroup.find(params[:id])

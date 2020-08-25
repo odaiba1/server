@@ -8,16 +8,16 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   end
 
   def show
-    render json: @classroom.to_json
+    render json: classroom_with_relations
   end
 
   def edit
-    render json: @classroom.to_json
+    render json: classroom_with_relations
   end
 
   def update
     if @classroom.update(classroom_params)
-      render json: @classroom.to_json
+      render json: classroom_with_relations
     else
       render_error
     end
@@ -34,7 +34,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
     @classroom.user = current_user
     authorize @classroom
     if @classroom.save
-      render json: @classroom.to_json
+      render json: classroom_with_relations
     else
       render_error
     end
@@ -46,6 +46,14 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   end
 
   private
+
+  def classroom_with_relations
+    {
+      classroom: @classroom.to_json,
+      teacher: @classroom.teacher.to_json,
+      students: @classroom.students.to_json
+    }
+  end
 
   def set_classroom
     @classroom = Classroom.find(params[:id])
