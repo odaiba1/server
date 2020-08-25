@@ -49,10 +49,10 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def classroom_with_relations
     {
-      classroom: @classroom.to_json,
-      teacher: @classroom.teacher.to_json,
-      students: @classroom.students.to_json
-    }
+      classroom: @classroom,
+      teacher: @classroom.teacher,
+      students: @classroom.students
+    }.to_json
   end
 
   def set_classroom

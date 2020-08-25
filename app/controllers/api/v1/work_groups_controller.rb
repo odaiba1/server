@@ -49,10 +49,10 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
 
   def work_group_with_relations
     {
-      work_group: @work_group.to_json,
-      teacher: @work_group.classroom.teacher.to_json,
-      students: @work_group.students.to_json
-    }
+      work_group: @work_group,
+      teacher: @work_group.classroom.teacher,
+      students: @work_group.students
+    }.to_json
   end
 
   def set_and_authorize_work_group
