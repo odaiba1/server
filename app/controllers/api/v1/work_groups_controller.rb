@@ -51,7 +51,9 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     {
       work_group: @work_group,
       teacher: @work_group.classroom.teacher,
-      students: @work_group.students
+      # these 2 lines below need to be merged into one using .joins or .includes
+      students: @work_group.students,
+      turns: @work_group.student_work_groups
     }.to_json
   end
 
