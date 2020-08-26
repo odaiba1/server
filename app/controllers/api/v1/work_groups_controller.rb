@@ -50,7 +50,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   def work_group_with_relations
     {
       work_group: @work_group,
-      teacher: @work_group.classroom.teacher,
+      teacher: @work_group.classroom.teacher.deep_pluck(:id, :name),
       students: @work_group.student_work_groups.deep_pluck(:turn, :joined, user: %i[id name])
     }.to_json
   end
