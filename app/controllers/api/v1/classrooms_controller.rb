@@ -50,7 +50,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   def classroom_with_relations
     {
       classroom: @classroom,
-      teacher: @classroom.teacher,
+      teacher: @classroom.teacher.select(:id, :name),
       students: @classroom.students
     }.to_json
   end
