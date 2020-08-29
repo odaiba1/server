@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_053016) do
+ActiveRecord::Schema.define(version: 2020_08_29_122728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2020_08_15_053016) do
     t.bigint "worksheet_template_id"
     t.bigint "work_group_id"
     t.string "image_url"
+    t.string "template_image_url"
     t.index ["work_group_id"], name: "index_worksheets_on_work_group_id"
     t.index ["worksheet_template_id"], name: "index_worksheets_on_worksheet_template_id"
   end

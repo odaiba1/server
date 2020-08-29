@@ -5,6 +5,7 @@
 #  id                    :bigint           not null, primary key
 #  canvas                :string
 #  image_url             :string
+#  template_image_url    :string
 #  title                 :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

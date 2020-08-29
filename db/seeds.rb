@@ -137,7 +137,7 @@ work_groups.each_with_index do |work_group, idx|
     canvas: '',
     worksheet_template: template,
     work_group: work_group,
-    image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
+    template_image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
   )
 end
 
