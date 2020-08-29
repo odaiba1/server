@@ -61,4 +61,30 @@ RSpec.describe ClassroomPolicy do
       it { should_not permit(:destroy) }
     end
   end
+
+  context 'policy scope' do
+    subject { Pundit.policy_scope!(user, Classroom) }
+
+    before do
+      create(:classroom)
+      create(:classroom)
+    end
+
+    context 'admin' do
+      let(:user) { create(:admin) }
+      it { expect(subject.size).to eq(2) }
+    end
+
+    context 'teacher' do
+      let(:user) { Classroom.first.teacher }
+      it { expect(subject.size).to eq(1) }
+      it { expect(subject.first.user_id).to eq(user.id) }
+    end
+
+    context 'student' do
+      let(:user) { create(:student_classroom, classroom: Classroom.first).user }
+      it { expect(subject.size).to eq(1) }
+      it { expect(user.classrooms.ids).to include(subject.first.id) }
+    end
+  end
 end

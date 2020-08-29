@@ -87,5 +87,7 @@ RSpec.describe WorkGroup, type: :model do
       subject.turn_time = 2_000_000
       expect(subject).not_to be_valid
     end
+
+    # TODO: it can be only one student's turn
   end
 end

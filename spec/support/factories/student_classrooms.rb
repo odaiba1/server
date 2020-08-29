@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :student_classroom do
-    association :user
-    association :classroom
+    user      { create(:student) }
+    classroom { create(:classroom) }
   end
 end
