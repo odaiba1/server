@@ -5,6 +5,7 @@
 #  id                    :bigint           not null, primary key
 #  canvas                :string
 #  image_url             :string
+#  template_image_url    :string
 #  title                 :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -25,6 +26,6 @@ class Worksheet < ApplicationRecord
   belongs_to :worksheet_template
   belongs_to :work_group
 
-  validates :title, presence: true
+  validates :title, :template_image_url, presence: true
   validates :canvas, length: { minimum: 0, allow_nil: false, message: "can't be nil" }
 end
