@@ -3,7 +3,7 @@ FactoryBot.define do
     title              { 'Test' }
     canvas             { '' }
     template_image_url { 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg' }
-    association :worksheet_template
-    association :work_group
+    worksheet_template { create(:worksheet_template) }
+    work_group         { create(:work_group) }
   end
 end
