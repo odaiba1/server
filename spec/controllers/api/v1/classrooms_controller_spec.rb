@@ -4,6 +4,13 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
   let(:teacher)    { create(:teacher) }
   let(:classroom1) { create(:classroom, user: teacher) }
   let(:classroom2) { create(:classroom) }
+  let(:classroom_json) do
+    {
+      classroom: classroom1,
+      teacher: classroom1.teacher.deep_pluck(:id, :name),
+      students: classroom1.students.deep_pluck(:id, :name)
+    }.to_json
+  end
 
   before do
     request.headers['X-User-Email'] = teacher.email
@@ -25,7 +32,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'returns selected classroom' do
         get :show, params: { id: classroom1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(classroom1.to_json)
+        expect(response.body).to eq(classroom_json)
       end
     end
 
@@ -47,7 +54,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'returns selected classroom to modify' do
         get :edit, params: { id: classroom1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(classroom1.to_json)
+        expect(response.body).to eq(classroom_json)
       end
     end
 

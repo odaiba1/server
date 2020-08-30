@@ -32,6 +32,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
 
   def create
     @work_group = WorkGroup.new(work_group_params)
+    @work_group.classroom = @classroom
     authorize @work_group
     if @work_group.save
       render json: work_group_with_relations
@@ -61,7 +62,8 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   end
 
   def work_group_params
-    params.require(:work_group).permit(:name, :classroom_id, :session_time, :session_time, :turn_time, :video_call_code)
+    params.require(:work_group).permit(:name, :classroom_id, :session_time, :session_time,
+                                       :turn_time, :video_call_code, :start_at)
   end
 
   def set_and_authorize_classroom

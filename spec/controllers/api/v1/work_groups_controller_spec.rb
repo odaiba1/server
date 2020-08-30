@@ -5,6 +5,13 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
   let(:classroom)   { create(:classroom, user: teacher) }
   let(:work_group1) { create(:work_group, classroom: classroom) }
   let(:work_group2) { create(:work_group) }
+  let(:work_group_json) do
+    {
+      work_group: work_group1,
+      teacher: work_group1.classroom.teacher.deep_pluck(:id, :name),
+      students: work_group1.student_work_groups.deep_pluck(:turn, :joined, user: %i[id name])
+    }.to_json
+  end
 
   before do
     request.headers['X-User-Email'] = teacher.email
@@ -35,7 +42,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'returns selected work group' do
         get :show, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(work_group1.to_json)
+        expect(response.body).to eq(work_group_json)
       end
     end
 
@@ -57,7 +64,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'returns selected work group to modify' do
         get :edit, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(work_group1.to_json)
+        expect(response.body).to eq(work_group_json)
       end
     end
 
@@ -109,7 +116,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'raises an error with missing data' do
         patch :update, params: {
           id: work_group1.id,
-          work_group: { name: nil },
+          work_group: { video_call_code: nil },
           format: :json
         }
         expect(response).to have_http_status(422)
@@ -140,7 +147,13 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'saves a new work_group' do
         put :create, params: {
           classroom_id: classroom.id,
-          work_group: { name: 'Test work group 1' },
+          work_group: {
+            name: 'Test work group 1',
+            video_call_code: 'abc',
+            session_time: 1_200_000,
+            turn_time: 3000,
+            start_at: DateTime.now + 1.hour
+          },
           format: :json
         }
         expect(response).to have_http_status(200)
@@ -152,7 +165,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'raises an error with missing data' do
         put :create, params: {
           classroom_id: classroom.id,
-          work_group: { name: nil },
+          work_group: { video_call_code: nil },
           format: :json
         }
         expect(response).to have_http_status(422)
