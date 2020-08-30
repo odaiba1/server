@@ -27,10 +27,15 @@ class WorkGroup < ApplicationRecord
   include AASM
 
   aasm do
+    state :created, initial: true
     state :next_up
     state :in_progress
     state :done
     state :canceled
+
+    event :schedule do
+      transitions from: :created, to: :next_up
+    end
 
     event :proceed do
       transitions from: :next_up, to: :in_progress
@@ -38,9 +43,10 @@ class WorkGroup < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: %i[next_up in_progress], to: :canceled
+      transitions from: %i[created next_up in_progress], to: :canceled
     end
   end
+
   alias_attribute :students, :users
 
   belongs_to :classroom
