@@ -6,6 +6,6 @@ FactoryBot.define do
     turn_time       { 3000 }
     aasm_state      { 'in_progress' }
     start_at        { DateTime.now + 1.hour }
-    association :classroom
+    classroom       { create(:classroom) }
   end
 end
