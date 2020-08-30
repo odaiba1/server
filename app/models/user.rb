@@ -35,6 +35,5 @@ class User < ApplicationRecord
   has_many :worksheet_templates
   has_many :classrooms
   has_many :student_classrooms
-  # OPTIMIZE: could it be confusing to has 2 different kinds of .classrooms ?
-  has_many :classrooms, through: :student_classrooms
+  has_many :attending_classrooms, through: :student_classrooms, source: :classroom
 end

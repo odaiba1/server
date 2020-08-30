@@ -92,9 +92,9 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns student classrooms' do
-      expect(student_a.classrooms).to include(classroom1)
-      expect(student_a.classrooms).to include(classroom2)
-      expect(student_a.classrooms.size).to eq(2)
+      expect(student_a.attending_classrooms).to include(classroom1)
+      expect(student_a.attending_classrooms).to include(classroom2)
+      expect(student_a.attending_classrooms.size).to eq(2)
     end
   end
 end

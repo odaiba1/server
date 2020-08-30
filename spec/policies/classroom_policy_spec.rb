@@ -84,7 +84,7 @@ RSpec.describe ClassroomPolicy do
     context 'student' do
       let(:user) { create(:student_classroom, classroom: Classroom.first).user }
       it { expect(subject.size).to eq(1) }
-      it { expect(user.classrooms.ids).to include(subject.first.id) }
+      it { expect(user.attending_classrooms.ids).to include(subject.first.id) }
     end
   end
 end
