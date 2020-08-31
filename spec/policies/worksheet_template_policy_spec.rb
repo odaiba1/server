@@ -49,4 +49,29 @@ RSpec.describe WorksheetTemplatePolicy do
     it { should_not permit(:update) }
     it { should_not permit(:destroy) }
   end
+
+  context 'policy scope' do
+    subject { Pundit.policy_scope!(user, WorksheetTemplate) }
+
+    before do
+      create(:worksheet_template)
+      create(:worksheet_template)
+    end
+
+    context 'admin' do
+      let(:user) { create(:admin) }
+      it { expect(subject.size).to eq(2) }
+    end
+
+    context 'teacher' do
+      let(:user) { User.where(role: 'teacher').first }
+      it { expect(subject.size).to eq(1) }
+      it { expect(subject.first.user_id).to eq(user.id) }
+    end
+
+    context 'student' do
+      let(:user) { create(:student) }
+      it { expect(subject.size).to eq(0) }
+    end
+  end
 end
