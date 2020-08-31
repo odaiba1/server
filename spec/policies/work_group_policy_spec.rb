@@ -62,4 +62,30 @@ RSpec.describe WorkGroupPolicy do
       it { should_not permit(:destroy) }
     end
   end
+
+  context 'policy scope' do
+    subject { Pundit.policy_scope!(user, WorkGroup) }
+
+    before do
+      create(:work_group)
+      create(:work_group)
+    end
+
+    context 'admin' do
+      let(:user) { create(:admin) }
+      it { expect(subject.size).to eq(2) }
+    end
+
+    context 'teacher' do
+      let(:user) { User.where(role: 'teacher').first }
+      it { expect(subject.size).to eq(1) }
+      it { expect(user.classrooms.ids).to include(subject.first.classroom_id) }
+    end
+
+    context 'student' do
+      let(:user) { create(:student_work_group, work_group: WorkGroup.first).user }
+      it { expect(subject.size).to eq(1) }
+      it { expect(user.work_groups.ids).to include(subject.first.id) }
+    end
+  end
 end
