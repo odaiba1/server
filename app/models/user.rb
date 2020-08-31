@@ -35,6 +35,5 @@ class User < ApplicationRecord
   has_many :worksheet_templates
   has_many :classrooms
   has_many :student_classrooms
-  # FIXME: .classrooms doesn't work either for teachers or students
-  has_many :classrooms, through: :student_classrooms
+  has_many :attending_classrooms, through: :student_classrooms, source: :classroom
 end
