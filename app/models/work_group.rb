@@ -7,9 +7,9 @@
 #  answered        :integer
 #  name            :string
 #  score           :integer
-#  session_time    :integer
+#  session_time    :integer          # time in miliseconds, 60000 == 1 minute
 #  start_at        :datetime
-#  turn_time       :integer
+#  turn_time       :integer          # time in miliseconds, 60000 == 1 minute
 #  video_call_code :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
