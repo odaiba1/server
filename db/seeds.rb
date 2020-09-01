@@ -68,8 +68,8 @@ p 'creating work groups'
     name: "Group #{number}",
     video_call_code: 'abc',
     classroom: Classroom.first,
-    session_time: 1_200_000,
-    turn_time: 3000,
+    session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
+    turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
     score: 0,
     answered: 0,
     aasm_state: 'in_progress',
@@ -81,8 +81,8 @@ WorkGroup.create!(
   name: "Group 1",
   video_call_code: 'xyz',
   classroom: Classroom.last,
-  session_time: 1_200_000,
-  turn_time: 3000,
+  session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
+  turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
   score: 0,
   answered: 0,
   aasm_state: 'in_progress',
