@@ -49,6 +49,7 @@ users.each_with_index do |user, idx|
 end
 
 puts 'Paste url for worksheet template'
+puts 'WARNING: url must come from cloudinary'
 print '> '
 image_url = gets.chomp
 
