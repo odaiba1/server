@@ -66,4 +66,6 @@ Worksheet.create!(
   template_image_url: image_url
 )
 
-p 'finished'
+p 'Finished!'
+workgroup = WorkGroup.last
+p "Find the url at https://odaiba-app.netlify.app/classrooms/#{workgroup.classroom_id}/work_groups/#{workgroup.id}"
