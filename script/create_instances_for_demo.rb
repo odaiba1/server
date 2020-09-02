@@ -10,7 +10,7 @@ users.each do |name|
   user = User.find_by_name(name)
   next if user
 
-  new_user = User.new(name: name, email: name + '@gmail.com', password: 'secret')
+  new_user = User.new(name: name, email: name.downcase + '@gmail.com', password: 'secret')
   new_user.save!
   new_users << new_user
 end
