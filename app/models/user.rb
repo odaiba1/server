@@ -36,16 +36,4 @@ class User < ApplicationRecord
   has_many :classrooms
   has_many :student_classrooms
   has_many :attending_classrooms, through: :student_classrooms, source: :classroom
-
-  # Returns the names of all the students a teacher has
-  def students
-    User.joins(:student_classrooms).where(student_classrooms: { classroom_id: classrooms })
-  end
-
-  # Returns the names of all the teachers of a student
-  def teachers
-    # Retrieve classroom IDs the student is in with student_classrooms.pluck
-    # Then find the teachers who share the same classroom IDs
-    User.joins(:classrooms).where(classrooms: {id: student_classrooms.pluck(:classroom_id)})
-  end
 end
