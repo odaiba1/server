@@ -32,12 +32,9 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
 
   def create
     @worksheet = Worksheet.new(worksheet_params)
-    # OPTIMIZE: make it more readable
     @worksheet.template_image_url = WorksheetTemplate.find(@worksheet.worksheet_template_id).image_url
-    if @worksheet.image_url.nil? && params[:worksheet][:photo]
-      image = Cloudinary::Uploader.upload(params[:worksheet][:photo])
-      @worksheet.image_url = image
-    end
+    prms = params[:worksheet]
+    @worksheet_template.image_url = CloudinaryUploader.new(prms[:image_url], prms[:photo]).call
     @worksheet.work_group = @work_group
     authorize @worksheet
     if @worksheet.save
