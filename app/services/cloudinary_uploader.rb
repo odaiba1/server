@@ -9,7 +9,8 @@ class CloudinaryUploader
       @image_url
     elsif @image_url || @photo
       source = @image_url || @photo
-      Cloudinary::Uploader.upload(source)
+      cloudinary_data = Cloudinary::Uploader.upload(source)
+      cloudinary_data['url']
     end
   end
 end
