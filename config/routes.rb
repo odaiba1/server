@@ -7,8 +7,6 @@ Rails.application.routes.draw do
 
   resources :user, only: [:show, :update]
 
-  resources :images, only: [:new, :create, :destroy]
-
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :classrooms, defaults: { format: :json } do

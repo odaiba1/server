@@ -17,7 +17,9 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   def update
-    if @worksheet.update(worksheet_params)
+    image_url = remote_image_url
+    prepped_params = worksheet_params.slice(:image_url, :photo).merge({ image_url: image_url })
+    if @worksheet.update(prepped_params)
       render json: @worksheet.to_json
     else
       render_error
@@ -33,8 +35,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   def create
     @worksheet = Worksheet.new(worksheet_params)
     @worksheet.template_image_url = WorksheetTemplate.find(@worksheet.worksheet_template_id).image_url
-    prms = params[:worksheet]
-    @worksheet_template.image_url = CloudinaryUploader.new(prms[:image_url], prms[:photo]).call
+    @worksheet.image_url = remote_image_url
     @worksheet.work_group = @work_group
     authorize @worksheet
     if @worksheet.save
@@ -45,6 +46,11 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   private
+
+  def remote_image_url
+    prms = params[:worksheet]
+    CloudinaryUploader.new(prms[:image_url], prms[:photo]).call
+  end
 
   def set_and_authorize_worksheet
     @worksheet = Worksheet.find(params[:id])
