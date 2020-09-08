@@ -37,15 +37,11 @@ class User < ApplicationRecord
   has_many :student_classrooms
   has_many :attending_classrooms, through: :student_classrooms, source: :classroom
 
-  # Returns the AR instances of students for a specific teacher
   def students
     User.joins(:student_classrooms).where(student_classrooms: { classroom_id: classrooms })
   end
 
-  # Returns the AR instances of teachers for a specific student
   def teachers
-    # Get Classroom IDs for student and retrieve the teachers who share the same classrooms
-    User.joins(:classrooms).where(classrooms: {id: student_classrooms.pluck(:classroom_id)})
+    User.joins(:classrooms).where(classrooms: attending_classrooms)
   end
-
 end
