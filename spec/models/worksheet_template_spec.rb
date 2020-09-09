@@ -20,6 +20,10 @@
 require 'rails_helper'
 
 RSpec.describe WorksheetTemplate, type: :model do
+  it 'has a valid factory' do
+    expect(build(:worksheet_template)).to be_valid
+  end
+
   let(:teacher) { create(:teacher) }
   subject do
     described_class.new(
