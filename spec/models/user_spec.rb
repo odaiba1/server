@@ -23,6 +23,18 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  it 'student has a valid factory' do
+    expect(build(:student)).to be_valid
+  end
+
+  it 'teacher has a valid factory' do
+    expect(build(:teacher)).to be_valid
+  end
+
+  it 'admin has a valid factory' do
+    expect(build(:admin)).to be_valid
+  end
+
   subject do
     described_class.new(
       name: 'Test User',

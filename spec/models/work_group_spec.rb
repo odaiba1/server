@@ -26,6 +26,10 @@
 require 'rails_helper'
 
 RSpec.describe WorkGroup, type: :model do
+  it 'has a valid factory' do
+    expect(build(:work_group)).to be_valid
+  end
+
   let(:classroom) { create(:classroom) }
   subject do
     described_class.new(

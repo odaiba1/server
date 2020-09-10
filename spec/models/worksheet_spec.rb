@@ -25,12 +25,17 @@
 require 'rails_helper'
 
 RSpec.describe Worksheet, type: :model do
+  it 'has a valid factory' do
+    expect(build(:worksheet)).to be_valid
+  end
+
   let(:worksheet_template) { create(:worksheet_template) }
   let(:work_group)         { create(:work_group) }
   subject do
     described_class.new(
       title: 'Test Worksheet',
       canvas: '',
+      template_image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
       image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
       worksheet_template: worksheet_template,
       work_group: work_group

@@ -23,6 +23,10 @@
 require 'rails_helper'
 
 RSpec.describe StudentWorkGroup, type: :model do
+  it 'has a valid factory' do
+    expect(build(:student_work_group)).to be_valid
+  end
+
   let(:student)    { create(:student) }
   let(:work_group) { create(:work_group) }
   subject do

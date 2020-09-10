@@ -21,6 +21,10 @@
 require 'rails_helper'
 
 RSpec.describe StudentClassroom, type: :model do
+  it 'has a valid factory' do
+    expect(build(:student_classroom)).to be_valid
+  end
+
   let(:student)   { create(:student) }
   let(:classroom) { create(:classroom) }
   subject do
