@@ -1,0 +1,10 @@
+<h3>Invitation for activity</h3>
+
+<p>Dear <%= @user.name %></p>
+<p>You've been invited to collaborate on a worksheet</p>
+<p>You can access it by clicking here: <%= @session_url %></p>
+<p>Please login with the following credentials:</p>
+<ul>
+  <li>Email: <%= @user.email %></li>
+  <li>Password: <%= @one_time_password %></li>
+</ul>
