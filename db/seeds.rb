@@ -55,26 +55,22 @@ subjects.each do |subject|
   end
 end
 
-# Classroom.create!(
-#   user_id: User.where(role: 1).first.id,
-#   name: '4B English'
-# )
-# Classroom.create!(
-#   user_id: User.where(role: 1).last.id,
-#   name: '1C Math'
-# )
-
 p "Finished creating #{Classroom.count} classrooms"
 
 p 'assigning students to classrooms'
 
-students = User.where(role: 0).limit(20)
-students.each do |user|
-  StudentClassroom.create!(user: user, classroom: Classroom.first)
-end
+students = User.where(role: 0)
 
-(User.where(role: 0) - students).each do |user|
-  StudentClassroom.create!(user: user, classroom: Classroom.last)
+Classroom.all.each do |classroom|
+  students = User.where(role: 0)
+  20.times do
+    index = rand(students.length)
+    student = students[index]
+    StudentClassroom.create!(
+      user: student,
+      classroom: classroom
+    )
+  end
 end
 
 p 'Finished assigning students to classrooms'
