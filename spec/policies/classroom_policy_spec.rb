@@ -43,7 +43,7 @@ RSpec.describe ClassroomPolicy do
     let(:classroom) { create(:classroom) }
 
     context 'own classroom' do
-      let!(:student_classroom) { build(:student_classroom, classroom: classroom, user: user) }
+      let!(:student_classroom) { create(:student_classroom, classroom: classroom, user: user) }
       it { should permit(:index) }
       it { should permit(:show) }
       it { should_not permit(:new) }
