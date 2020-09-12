@@ -61,17 +61,27 @@ p 'assigning students to classrooms'
 
 students = User.where(role: 0)
 
-Classroom.all.each do |classroom|
-  students = User.where(role: 0)
-  20.times do
-    index = rand(students.length)
-    student = students[index]
+students.each do |student|
+  subjects.each do |subject|
+    count = Classroom.where(subject: subject).count
     StudentClassroom.create!(
       user: student,
-      classroom: classroom
+      classroom: Classroom.where(subject: subject)[rand(count)]
     )
   end
 end
+
+# Classroom.all.each do |classroom|
+#   students = User.where(role: 0)
+#   20.times do
+#     index = rand(students.length)
+#     student = students[index]
+#     StudentClassroom.create!(
+#       user: student,
+#       classroom: classroom
+#     )
+#   end
+# end
 
 p 'Finished assigning students to classrooms'
 
