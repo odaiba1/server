@@ -26,6 +26,23 @@ User.create!(name: 'Mr. Murata', email: 'murata@gmail.com', password: 'supersecr
 
 p "Finished creating #{User.where(role: 1).size} Teachers"
 
+p 'creating classrooms'
+
+subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
+groups = ['A', 'B', 'C']
+
+subjects.each do |subject|
+  group = groups[rand(groups.length)]
+  Classroom.create!(
+    user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
+    group: "Class #{group}",
+    subject: subject,
+    grade: 5
+  )
+end
+
+p "Finished creating #{Classroom.count} classrooms"
+
 p 'creating students'
 
 User.create!(name: 'Paulo', email: 'paulo@gmail.com', password: 'secret')
@@ -40,48 +57,19 @@ end
 
 p "Finished creating #{User.where(role: 0).size} students"
 
-p 'creating classroom'
-
-subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
-groups = ['A', 'B', 'C']
-
-subjects.each do |subject|
-  groups.each do |group|
-    Classroom.create!(
-      user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
-      group: "Class #{group}",
-      subject: subject
-    )
-  end
-end
-
-p "Finished creating #{Classroom.count} classrooms"
-
 p 'assigning students to classrooms'
 
 students = User.where(role: 0)
 
 students.each do |student|
   subjects.each do |subject|
-    count = Classroom.where(subject: subject).count
+    subject_classrooms_count = Classroom.where(subject: subject).count
     StudentClassroom.create!(
       user: student,
-      classroom: Classroom.where(subject: subject)[rand(count)]
+      classroom: Classroom.where(subject: subject)[rand(subject_classrooms_count)]
     )
   end
 end
-
-# Classroom.all.each do |classroom|
-#   students = User.where(role: 0)
-#   20.times do
-#     index = rand(students.length)
-#     student = students[index]
-#     StudentClassroom.create!(
-#       user: student,
-#       classroom: classroom
-#     )
-#   end
-# end
 
 p 'Finished assigning students to classrooms'
 

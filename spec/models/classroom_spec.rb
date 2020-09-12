@@ -3,6 +3,7 @@
 # Table name: classrooms
 #
 #  id         :bigint           not null, primary key
+#  grade      :integer
 #  group      :string
 #  subject    :string
 #  created_at :datetime         not null
