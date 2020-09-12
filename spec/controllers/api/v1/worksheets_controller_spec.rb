@@ -29,7 +29,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
       context 'failure' do
         it 'restricts worksheets belonging to other work groups' do
           get :index, format: :json, params: { work_group_id: worksheet2.work_group.id }
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
 
         it 'restricts worksheet belonging to other work group' do
           get :show, params: { id: worksheet2.id, format: :json }
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
       end
     end
@@ -73,7 +73,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
 
         it 'restricts worksheet belonging to other work group' do
           get :edit, params: { id: worksheet2.id, format: :json }
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
 
         it 'restricts worksheet belonging to other work group' do
           patch :update, params: { id: worksheet2.id, worksheet: { title: 'New Test worksheet' }, format: :json }
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(403)
         end
 
         it 'raises an error with missing data' do
@@ -109,7 +109,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
     describe '#new' do
       it 'restrict students from creating' do
         get :new, format: :json, params: { work_group_id: work_group.id }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       # context 'success' do
       #   it 'returns blank worksheet' do
@@ -122,7 +122,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
       # context 'failure' do
       #   it 'restricts creating a worksheet from a foreign work group' do
       #     get :new, format: :json, params: { work_group_id: worksheet2.work_group.id }
-      #     expect(response).to have_http_status(401)
+      #     expect(response).to have_http_status(403)
       #   end
       # end
     end
@@ -135,7 +135,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
           worksheet: { title: 'Test Worksheet 1' },
           format: :json
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
       # context 'success' do
       #   it 'saves a new worksheet' do
@@ -169,7 +169,7 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
       #       worksheet: { name: 'Test Worksheet 2' },
       #       format: :json
       #     }
-      #     expect(response).to have_http_status(401)
+      #     expect(response).to have_http_status(403)
       #   end
       # end
     end
