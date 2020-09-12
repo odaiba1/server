@@ -35,7 +35,7 @@ subjects.each do |subject|
   group = groups[rand(groups.length)]
   Classroom.create!(
     user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
-    group: "Class #{group}",
+    group: "#{group}",
     subject: subject,
     grade: 5
   )

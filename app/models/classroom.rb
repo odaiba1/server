@@ -27,7 +27,7 @@ class Classroom < ApplicationRecord
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :subject, :group, presence: true
+  validates :subject, :group, :grade, presence: true
   validate :user_role
 
   def parse_for_dashboard
@@ -56,6 +56,10 @@ class Classroom < ApplicationRecord
     else
       'blue'
     end
+  end
+
+  def name
+    "Grade #{self.grade} #{self.subject} Class #{self.group}"
   end
 
   private
