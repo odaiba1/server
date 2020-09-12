@@ -18,6 +18,11 @@ p 'creating teachers'
 
 User.create!(name: Faker::Name.name, email: 'teacher@gmail.com', password: 'supersecret', role: 1)
 User.create!(name: Faker::Name.name, email: 'sub-teacher@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: 'Ms. Tachibana', email: 'tachibanar@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: 'Mr. Murakami', email: 'murakami@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: 'Ms. Hayashi', email: 'hayashi@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: 'Ms. Dedachi', email: 'dedachi@gmail.com', password: 'supersecret', role: 1)
+User.create!(name: 'Mr. Murata', email: 'murata@gmail.com', password: 'supersecret', role: 1)
 
 p "Finished creating #{User.where(role: 1).size} Teachers"
 
@@ -37,14 +42,27 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
-Classroom.create!(
-  user_id: User.where(role: 1).first.id,
-  name: '4B English'
-)
-Classroom.create!(
-  user_id: User.where(role: 1).last.id,
-  name: '1C Math'
-)
+subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
+groups = ['A', 'B', 'C']
+
+subjects.each do |subject|
+  groups.each do |group|
+    Classroom.create!(
+      user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
+      group: "Class #{group}",
+      subject: subject
+    )
+  end
+end
+
+# Classroom.create!(
+#   user_id: User.where(role: 1).first.id,
+#   name: '4B English'
+# )
+# Classroom.create!(
+#   user_id: User.where(role: 1).last.id,
+#   name: '1C Math'
+# )
 
 p "Finished creating #{Classroom.count} classrooms"
 

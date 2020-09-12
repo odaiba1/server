@@ -26,7 +26,7 @@ class Classroom < ApplicationRecord
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :name, presence: true
+  validates :subject, :group, presence: true
   validate :user_role
 
   private
