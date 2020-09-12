@@ -29,6 +29,34 @@ class Classroom < ApplicationRecord
   validates :subject, :group, presence: true
   validate :user_role
 
+  def parse_for_dashboard
+    {
+      id: self.id,
+      subject: self.subject,
+      group: self.group,
+      teacher: self.user.name,
+      color: self.get_color,
+      link: '#'
+    }
+  end
+
+  def get_color
+    case self.subject
+    when 'English'
+      'blue'
+    when 'Maths'
+      'green'
+    when 'Science'
+      'yellow'
+    when 'Geography'
+      'purple'
+    when 'History'
+      'red'
+    else
+      'blue'
+    end
+  end
+
   private
 
   def user_role
