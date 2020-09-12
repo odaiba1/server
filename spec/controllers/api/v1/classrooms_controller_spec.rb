@@ -44,7 +44,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
 
       it 'restricts classroom belonging to other teacher' do
         get :show, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
 
       it 'restricts classroom belonging to other teacher' do
         get :edit, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
 
       it 'restricts classroom belonging to other teacher' do
         patch :update, params: { id: classroom2.id, classroom: { name: 'New Test Classroom' }, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'raises an error with missing data' do
@@ -137,7 +137,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
     context 'failure' do
       it 'restricts classroom belonging to other teacher' do
         delete :destroy, params: { id: classroom2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'returns 404 for missing classroom' do

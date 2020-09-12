@@ -37,7 +37,7 @@ RSpec.describe Api::V1::WorksheetTemplatesController, type: :controller do
 
       it 'restricts worksheet template belonging to other teacher' do
         get :show, params: { id: worksheet_template2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe Api::V1::WorksheetTemplatesController, type: :controller do
 
       it 'restricts worksheet_template belonging to other teacher' do
         get :edit, params: { id: worksheet_template2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::WorksheetTemplatesController, type: :controller do
           worksheet_template: { title: 'New Test Worksheet Template' },
           format: :json
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'raises an error with missing data' do
@@ -138,7 +138,7 @@ RSpec.describe Api::V1::WorksheetTemplatesController, type: :controller do
     context 'failure' do
       it 'restricts worksheet template belonging to other teacher' do
         delete :destroy, params: { id: worksheet_template2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'returns 404 for missing worksheet template' do
