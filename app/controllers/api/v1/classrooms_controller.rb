@@ -3,6 +3,8 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   before_action :set_classroom, only: %i[show edit update destroy]
 
   def index
+    # TODO - frontend needs index data to look like this:
+    
     @classrooms = policy_scope(Classroom)
     render json: @classrooms.to_json
   end
