@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :classroom do
-    name { 'Test Classroom' }
+    subject { 'English' }
+    group { 'A' }
+    grade { 5 }
     user { create(:teacher) }
   end
 end

@@ -61,7 +61,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name)
+    params.require(:classroom).permit(:grade, :group, :subject)
   end
 
   def render_error
