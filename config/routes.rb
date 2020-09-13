@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  resources :work_groups, only: %i[new create]
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
