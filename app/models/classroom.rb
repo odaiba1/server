@@ -32,11 +32,11 @@ class Classroom < ApplicationRecord
 
   def parse_for_dashboard
     {
-      id: self.id,
-      subject: self.subject,
-      group: self.group,
-      teacher: self.user.name,
-      color: self.get_color,
+      id: id,
+      subject: subject,
+      group: group,
+      teacher: user.name,
+      color: get_color,
       link: '#'
     }
   end
