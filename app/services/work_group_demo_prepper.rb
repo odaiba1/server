@@ -3,7 +3,7 @@ class WorkGroupDemoPrepper
     @emails =        emails
     @worksheet_url = worksheet_url
     @start_at =      start_at
-    @turn_time =     turn_time
+    @turn_time =     turn_time.to_i
   end
 
   def call
@@ -41,8 +41,8 @@ class WorkGroupDemoPrepper
       name: @users.join('-'),
       video_call_code: 'abc',
       classroom: Classroom.first,
-      session_time: @turn_time * @users.size,
-      turn_time: @turn_time,
+      session_time: @turn_time * 60_000 * @users.size,
+      turn_time: @turn_time * 60_000,
       aasm_state: 'in_progress',
       start_at: @start_at
     )

@@ -6,6 +6,6 @@ class InvitationMailer < ApplicationMailer
     @session_url = "https://odaiba-app.netlify.app/classrooms/#{work_group.classroom_id}/work_groups/#{work_group.id}"
     return unless @user.update(password: @one_time_password)
 
-    mail(to: @user.email, subject: 'You have been invited to and Odaiba demo session')
+    mail(to: @user.email, subject: 'You have been invited to an Odaiba demo session')
   end
 end
