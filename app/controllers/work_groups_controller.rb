@@ -7,10 +7,18 @@ class WorkGroupsController < ApplicationController
   end
 
   def create
+    start_time = Time.new(
+      work_group_params['start_at(1i)'],
+      work_group_params['start_at(2i)'],
+      work_group_params['start_at(3i)'],
+      work_group_params['start_at(4i)'],
+      work_group_params['start_at(5i)']
+    ) + 9.hours
+
     vars_for_mailer = WorkGroupDemoPrepper.new(
       custom_params[:emails],
       custom_params[:worksheet_url],
-      work_group_params[:start_at],
+      start_time,
       work_group_params[:turn_time]
     ).call
 
@@ -19,6 +27,7 @@ class WorkGroupsController < ApplicationController
       vars_for_mailer[:users].each do |user|
         InvitationMailer.with(user: user, work_group: vars_for_mailer[:work_group]).demo_invite.deliver_later
       end
+      render :new
     else
       render :new
     end

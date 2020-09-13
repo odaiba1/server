@@ -20,12 +20,15 @@ class WorkGroupDemoPrepper
     new_users = []
     @users = @emails.split(' ').map do |email|
       user = User.find_by_email(email)
-      next if user
 
-      new_user = User.new(name: email.split('@').first, email: email, password: 'secret')
-      new_user.save!
-      new_users << new_user
-      new_user
+      if user
+        user
+      else
+        new_user = User.new(name: email.split('@').first, email: email, password: 'secret')
+        new_user.save!
+        new_users << new_user
+        new_user
+      end
     end
 
     new_users.each do |user|
@@ -38,8 +41,8 @@ class WorkGroupDemoPrepper
       name: @users.join('-'),
       video_call_code: 'abc',
       classroom: Classroom.first,
-      session_time: @turn_time * 60_000 * @users.size,
-      turn_time: @turn_time * 60_000,
+      session_time: @turn_time * @users.size,
+      turn_time: @turn_time,
       aasm_state: 'in_progress',
       start_at: @start_at
     )
