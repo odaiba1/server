@@ -42,17 +42,12 @@ class Classroom < ApplicationRecord
   end
 
   def get_color
-    case self.subject
-    when 'English'
-      'blue'
-    when 'Maths'
-      'green'
-    when 'Science'
-      'yellow'
-    when 'Geography'
-      'purple'
-    when 'History'
-      'red'
+    case subject
+    when 'English' then 'blue'
+    when 'Maths' then 'green'
+    when 'Science' then 'yellow'
+    when 'Geography' then 'purple'
+    when 'History' then 'red'
     else
       'blue'
     end
