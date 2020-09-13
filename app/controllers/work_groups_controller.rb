@@ -16,7 +16,9 @@ class WorkGroupsController < ApplicationController
 
     if vars_for_mailer
       # flash notice
-      # send email
+      vars_for_mailer[:users].each do |user|
+        InvitationMailer.with(user: user, work_group: vars_for_mailer[:work_group]).demo_invite.deliver_later
+      end
     else
       render :new
     end

@@ -76,9 +76,8 @@ class WorkGroupDemoPrepper
 
   def variables_for_mailer
     {
-      emails: @users.pluck(:email),
-      classroom_id: @work_group.classroom_id,
-      work_group_id: @work_group.id
+      users: @users,
+      work_group: @work_group
     }
   end
 end
