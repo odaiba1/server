@@ -4,10 +4,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def index
     @classrooms = policy_scope(Classroom)
-    parsed_classrooms = @classrooms.map do |classroom|
-      classroom = classroom.parse_for_dashboard
-    end
-    render json: parsed_classrooms.to_json
+    render json: @classrooms.map(&:parse_for_dashboard).to_json
   end
 
   def show
