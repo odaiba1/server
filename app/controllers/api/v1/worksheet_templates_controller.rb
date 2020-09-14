@@ -17,7 +17,7 @@ class Api::V1::WorksheetTemplatesController < Api::V1::BaseController
 
   def update
     image_url = remote_image_url
-    prepped_params = worksheet_template_params.slice(:image_url, :photo).merge({ image_url: image_url })
+    prepped_params = worksheet_template_params.except(:image_url, :photo).merge({ image_url: image_url })
     if @worksheet_template.update(prepped_params)
       render json: @worksheet_template.to_json
     else

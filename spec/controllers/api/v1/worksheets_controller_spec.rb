@@ -129,10 +129,9 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
 
     describe '#create' do
       it 'restricts students from creating' do
-        put :create, params: {
+        post :create, params: {
           work_group_id: work_group.id,
-          worksheet_template_id: worksheet_template.id,
-          worksheet: { title: 'Test Worksheet 1' },
+          worksheet: { worksheet_template_id: worksheet_template.id, title: 'Test Worksheet 1' },
           format: :json
         }
         expect(response).to have_http_status(403)
