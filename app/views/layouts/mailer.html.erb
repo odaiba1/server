@@ -2,40 +2,90 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
       /* Email styles need to be inline */
       body {
         margin: 0;
+        font-family: 'Poppins', sans-serif;
       }
-      h3  {color: #F88436;}
+      strong {
+        font-weight: 600;
+      }
+      h3  {
+        color: #F88436;
+        text-align: center;
+      }
+
+      hr {
+        border-style: solid;
+        box-sizing: content-box;
+        height: 0;
+        overflow: visible;
+        border-color: #F88436;
+        border-width: 1px;
+        margin: auto;
+        width: 3rem;
+      }
+      ul {
+        border-style: solid;
+        border-width: 2px;
+        border-color: #E5E5E5;
+        padding: 1.5em;
+      }
+      li {
+        list-style: none;
+      }
       .container {
         width: 100vw;
         height: 100vh;
         background-color: #E5E5E5;
+        padding-top: 3rem;
       }
       .card {
-        width: 50vw;
+        max-width: 60vw;
         margin: 0 auto;
         background-color: white;
+        /*padding: 2rem;*/
+      }
+      .card-text{
+        padding: 2rem;
+      }
+      .header {
+        background-color: #FDDE7E;
+        max-width: 100%;
+        padding: 2rem;
       }
     </style>
   </head>
 
   <body>
     <!-- <%#= yield %> -->
-
     <div class="container">
       <div class="card">
-        <h3>You've been invited!</h3>
-
-        <p>Dear <%= @user.name %></p>
-        <p>You've been invited to collaborate on a worksheet</p>
-        <p>You can access it by clicking here: <%= @session_url %></p>
-        <p>Please login with the following credentials:</p>
-        <ul>
-          <li>Email: <%= @user.email %></li>
-          <li>Password: <%= @one_time_password %></li>
-        </ul>
+        <div class="header">
+          <div class="image">
+            <%= image_tag attachments['odaiba-logo_inverted_icon.png'].url, alt: 'odaiba logo', class: 'photos' %>
+          </div>
+        </div>
+        <div class="card-text">
+          <h3>You've been invited!</h3>
+          <hr>
+          <p>Dear <%= @user.name %>,<br/>
+          <br/>
+          You've been invited to collaborate on a worksheet.<br/>
+          You can access it by clicking here:<br/>
+          <%= @session_url %><br/>
+          Please login with the following credentials:</p>
+          <br/>
+          <ul>
+            <li><strong>Email: <%= @user.email %></strong></li>
+            <li><strong>Password: <%= @one_time_password %></strong></li>
+          </ul>
+          <br/>
+          <p>Sincerely,</p>
+          <p>The odaiba team</p>
+        </div>
       </div>
     </div>
 
