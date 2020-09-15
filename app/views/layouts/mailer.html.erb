@@ -4,10 +4,38 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
       /* Email styles need to be inline */
+      body {
+        margin: 0;
+      }
+      h3  {color: #F88436;}
+      .container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #E5E5E5;
+      }
+      .card {
+        background-color: white;
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <%#= yield %>
+
+    <div class="container">
+      <div class="card">
+        <h3>You've been invited!</h3>
+
+        <p>Dear <%= @user.name %></p>
+        <p>You've been invited to collaborate on a worksheet</p>
+        <p>You can access it by clicking here: <%= @session_url %></p>
+        <p>Please login with the following credentials:</p>
+        <ul>
+          <li>Email: <%= @user.email %></li>
+          <li>Password: <%= @one_time_password %></li>
+        </ul>
+      </div>
+    </div>
+
   </body>
 </html>
