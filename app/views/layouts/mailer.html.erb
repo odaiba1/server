@@ -82,7 +82,7 @@
       }
 
       .header {
-        background-color: #FDDE7E;
+        background-color: #f5bf2d;
         max-width: 100%;
         padding: 2rem;
         border-top-left-radius: 12px;
@@ -101,7 +101,6 @@
       .footer {
         margin-top: 2rem;
       }
-
 
       /* Small devices (portrait tablets and large phones, 600px and up) */
       @media only screen and (min-width: 600px) {
@@ -143,42 +142,6 @@
   </head>
 
   <body>
-    <div class="container">
-      <div class="card">
-        <div class="header">
-          <div class="image">
-            <!-- <%#= image_tag attachments['odaiba-logo_inverted_icon.png'].url, alt: 'odaiba logo', class: 'photos' %> -->
-          </div>
-        </div>
-        <div class="card-text">
-          <h2>You've been invited!</h2>
-          <hr>
-          <p>Dear <%= @user.name %>,<br/>
-          <br/>
-          You have been invited to collaborate on a worksheet.<br/>
-          You can access it by clicking here:
-          <br/>
-          <br/>
-          <%= @session_url %>
-          <br/>
-          <br/>
-          Please login with the following credentials:</p>
-          <ul>
-            <div class="li-container">
-              <li><strong>Email: <%= @user.email %></strong></li>
-              <li><strong>Password: <%= @one_time_password %></strong></li>
-            </div>
-          </ul>
-          <p>Sincerely,</p>
-          <p>The odaiba team</p>
-        </div>
-      </div>
-      <div class="footer">
-        <p>Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
-        Or contact us at <a class="link" href = "mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
-      </div>
-    </div>
-
-    <!-- <%#= yield %> -->
+    <%= yield %>
   </body>
 </html>
