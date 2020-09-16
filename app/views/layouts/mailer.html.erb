@@ -32,21 +32,25 @@
         border-width: 2px;
         border-color: #E5E5E5;
         padding: 1.5em;
+        border-radius: 6px;
       }
       li {
         list-style: none;
       }
+      .li-container {
+        margin: 0 auto;
+      }
       .container {
         width: 100vw;
         height: 100vh;
-        background-color: #E5E5E5;
+        background-color: #F4F4F4;
         padding-top: 3rem;
       }
       .card {
         max-width: 60vw;
         margin: 0 auto;
         background-color: white;
-        /*padding: 2rem;*/
+        border-radius: 12px;
       }
       .card-text{
         padding: 2rem;
@@ -55,6 +59,8 @@
         background-color: #FDDE7E;
         max-width: 100%;
         padding: 2rem;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
       }
     </style>
   </head>
@@ -77,12 +83,12 @@
           You can access it by clicking here:<br/>
           <%= @session_url %><br/>
           Please login with the following credentials:</p>
-          <br/>
           <ul>
-            <li><strong>Email: <%= @user.email %></strong></li>
-            <li><strong>Password: <%= @one_time_password %></strong></li>
+            <div class="li-container">
+              <li><strong>Email: <%= @user.email %></strong></li>
+              <li><strong>Password: <%= @one_time_password %></strong></li>
+            </div>
           </ul>
-          <br/>
           <p>Sincerely,</p>
           <p>The odaiba team</p>
         </div>
