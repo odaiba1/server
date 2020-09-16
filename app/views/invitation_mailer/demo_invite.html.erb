@@ -1,14 +1,27 @@
-<div id="wrapper" style="background-color: #E5E5E5;">
-  <div class="card" style="background-color: white;">
-    <h3>Invitation for activity</h3>
-
-    <p>Dear <%= @user.name %></p>
-    <p>You've been invited to collaborate on a worksheet</p>
-    <p>You can access it by clicking here: <%= @session_url %></p>
-    <p>Please login with the following credentials:</p>
-    <ul>
-      <li>Email: <%= @user.email %></li>
-      <li>Password: <%= @one_time_password %></li>
-    </ul>
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div class="image">
+        <!-- <%#= image_tag attachments['odaiba-logo_inverted_icon.png'].url, alt: 'odaiba logo', class: 'photos' %> -->
+      </div>
+    </div>
+    <div class="card-text">
+      <h3>You've been invited!</h3>
+      <hr>
+      <p>Dear <%= @user.name %>,<br/>
+      <br/>
+      You have been invited to collaborate on a worksheet.<br/>
+      You can access it by clicking here:<br/>
+      <%= @session_url %><br/>
+      Please login with the following credentials:</p>
+      <ul>
+        <div class="li-container">
+          <li><strong>Email: <%= @user.email %></strong></li>
+          <li><strong>Password: <%= @one_time_password %></strong></li>
+        </div>
+      </ul>
+      <p>Sincerely,</p>
+      <p>The odaiba team</p>
+    </div>
   </div>
 </div>
