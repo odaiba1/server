@@ -1,6 +1,4 @@
 class InvitationMailer < ApplicationMailer
-  # add_template_helper(EmailHelper)
-
   def demo_invite
     attachments.inline["odaiba-logo_inverted_icon.png"] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
     @user = params[:user]
