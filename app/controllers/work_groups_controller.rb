@@ -10,7 +10,7 @@ class WorkGroupsController < ApplicationController
         InvitationMailer.with(user: user, work_group: users_and_work_groups[:work_group]).demo_invite.deliver_later
       end
       instances_for_new_form
-      render :new, notice: 'Invitations sent'
+      redirect_to new_work_group_path, notice: 'Invitations sent'
     else
       instances_for_new_form
       render :new, notice: errors.messages
