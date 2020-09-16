@@ -38,7 +38,7 @@ class WorkGroupDemoPrepper
 
   def create_work_groups
     @work_group = WorkGroup.create!(
-      name: @users.join('-'),
+      name: @users.pluck(:name).join('-'),
       video_call_code: 'abc',
       classroom: Classroom.first,
       session_time: @turn_time * 60_000 * @users.size,

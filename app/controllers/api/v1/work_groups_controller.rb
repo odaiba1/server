@@ -5,7 +5,10 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
 
   def index
     @work_groups = policy_scope(WorkGroup)
-    render json: @work_groups.to_json
+    render json: {
+      active_work_groups: @work_groups.active_groups,
+      all_work_groups: @work_groups
+    }.to_json
   end
 
   def show

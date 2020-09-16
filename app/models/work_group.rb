@@ -58,6 +58,12 @@ class WorkGroup < ApplicationRecord
   validate :start_time_after_current_time
   validate :turn_time_less_than_session_time
 
+  scope :active_groups, -> { all.select { |wg| wg.time_slot.include?(Time.now) } }
+
+  def time_slot
+    start_at..(start_at + (session_time / 1_000))
+  end
+
   private
 
   def start_time_after_current_time
