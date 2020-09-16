@@ -41,7 +41,7 @@ class WorkGroupsController < ApplicationController
       work_group_params['start_at(3i)'],
       work_group_params['start_at(4i)'],
       work_group_params['start_at(5i)']
-    )
+    ) - 9.hours
 
     WorkGroupDemoPrepper.new(
       custom_params[:emails],
