@@ -10,23 +10,57 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Poppins', sans-serif;
     color: #333333;
-  }
+}
 
-  .wrapper {
+.wrapper {
+    font-family: 'Poppins', sans-serif;
+}
+
+.form {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: white;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+input, select {
+    border: 3px solid #F4F1EA;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+.form-text {
+    padding: 1em;
+}
+.grey-header {
+    background-color: #E5E5E5;
+    max-width: 100%;
+    padding: 1rem 2rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.grey-header h3 {
+    text-align: center;
+}
+
+.wrapper {
     height: 100%;
     background-color: #F4F4F4;
     padding-top: 3rem;
     padding-bottom: 3rem;
-  }
+}
 
-  .header {
+.header {
     background-color: #f5bf2d;
     max-width: 100%;
     padding: 1rem 2rem;
-  }
+}
 
-  .logo img {
+
+
+.logo img {
     height: 48px;
-  }
+}

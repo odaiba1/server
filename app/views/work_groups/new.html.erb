@@ -4,18 +4,28 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="body-text">
-    <%= simple_form_for @work_group do |f| %>
-      <%= simple_fields_for :no_model_fields do |n| %>
-        <p><%= n.input :emails %> Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
-        <p><%= n.input :worksheet_url %> Paste image url of an online worksheet, or one of the below</p>
-        <% @worksheet_urls.each do |url| %>
-          <li><%= url %></li>
+  <div class="form">
+  <div class="grey-header">
+    <h3>Create a New Work Group</h3>
+  </div>
+    <div class="form-text">
+      <%= simple_form_for @work_group do |f| %>
+        <%= simple_fields_for :no_model_fields do |n| %>
+          <h3>Emails</h3>
+          <p>Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
+          <%= n.input :emails %> 
+          
+          <h3>Worksheet URL</h3>
+          <p>Paste image url of an online worksheet, or one of the below</p>
+          <%= n.input :worksheet_url %>
+          <% @worksheet_urls.each do |url| %>
+            <li><%= url %></li>
+          <% end %>
         <% end %>
+        <%= f.input :start_at %>
+        <p><%= f.input :turn_time %> Length of turn for single participant in minutes</p>
+        <%= f.submit %>
       <% end %>
-      <%= f.input :start_at %>
-      <p><%= f.input :turn_time %> Length of turn for single participant in minutes</p>
-      <%= f.submit %>
-    <% end %>
+    </div>
   </div>
 </div>
