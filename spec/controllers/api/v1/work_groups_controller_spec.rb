@@ -25,7 +25,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
         work_group2
         get :index, format: :json, params: { classroom_id: classroom.id }
         expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)["all_work_groups"].size).to eq(1)
+        expect(JSON.parse(response.body)['all_work_groups'].size).to eq(1)
       end
     end
 
