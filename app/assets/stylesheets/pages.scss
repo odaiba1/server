@@ -37,6 +37,7 @@ input, select {
 .form-text {
     padding: 1em;
 }
+
 .grey-header {
     background-color: #E5E5E5;
     max-width: 100%;
@@ -62,8 +63,13 @@ input, select {
     padding: 1rem 2rem;
 }
 
-
-
 .logo img {
     height: 48px;
+}
+
+#form-submit {
+    background-color: #4A92A0;
+    padding: .5em 1em;
+    border-radius: 6px;
+    border: none;
 }
