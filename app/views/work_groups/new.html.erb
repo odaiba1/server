@@ -13,17 +13,21 @@
         <%= simple_fields_for :no_model_fields do |n| %>
           <h3>Emails</h3>
           <p>Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
-          <%= n.input :emails %> 
+          <%= n.input_field :emails %> 
           
           <h3>Worksheet URL</h3>
           <p>Paste image url of an online worksheet, or one of the below</p>
-          <%= n.input :worksheet_url %>
+          <%= n.input_field :worksheet_url %>
           <% @worksheet_urls.each do |url| %>
             <li><%= url %></li>
           <% end %>
         <% end %>
-        <%= f.input :start_at %>
-        <p><%= f.input :turn_time %> Length of turn for single participant in minutes</p>
+
+        <h3>Start at</h3>
+        <%= f.input_field :start_at %>
+        <h3>Turn Time</h3>
+        <p>Length of turn for single participant in minutes</p>
+        <%= f.input_field :turn_time %>
         <%= f.submit %>
       <% end %>
     </div>
