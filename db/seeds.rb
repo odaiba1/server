@@ -17,6 +17,7 @@ DatabaseCleaner.clean
 p 'creating teachers'
 
 User.create!(name: Faker::Name.name, email: 'teacher@gmail.com', password: 'supersecret', role: 1)
+User.first.update(authentication_token: ENV['TEACHER_CODE'])
 User.create!(name: Faker::Name.name, email: 'sub-teacher@gmail.com', password: 'supersecret', role: 1)
 
 p "Finished creating #{User.where(role: 1).size} Teachers"
