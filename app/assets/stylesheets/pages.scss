@@ -14,6 +14,9 @@ html, body {
 }
 
 .wrapper {
+    background-color: #F4F4F4;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     font-family: 'Poppins', sans-serif;
     h3 {
         font-weight: 600;
@@ -21,8 +24,7 @@ html, body {
 }
 
 .form {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-radius: 12px;
     background-color: white;
     max-width: 90%;
     margin: 0 auto;
@@ -48,13 +50,6 @@ input, select {
 
 .grey-header h3 {
     text-align: center;
-}
-
-.wrapper {
-    height: 100%;
-    background-color: #F4F4F4;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
 }
 
 .header {

@@ -19,7 +19,8 @@
           <p>Paste image url of an online worksheet, or one of the below</p>
           <%= n.input_field :worksheet_url %>
           <% @worksheet_urls.each do |url| %>
-            <li><%= url %></li>
+            <li><%= image_tag(url, style: 'max-width:300px;') %></li>
+            <li><%= image_tag(url, style: 'max-width:300px;') %></li>
           <% end %>
         <% end %>
 
