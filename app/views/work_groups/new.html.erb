@@ -18,14 +18,16 @@
           <h3>Worksheet URL</h3>
           <p>Paste image url of an online worksheet, or one of the below</p>
           <%= n.input_field :worksheet_url %>
-          <% @worksheet_urls.each do |url| %>
-            <li><%= image_tag(url, style: 'max-width:300px;') %></li>
-            <li><%= image_tag(url, style: 'max-width:300px;') %></li>
-          <% end %>
+          <div class="img-container">
+            <% @worksheet_urls.each do |url| %>
+              <li><%= image_tag(url, style: 'max-width:300px;') %></li>
+              <li><%= image_tag(url, style: 'max-width:300px;') %></li>
+            <% end %>
+          </div>
         <% end %>
 
         <h3>Start at</h3>
-        <%= f.input_field :start_at %>
+        <%= f.input_field :start_at, as: :string, type: :text %>
         <h3>Turn Time</h3>
         <p>Length of turn for single participant in minutes</p>
         <%= f.input_field :turn_time %>
