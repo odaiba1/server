@@ -33,7 +33,7 @@ class Classroom < ApplicationRecord
   validate :end_time_after_start_time
 
   def class_time
-    formatted_time_str = start_time.strftime("%k:%M") + " - " + end_time.strftime("%k:%M")
+    formatted_time_str = start_time.strftime("%H:%M") + " - " + end_time.strftime("%H:%M")
   end
 
   private
