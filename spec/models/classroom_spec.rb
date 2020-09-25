@@ -28,11 +28,11 @@ RSpec.describe Classroom, type: :model do
   let(:teacher) { create(:teacher) }
   subject do
     described_class.new(
-      name: 'Test Classroom', 
-      user: teacher, 
-      start_time: Time.new(2021, 10, 18, 9, 0, 0, "+00:00"),
-      end_time: Time.new(2021, 10, 18, 10, 15, 0, "+00:00")
-    ) 
+      name: 'Test Classroom',
+      user: teacher,
+      start_time: Time.new(2021, 10, 18, 9, 0, 0, '+00:00'),
+      end_time: Time.new(2021, 10, 18, 10, 15, 0, '+00:00')
+    )
   end
 
   context 'valid' do
@@ -58,9 +58,9 @@ RSpec.describe Classroom, type: :model do
     end
 
     it 'has end time earlier than start time' do
-        subject.start_time = Time.now + 1.hour
-        subject.end_time = Time.now 
-        expect(subject).not_to be_valid
+      subject.start_time = Time.now + 1.hour
+      subject.end_time = Time.now
+      expect(subject).not_to be_valid
     end
 
     it 'without a start time' do
@@ -87,8 +87,7 @@ RSpec.describe Classroom, type: :model do
 
   context 'valid method' do
     it 'returns the correct time output' do
-      expect(subject.class_time).to eql("09:00 - 10:15")
+      expect(subject.class_time).to eql('09:00 - 10:15')
     end
   end
 end
-

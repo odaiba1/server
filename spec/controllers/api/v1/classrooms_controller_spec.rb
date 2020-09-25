@@ -110,13 +110,14 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
   describe '#create' do
     context 'success' do
       it 'saves a new classroom' do
-        put :create, params: { 
-          classroom: { 
-            name: 'Test Classroom 1', 
-            start_time: Time.now + 1.hour, 
+        put :create, params: {
+          classroom: {
+            name: 'Test Classroom 1',
+            start_time: Time.now + 1.hour,
             end_time: Time.now + 2.hours
-          }, 
-          format: :json }
+          },
+          format: :json
+        }
         expect(response).to have_http_status(200)
         expect(Classroom.find_by_name('Test Classroom 1')).to be_instance_of(Classroom)
       end
