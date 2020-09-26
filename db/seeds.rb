@@ -40,15 +40,15 @@ p 'creating classroom'
 
 Classroom.create!(
   user_id: User.where(role: 1).first.id,
-  name: '4B English', 
-  start_time: Time.now + 3600,
-  end_time: Time.now + 7200
+  name: '4B English',
+  start_time: Time.current + 3600,
+  end_time: Time.current + 7200
 )
 Classroom.create!(
   user_id: User.where(role: 1).last.id,
   name: '1C Math',
-  start_time: Time.now + 7200,
-  end_time: Time.now + 10800
+  start_time: Time.current + 7200,
+  end_time: Time.current + 10800
 )
 
 p "Finished creating #{Classroom.count} classrooms"
