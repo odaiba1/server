@@ -43,6 +43,20 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
+Classroom.create!(
+  user_id: User.where(role: 1).first.id,
+  subject: 'English',
+  group: 'A',
+  grade: 5
+)
+
+Classroom.create!(
+  user_id: User.where(role: 1).last.id,
+  subject: 'Math',
+  group: 'B',
+  grade: 3
+)
+
 subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
 groups = ['A', 'B', 'C']
 
@@ -50,7 +64,6 @@ subjects.each do |subject|
   groups.each do |group|
     Classroom.create!(
       user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
-      group: "#{group}",
       subject: subject,
       grade: 5,
       group: group
