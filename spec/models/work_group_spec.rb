@@ -38,7 +38,7 @@ RSpec.describe WorkGroup, type: :model do
       name: 'Test Group',
       # score: 0,
       session_time: 1_000_000,
-      start_at: DateTime.now + 1.hour,
+      start_at: DateTime.current + 1.hour,
       turn_time: 1000,
       video_call_code: 'abc',
       classroom: classroom
@@ -83,7 +83,7 @@ RSpec.describe WorkGroup, type: :model do
     end
 
     it 'with a start time in the past' do
-      subject.start_at = DateTime.now - 1.hour
+      subject.start_at = DateTime.current - 1.hour
       expect(subject).not_to be_valid
     end
 

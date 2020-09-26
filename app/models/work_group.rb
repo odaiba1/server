@@ -59,7 +59,7 @@ class WorkGroup < ApplicationRecord
   validate :turn_time_less_than_session_time
 
   scope :active_groups, lambda {
-    where("start_at > :time AND start_at - INTERVAL '1 millisecond' * session_time < :time", time: Time.now)
+    where("start_at > :time AND start_at - INTERVAL '1 millisecond' * session_time < :time", time: Time.current)
   }
 
   private
@@ -67,7 +67,7 @@ class WorkGroup < ApplicationRecord
   def start_time_after_current_time
     return if start_at.nil?
 
-    errors.add(:start_at, 'Start time must not be in the past') if Time.now >= start_at
+    errors.add(:start_at, 'Start time must not be in the past') if Time.current >= start_at
   end
 
   def turn_time_less_than_session_time

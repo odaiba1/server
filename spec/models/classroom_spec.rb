@@ -58,8 +58,8 @@ RSpec.describe Classroom, type: :model do
     end
 
     it 'has end time earlier than start time' do
-      subject.start_time = Time.now + 1.hour
-      subject.end_time = Time.now
+      subject.start_time = Time.current + 1.hour
+      subject.end_time = Time.current
       expect(subject).not_to be_valid
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Classroom, type: :model do
     end
 
     it 'start time in the past' do
-      subject.start_time = Time.now - 1.hour
+      subject.start_time = Time.current - 1.hour
       expect(subject).not_to be_valid
     end
   end

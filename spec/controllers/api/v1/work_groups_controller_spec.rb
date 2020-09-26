@@ -152,7 +152,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
             video_call_code: 'abc',
             session_time: 1_200_000,
             turn_time: 3000,
-            start_at: DateTime.now + 1.hour
+            start_at: DateTime.current + 1.hour
           },
           format: :json
         }
