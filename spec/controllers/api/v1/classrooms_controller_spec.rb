@@ -6,7 +6,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
   let(:classroom2) { create(:classroom) }
   let(:classroom_json) do
     {
-      classroom: classroom1.as_json(except: %i[start_time end_time], methods: :class_time),
+      classroom: classroom1.as_json(methods: :class_time),
       teacher: classroom1.teacher.deep_pluck(:id, :name),
       students: classroom1.students.deep_pluck(:id, :name)
     }.to_json
