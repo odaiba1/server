@@ -38,14 +38,15 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
-# Classroom.create!(
-#   user_id: User.where(role: 1).first.id,
-#   grade: 4,
-#   subject: 'English',
-#   group: 'B',
-#   start_time: Time.now + 3600,
-#   end_time: Time.now + 7200
-# )
+Classroom.create!(
+  user_id: User.where(role: 1).first.id,
+  grade: 4,
+  subject: 'English',
+  group: 'B',
+  start_time: Time.now + 3600,
+  end_time: Time.now + 7200
+)
+
 Classroom.create!(
   user_id: User.where(role: 1).last.id,
   grade: 1,
