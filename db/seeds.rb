@@ -80,10 +80,11 @@ p 'Finished assigning students to classrooms'
 p 'creating work groups'
 
 Classroom.all.each do |classroom|
-  (1..2).to_a.each do |number|
+  # dynamically generate a number of groups based on the number of students in the class
+  (1..(classroom.users.count / 4)).to_a.each do |number|
     WorkGroup.create!(
       name: "Group #{number}",
-      video_call_code: "group_#{number}",
+      video_call_code: "#{classroom.subject}#{classroom.grade}#{classroom.group}#{number}", # each video_call_code is unique
       classroom: classroom,
       session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
       turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
@@ -104,13 +105,14 @@ Classroom.all.each do |classroom|
   current_group_index = 0
   current_student_index = 0
   students = classroom.users
-  until current_student_index == students.size
+  until current_student_index == students.size # will place each student in exactly 1 group
     StudentWorkGroup.create!(
       student: students[current_student_index],
       work_group: work_groups[current_group_index],
       joined: true,
-      turn: work_groups[current_group_index].users.size.zero?
+      turn: work_groups[current_group_index].users.size.zero? # sets the first student assigned to the group to turn = true
     )
+    # increases the group index by 1 until it reaches the end of the max of the group, then starts over
     current_group_index == work_groups.size - 1 ? current_group_index = 0 : current_group_index += 1
     current_student_index += 1
   end
