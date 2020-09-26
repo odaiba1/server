@@ -29,7 +29,7 @@ class Classroom < ApplicationRecord
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :subject, :group, :grade, presence: true
+  validates :subject, :group, :grade, :start_time, :end_time, presence: true
   validate :user_role
   validate :start_time_after_current_time
   validate :end_time_after_start_time
