@@ -4,7 +4,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def index
     @classrooms = policy_scope(Classroom)
-    render json: @classrooms.to_json
+    render json: @classrooms.to_json(methods: :class_time)
   end
 
   def show
@@ -49,7 +49,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def classroom_with_relations
     {
-      classroom: @classroom,
+      classroom: @classroom.as_json(methods: :class_time),
       teacher: @classroom.teacher.deep_pluck(:id, :name),
       students: @classroom.students.deep_pluck(:id, :name)
     }.to_json
