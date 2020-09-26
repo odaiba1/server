@@ -8,16 +8,14 @@
     <div class="card-text">
       <h2>You've been invited!</h2>
       <hr>
-      <p>Dear <%= @user.name %>,<br/>
-      <br/>
-      You have been invited to collaborate on a worksheet.<br/>
-      You can access it by clicking here:
-      <br/>
-      <br/>
+      <p>Dear <%= @user.name %>,</p>
+      <p>
+        You have been invited to collaborate on a worksheet.<br/>
+        You can access it by clicking here:
+      </p>
       <%= @session_url %>
       <br/>
-      <br/>
-      Please login with the following credentials:</p>
+      <p>Please login with the following credentials:</p>
       <ul>
         <div class="li-container">
           <li><strong>Email: <%= @user.email %></strong></li>
@@ -29,7 +27,9 @@
     </div>
   </div>
   <div class="footer">
-    <p>Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
-    Or contact us at <a class="link" href = "mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
+    <p>
+      Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
+      Or contact us at <a class="link" href="mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
+    </p>
   </div>
 </div>
