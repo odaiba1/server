@@ -3,10 +3,8 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   before_action :set_classroom, only: %i[show edit update destroy]
 
   def index
-    def index
-      @classrooms = policy_scope(Classroom)
-      render json: @classrooms.map(&:parse_for_dashboard).to_json
-    end
+    @classrooms = policy_scope(Classroom)
+    render json: @classrooms.map(&:parse_for_dashboard).to_json
   end
 
   def show
@@ -51,7 +49,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def classroom_with_relations
     {
-      classroom: @classroom,
+      classroom: @classroom.as_json(methods: :class_time),
       teacher: @classroom.teacher.deep_pluck(:id, :name),
       students: @classroom.students.deep_pluck(:id, :name)
     }.to_json
