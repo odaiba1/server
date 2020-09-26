@@ -46,8 +46,18 @@ RSpec.describe Classroom, type: :model do
   end
 
   context 'not valid' do
-    it 'without a name' do
-      subject.name = nil
+    it 'without a subject' do
+      subject.subject = nil
+      expect(subject).not_to be_valid
+    end
+
+    it 'without a grade' do
+      subject.grade = nil
+      expect(subject).not_to be_valid
+    end
+
+    it 'without a group' do
+      subject.group = nil
       expect(subject).not_to be_valid
     end
 
