@@ -4,8 +4,10 @@
 #
 #  id         :bigint           not null, primary key
 #  end_time   :datetime
-#  name       :string
+#  grade      :integer
+#  group      :string
 #  start_time :datetime
+#  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null

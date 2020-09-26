@@ -38,9 +38,11 @@ ActiveRecord::Schema.define(version: 2020_09_24_170344) do
 
   create_table "classrooms", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "subject"
+    t.string "group"
+    t.integer "grade"
     t.datetime "start_time"
     t.datetime "end_time"
     t.index ["user_id"], name: "index_classrooms_on_user_id"
