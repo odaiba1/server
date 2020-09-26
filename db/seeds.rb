@@ -43,20 +43,6 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
-Classroom.create!(
-  user_id: User.where(role: 1).first.id,
-  subject: 'English',
-  group: 'A',
-  grade: 5
-)
-
-Classroom.create!(
-  user_id: User.where(role: 1).last.id,
-  subject: 'Math',
-  group: 'B',
-  grade: 3
-)
-
 subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
 groups = ['A', 'B', 'C']
 
@@ -66,7 +52,9 @@ subjects.each do |subject|
       user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
       subject: subject,
       grade: 5,
-      group: group
+      group: group,
+      start_time: Time.now + 7200,
+      end_time: Time.now + 10800
     )
   end
 end
@@ -91,52 +79,41 @@ p 'Finished assigning students to classrooms'
 
 p 'creating work groups'
 
-(1..5).to_a.each do |number|
-  WorkGroup.create!(
-    name: "Group #{number}",
-    video_call_code: 'abc',
-    classroom: Classroom.first,
-    session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
-    turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
-    score: 0,
-    answered: 0,
-    aasm_state: 'in_progress',
-    start_at: DateTime.new(2030, 1, 1, 10, 30)
-  )
+Classroom.all.each do |classroom|
+  (1..5).to_a.each do |number|
+    WorkGroup.create!(
+      name: "Group #{number}",
+      video_call_code: "group_#{number}",
+      classroom: classroom,
+      session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
+      turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
+      score: 0,
+      answered: 0,
+      aasm_state: 'in_progress',
+      start_at: DateTime.new(2030, 1, 1, 10, 30)
+    )
+  end
 end
-
-WorkGroup.create!(
-  name: "Group 1",
-  video_call_code: 'xyz',
-  classroom: Classroom.last,
-  session_time: 1_200_000, # time in miliseconds, 60000 == 1 minute
-  turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
-  score: 0,
-  answered: 0,
-  aasm_state: 'in_progress',
-  start_at: DateTime.new(2030, 1, 1, 10, 30)
-)
 
 p "Finished creating #{WorkGroup.count} work groups"
 
 p 'assigning students to workgroups'
 
-work_groups = WorkGroup.all
-students.each_with_index do |student, index|
-  StudentWorkGroup.create!(
-    student: student,
-    work_group: work_groups[index / 4],
-    joined: true,
-    turn: (index % 4).zero?
-  )
-end
-(User.where(role: 0) - students).each_with_index do |student, index|
-  StudentWorkGroup.create!(
-    student: student,
-    work_group: WorkGroup.last,
-    joined: true,
-    turn: (index % 4).zero?
-  )
+Classroom.all.each do |classroom|
+  work_groups = classroom.work_groups
+  current_group = 0
+  current_student = 0
+  students = classroom.users
+  until current_student == students.size
+    StudentWorkGroup.create!(
+      student: students[current_student],
+      work_group: work_groups[current_group],
+      joined: true,
+      turn: work_groups[current_group].users.size.zero?
+    )
+    current_group == work_groups.size - 1 ? current_group = 0 : current_group += 1
+    current_student += 1
+  end
 end
 
 p 'Finished assigning students to work groups'
@@ -158,6 +135,7 @@ p "Finished creating #{WorksheetTemplate.count} worksheets"
 
 p 'assigning worksheets to work groups'
 
+work_groups = WorkGroup.all
 work_groups.each_with_index do |work_group, idx|
   template = idx == WorkGroup.count - 1 ? WorksheetTemplate.last : WorksheetTemplate.first
   Worksheet.create!(
