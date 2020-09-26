@@ -25,14 +25,14 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
         work_group2
         get :index, format: :json, params: { classroom_id: classroom.id }
         expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body).size).to eq(1)
+        expect(JSON.parse(response.body)['all_work_groups'].size).to eq(1)
       end
     end
 
     context 'failure' do
       it 'restricts work groups belonging to other teacher' do
         get :index, format: :json, params: { classroom_id: work_group2.classroom.id }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
 
       it 'restricts work group belonging to other teacher' do
         get :show, params: { id: work_group2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
 
       it 'restricts work group belonging to other teacher' do
         get :edit, params: { id: work_group2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
           work_group: { name: 'New Test work_group' },
           format: :json
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'raises an error with missing data' do
@@ -137,7 +137,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
     context 'failure' do
       it 'restricts creating a work group to a classroom belonging to other teacher' do
         get :new, format: :json, params: { classroom_id: work_group2.classroom.id }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -178,7 +178,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
           work_group: { name: 'Test work group 2' },
           format: :json
         }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -195,7 +195,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
     context 'failure' do
       it 'restricts work_group belonging to other teacher' do
         delete :destroy, params: { id: work_group2.id, format: :json }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
 
       it 'returns 404 for missing classroom' do

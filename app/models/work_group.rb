@@ -58,6 +58,10 @@ class WorkGroup < ApplicationRecord
   validate :start_time_after_current_time
   validate :turn_time_less_than_session_time
 
+  scope :active_groups, lambda {
+    where("start_at > :time AND start_at - INTERVAL '1 millisecond' * session_time < :time", time: Time.now)
+  }
+
   private
 
   def start_time_after_current_time
