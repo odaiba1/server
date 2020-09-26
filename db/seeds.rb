@@ -101,17 +101,17 @@ p 'assigning students to workgroups'
 
 Classroom.all.each do |classroom|
   work_groups = classroom.work_groups
-  current_group = 0
-  current_student = 0
+  current_group_index = 0
+  current_student_index = 0
   students = classroom.users
-  until current_student == students.size
+  until current_student_index == students.size
     StudentWorkGroup.create!(
-      student: students[current_student],
-      work_group: work_groups[current_group],
+      student: students[current_student_index],
+      work_group: work_groups[current_group_index],
       joined: true,
-      turn: work_groups[current_group].users.size.zero?
+      turn: work_groups[current_group_index].users.size.zero?
     )
-    current_group == work_groups.size - 1 ? current_group = 0 : current_group += 1
+    current_group_index == work_groups.size - 1 ? current_group_index = 0 : current_group_index += 1
     current_student += 1
   end
 end
