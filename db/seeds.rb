@@ -50,8 +50,10 @@ subjects.each do |subject|
   groups.each do |group|
     Classroom.create!(
       user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
-      group: "Class #{group}",
-      subject: subject
+      group: "#{group}",
+      subject: subject,
+      grade: 5,
+      group: group
     )
   end
 end
@@ -68,18 +70,6 @@ students.each do |student|
     StudentClassroom.create!(
       user: student,
       classroom: Classroom.where(subject: subject)[rand(count)]
-    )
-  end
-end
-
-Classroom.all.each do |classroom|
-  students = User.where(role: 0)
-  20.times do
-    index = rand(students.length)
-    student = students[index]
-    StudentClassroom.create!(
-      user: student,
-      classroom: classroom
     )
   end
 end

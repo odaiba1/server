@@ -3,8 +3,10 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   before_action :set_classroom, only: %i[show edit update destroy]
 
   def index
-    @classrooms = policy_scope(Classroom)
-    render json: @classrooms.to_json
+    def index
+      @classrooms = policy_scope(Classroom)
+      render json: @classrooms.map(&:parse_for_dashboard).to_json
+    end
   end
 
   def show
