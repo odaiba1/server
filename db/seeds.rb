@@ -105,7 +105,7 @@ Classroom.all.each do |classroom|
   current_group_index = 0
   current_student_index = 0
   students = classroom.users
-  until current_student_index == students.size # will place each student in exactly 1 group
+  until current_student_index >= students.size # will place each student in exactly 1 group
     StudentWorkGroup.create!(
       student: students[current_student_index],
       work_group: work_groups[current_group_index],
