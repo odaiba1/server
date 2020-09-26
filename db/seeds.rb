@@ -80,7 +80,7 @@ p 'Finished assigning students to classrooms'
 p 'creating work groups'
 
 Classroom.all.each do |classroom|
-  (1..5).to_a.each do |number|
+  (1..2).to_a.each do |number|
     WorkGroup.create!(
       name: "Group #{number}",
       video_call_code: "group_#{number}",
@@ -112,7 +112,7 @@ Classroom.all.each do |classroom|
       turn: work_groups[current_group_index].users.size.zero?
     )
     current_group_index == work_groups.size - 1 ? current_group_index = 0 : current_group_index += 1
-    current_student += 1
+    current_student_index += 1
   end
 end
 
