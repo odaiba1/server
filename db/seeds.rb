@@ -138,10 +138,10 @@ p "Finished creating #{WorksheetTemplate.count} worksheets"
 p 'assigning worksheets to work groups'
 
 work_groups = WorkGroup.all
-work_groups.each_with_index do |work_group, idx|
-  template = idx == WorkGroup.count - 1 ? WorksheetTemplate.last : WorksheetTemplate.first
+work_groups.each_with_index do |work_group, index|
+  template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
   Worksheet.create!(
-    title: "Worksheet #{idx}",
+    title: "Worksheet #{index}",
     canvas: '',
     worksheet_template: template,
     work_group: work_group,
