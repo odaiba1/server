@@ -43,7 +43,6 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
-<<<<<<< HEAD
 subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
 groups = ['A', 'B', 'C']
 
@@ -59,20 +58,6 @@ subjects.each do |subject|
     )
   end
 end
-=======
-Classroom.create!(
-  user_id: User.where(role: 1).first.id,
-  name: '4B English',
-  start_time: Time.current + 3600,
-  end_time: Time.current + 7200
-)
-Classroom.create!(
-  user_id: User.where(role: 1).last.id,
-  name: '1C Math',
-  start_time: Time.current + 7200,
-  end_time: Time.current + 10800
-)
->>>>>>> master
 
 p "Finished creating #{Classroom.count} classrooms"
 
@@ -96,7 +81,7 @@ p 'creating work groups'
 
 Classroom.all.each do |classroom|
   # dynamically generate a number of groups based on the number of students in the class
-  (1..(classroom.users.count / 4)).to_a.each do |number|
+  (1..(classroom.students.count / 4)).to_a.each do |number|
     WorkGroup.create!(
       name: "Group #{number}",
       video_call_code: "#{classroom.subject}#{classroom.grade}#{classroom.group}#{number}", # each video_call_code is unique
@@ -119,7 +104,7 @@ Classroom.all.each do |classroom|
   work_groups = classroom.work_groups
   current_group_index = 0
   current_student_index = 0
-  students = classroom.users
+  students = classroom.students
   until current_student_index >= students.size # will place each student in exactly 1 group
     StudentWorkGroup.create!(
       student: students[current_student_index],
