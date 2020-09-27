@@ -41,7 +41,8 @@ class Classroom < ApplicationRecord
       group: group,
       teacher: user.name,
       color: get_color,
-      link: '#'
+      link: '#',
+      classTime: class_time   # CamelCase used because this will be primarily used on the frontent
     }
   end
 
