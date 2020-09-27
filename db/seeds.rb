@@ -43,6 +43,7 @@ p "Finished creating #{User.where(role: 0).size} students"
 
 p 'creating classroom'
 
+<<<<<<< HEAD
 subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
 groups = ['A', 'B', 'C']
 
@@ -58,6 +59,20 @@ subjects.each do |subject|
     )
   end
 end
+=======
+Classroom.create!(
+  user_id: User.where(role: 1).first.id,
+  name: '4B English',
+  start_time: Time.current + 3600,
+  end_time: Time.current + 7200
+)
+Classroom.create!(
+  user_id: User.where(role: 1).last.id,
+  name: '1C Math',
+  start_time: Time.current + 7200,
+  end_time: Time.current + 10800
+)
+>>>>>>> master
 
 p "Finished creating #{Classroom.count} classrooms"
 

@@ -113,8 +113,8 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
         put :create, params: {
           classroom: {
             name: 'Test Classroom 1',
-            start_time: Time.now + 1.hour,
-            end_time: Time.now + 2.hours
+            start_time: Time.current + 1.hour,
+            end_time: Time.current + 2.hours
           },
           format: :json
         }
