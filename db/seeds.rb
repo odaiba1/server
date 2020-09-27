@@ -138,15 +138,17 @@ p "Finished creating #{WorksheetTemplate.count} worksheets"
 p 'assigning worksheets to work groups'
 
 work_groups = WorkGroup.all
-work_groups.each_with_index do |work_group, index|
-  template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
-  Worksheet.create!(
-    title: "Worksheet #{index}",
-    canvas: '',
-    worksheet_template: template,
-    work_group: work_group,
-    template_image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
-  )
+Classroom.all.each do |classroom|
+  classroom.work_groups.each_with_index do |work_group, index|
+    template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
+    Worksheet.create!(
+      title: "Worksheet #{index}",
+      canvas: '',
+      worksheet_template: template,
+      work_group: work_group,
+      template_image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
+    )
+  end
 end
 
 p 'Finished assigning worksheets to work groups'
