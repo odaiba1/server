@@ -28,8 +28,8 @@
 
         <h3>Start at</h3>
         <%#= f.input_field :start_at, as: :string, type: :text %>
-        <%= f.date_field :start_at %>
-        <%= f.time_field :start_at, :ignore_date => true %>
+        <%= f.date_field :start_at, class: "start-date"%>
+        <%= f.time_field :start_at, :ignore_date => true, class: "start-time" %>
         <h3>Turn Time</h3>
         <p>Length of turn for single participant in minutes</p>
         <%= f.input_field :turn_time %>

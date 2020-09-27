@@ -18,6 +18,11 @@ require("channels")
 import "../stylesheets/application"
 import flatpickr from "flatpickr";
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     flatpickr('#work_group_start_at_1i');
-//   })
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr(".start-date");
+    flatpickr(".start-time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+    });
+  })
