@@ -18,6 +18,6 @@ require("channels")
 import "../stylesheets/application"
 import flatpickr from "flatpickr";
 
-document.addEventListener('DOMContentLoaded', function() {
-    flatpickr('#work_group_start_at');
-  })
+// document.addEventListener('DOMContentLoaded', function() {
+//     flatpickr('#work_group_start_at_1i');
+//   })
