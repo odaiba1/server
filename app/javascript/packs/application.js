@@ -25,4 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
         noCalendar: true,
         dateFormat: "H:i",
     });
-  })
+  });
+
+const urlField = document.querySelector("#no_model_fields_worksheet_url");
+
+  document.querySelectorAll(".img-container img").forEach(item => {
+    item.addEventListener('click', event => {
+      //handle click
+      urlField.value += item.src;
+    });
+  });
