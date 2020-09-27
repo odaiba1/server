@@ -4,7 +4,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def index
     @classrooms = policy_scope(Classroom)
-    render json: @classrooms.to_json(methods: :class_time)
+    render json: @classrooms.map(&:parse_for_dashboard).to_json
   end
 
   def show
@@ -61,7 +61,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name, :start_time, :end_time)
+    params.require(:classroom).permit(:subject, :grade, :group, :start_time, :end_time)
   end
 
   def render_error

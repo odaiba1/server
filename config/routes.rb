@@ -16,7 +16,7 @@ Rails.application.routes.draw do
           resources :worksheets, except: :destroy, shallow: true
         end
       end
-
+      
       resources :worksheet_templates
     end
   end

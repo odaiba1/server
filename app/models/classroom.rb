@@ -4,8 +4,10 @@
 #
 #  id         :bigint           not null, primary key
 #  end_time   :datetime
-#  name       :string
+#  grade      :integer
+#  group      :string
 #  start_time :datetime
+#  subject    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -27,10 +29,38 @@ class Classroom < ApplicationRecord
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :name, :start_time, :end_time, presence: true
+  validates :subject, :group, :grade, :start_time, :end_time, presence: true
   validate :user_role
   validate :start_time_after_current_time
   validate :end_time_after_start_time
+
+  def parse_for_dashboard
+    {
+      id: id,
+      subject: subject,
+      group: group,
+      teacher: user.name,
+      color: get_color,
+      link: '#',
+      classTime: class_time   # CamelCase used because this will be primarily used on the frontent
+    }
+  end
+
+  def get_color
+    case subject
+    when 'English' then 'blue'
+    when 'Maths' then 'green'
+    when 'Science' then 'yellow'
+    when 'Geography' then 'purple'
+    when 'History' then 'red'
+    else
+      'blue'
+    end
+  end
+
+  def name
+    "Grade #{self.grade} #{self.subject} Class #{self.group}"
+  end
 
   def class_time
     start_time.strftime("%H:%M") + " - " + end_time.strftime("%H:%M")
