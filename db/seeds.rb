@@ -34,7 +34,7 @@ User.create!(name: 'Dzakki', email: 'dzakki@gmail.com', password: 'secret')
 User.create!(name: 'Ann', email: 'ann@gmail.com', password: 'secret')
 User.create!(name: 'Myra', email: 'myra@gmail.com', password: 'secret')
 
-20.times do
+40.times do
   name = Faker::Name.name
   User.create!(name: name, email: name.split.join('') + '@gmail.com', password: 'secret')
 end
@@ -138,9 +138,9 @@ p "Finished creating #{WorksheetTemplate.count} worksheets"
 p 'assigning worksheets to work groups'
 
 work_groups = WorkGroup.all
-Classroom.all.each do |classroom|
+Classroom.all.each_with_index do |classroom, index|
+  template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
   classroom.work_groups.each_with_index do |work_group, index|
-    template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
     Worksheet.create!(
       title: "Worksheet #{index}",
       canvas: '',
