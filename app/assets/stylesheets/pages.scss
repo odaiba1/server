@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 //work_groups/new
+@import "base";
 
 html, body {
     width: 100vw;
@@ -103,7 +104,7 @@ html, body {
         @include for-tablet-portrait-up {
             max-width: 30%;
             margin-right: 1rem;
-        } 
+        }
     }
 }
 #work_group_turn_time {
