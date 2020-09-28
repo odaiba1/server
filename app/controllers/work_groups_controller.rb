@@ -1,19 +1,28 @@
 class WorkGroupsController < ApplicationController
   def new
-    instances_for_new_form
+    @work_group = params[:work_group] ? WorkGroup.new(work_group_params) : WorkGroup.new
+    if params[:no_model_fields]
+      @emails =     custom_params[:emails]
+      @urls =       custom_params[:worksheet_url]
+      @start_time = custom_params[:start_time]
+      @start_date = custom_params[:start_date]
+    end
+    @worksheet_urls = WorksheetTemplate.all.pluck(:image_url).uniq.select do |url|
+      url.include?('res.cloudinary.com/naokimi')
+    end
   end
 
   def create
+    return redirect_with_params('Please input at least 2 email addresses') if custom_params[:emails].split(' ').size < 2
+
     users_and_work_groups = vars_for_mailer
     if users_and_work_groups
       users_and_work_groups[:users].each do |user|
         InvitationMailer.with(user: user, work_group: users_and_work_groups[:work_group]).demo_invite.deliver_later
       end
-      instances_for_new_form
       redirect_to new_work_group_path, notice: 'Invitations sent'
     else
-      instances_for_new_form
-      render :new, notice: errors.messages
+      redirect_with_params(errors.messages)
     end
   end
 
@@ -27,11 +36,8 @@ class WorkGroupsController < ApplicationController
     params.require(:no_model_fields).permit(:emails, :worksheet_url, :start_time, :start_date)
   end
 
-  def instances_for_new_form
-    @work_group = WorkGroup.new
-    @worksheet_urls = WorksheetTemplate.all.pluck(:image_url).uniq.select do |url|
-      url.include?('res.cloudinary.com/naokimi')
-    end
+  def redirect_with_params(message)
+    redirect_to new_work_group_path(work_group: work_group_params, no_model_fields: custom_params), notice: message
   end
 
   def vars_for_mailer
