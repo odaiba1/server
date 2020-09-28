@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
+        defaultHour: new Date().getHours(),
+        defaultMinute: new Date().getMinutes(),
     });
   });
 
