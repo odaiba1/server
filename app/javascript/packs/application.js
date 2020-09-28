@@ -16,3 +16,26 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 import "../stylesheets/application"
+import flatpickr from "flatpickr";
+
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr(".start-date", {
+      minDate: "today",
+      defaultDate: "today",
+    });
+    flatpickr(".start-time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        defaultHour: new Date().getHours(),
+        defaultMinute: new Date().getMinutes(),
+    });
+  });
+
+const urlField = document.querySelector("#no_model_fields_worksheet_url");
+
+  document.querySelectorAll(".img-container img").forEach(item => {
+    item.addEventListener('click', event => {
+      urlField.value += item.src;
+    });
+  });

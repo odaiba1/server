@@ -1,12 +1,46 @@
-<%= simple_form_for @work_group do |f| %>
-  <%= simple_fields_for :no_model_fields do |n| %>
-    <p><%= n.input :emails %> Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
-    <p><%= n.input :worksheet_url %> Paste image url of an online worksheet, or one of the below</p>
-    <% @worksheet_urls.each do |url| %>
-      <li><%= url %></li>
-    <% end %>
-  <% end %>
-  <%= f.input :start_at %>
-  <p><%= f.input :turn_time %> Length of turn for single participant in minutes</p>
-  <%= f.submit %>
-<% end %>
+<div class="header">
+  <div class="logo">
+    <%= image_tag 'odaiba-logo_inverted_icon.png' %>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="form">
+  <div class="grey-header">
+    <h3>Create a New Work Group</h3>
+  </div>
+    <div class="form-text">
+      <%= simple_form_for @work_group do |f| %>
+        <%= simple_fields_for :no_model_fields do |n| %>
+          <h3>Emails</h3>
+          <p>Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
+          <%= n.text_area :emails %>
+
+          <h3>Worksheet URL</h3>
+          <p>Paste image url of an online worksheet, or click of one of the options below</p>
+          <%= n.input_field :worksheet_url %>
+          <div class="img-container">
+            <% @worksheet_urls.each do |url| %>
+              <li>
+                <%= image_tag(url, class: "worksheet-img", style: 'max-width:300px;') %>
+              </li>
+            <% end %>
+          </div>
+        <% end %>
+
+        <h3>Start at</h3>
+          <div class="start-fields">
+            <%= simple_fields_for :no_model_fields do |n| %>
+              <%= n.date_field :start_date, class: "start-date"%>
+              <%= n.time_field :start_time, class: "start-time", placeholder: "12:00" %>
+            <% end %>
+          </div>
+        <h3>Turn Time</h3>
+        <p>Length of turn for single participant in minutes</p>
+        <%= f.input_field :turn_time %>
+        <div class="submit-container">
+          <%= f.submit "Create Work Group", id: "form-submit"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

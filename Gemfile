@@ -64,6 +64,7 @@ gem 'simple_form'
 gem 'sitemap_generator'
 gem 'uglifier'
 gem 'whenever', require: false
+gem 'flatpickr'
 
 group :development, :test do
   gem 'annotate'
