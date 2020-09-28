@@ -21,16 +21,6 @@
           <div class="img-container">
             <% @worksheet_urls.each do |url| %>
               <li>
-                <div class="icons">
-                    <div>
-                      <i class="fas fa-search-plus"></i>
-                    </div>
-                    <div> 
-                      <label class="label-big-check">
-	                      <input type="checkbox" value="1" name="option_1" id="option_1">
-                      </label>             
-                    </div>
-                </div>
                 <%= image_tag(url, class: "worksheet-img", style: 'max-width:300px;') %>
               </li>
             <% end %>

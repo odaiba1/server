@@ -19,7 +19,10 @@ import "../stylesheets/application"
 import flatpickr from "flatpickr";
 
 document.addEventListener('DOMContentLoaded', function() {
-    flatpickr(".start-date");
+    flatpickr(".start-date", {
+      minDate: "today",
+      defaultDate: "today",
+    });
     flatpickr(".start-time", {
         enableTime: true,
         noCalendar: true,
