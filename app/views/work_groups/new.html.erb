@@ -13,10 +13,10 @@
         <%= simple_fields_for :no_model_fields do |n| %>
           <h3>Emails</h3>
           <p>Please write emails of session participants. Please separate by a single empty space. After submitting all participants will receive an email with url and password</p>
-          <%= n.input_field :emails %> 
-          
+          <%= n.input_field :emails %>
+
           <h3>Worksheet URL</h3>
-          <p>Paste image url of an online worksheet, or one of the below</p>
+          <p>Paste image url of an online worksheet, or click of one of the options below</p>
           <%= n.input_field :worksheet_url %>
           <div class="img-container">
             <% @worksheet_urls.each do |url| %>
@@ -27,8 +27,10 @@
 
         <h3>Start at</h3>
           <div class="start-fields">
-            <%= f.date_field :start_at, class: "start-date"%>
-            <%= f.time_field :start_at, :ignore_date => true, class: "start-time" %>
+            <%= simple_fields_for :no_model_fields do |n| %>
+              <%= n.date_field :start_date, class: "start-date"%>
+              <%= n.time_field :start_time, class: "start-time" %>
+            <% end %>
           </div>
         <h3>Turn Time</h3>
         <p>Length of turn for single participant in minutes</p>

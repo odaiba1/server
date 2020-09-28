@@ -20,11 +20,11 @@ class WorkGroupsController < ApplicationController
   private
 
   def work_group_params
-    params.require(:work_group).permit(:turn_time, :start_at)
+    params.require(:work_group).permit(:turn_time)
   end
 
   def custom_params
-    params.require(:no_model_fields).permit(:emails, :worksheet_url)
+    params.require(:no_model_fields).permit(:emails, :worksheet_url, :start_time, :start_date)
   end
 
   def instances_for_new_form
@@ -35,6 +35,7 @@ class WorkGroupsController < ApplicationController
   end
 
   def vars_for_mailer
+<<<<<<< HEAD
     start_time = Time.new(
       work_group_params['start_at(1i)'],
       work_group_params['start_at(2i)'],
@@ -42,6 +43,9 @@ class WorkGroupsController < ApplicationController
       work_group_params['start_at(4i)'],
       work_group_params['start_at(5i)']
     )
+=======
+    start_time = (custom_params[:start_date] + ' ' + custom_params[:start_time]).to_datetime.in_time_zone
+>>>>>>> b14bca09f197f9015169751b8bab45d738ed5843
 
     WorkGroupDemoPrepper.new(
       custom_params[:emails],
