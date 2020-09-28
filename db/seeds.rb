@@ -139,7 +139,7 @@ p 'assigning worksheets to work groups'
 
 work_groups = WorkGroup.all
 Classroom.all.each_with_index do |classroom, index|
-  template = outer_index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
+  template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
   classroom.work_groups.each do |work_group|
     Worksheet.create!(
       title: "Worksheet #{index}",
