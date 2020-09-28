@@ -74,9 +74,9 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
   describe '#update' do
     context 'success' do
       it 'changes selected classroom' do
-        patch :update, params: { id: classroom1.id, classroom: { name: 'New Test Classroom' }, format: :json }
+        patch :update, params: { id: classroom1.id, classroom: { subject: 'English', group: 'B', grade: 1 }, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to include('New Test')
+        expect(response.body).to include('English')
       end
     end
 
@@ -92,13 +92,14 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       end
 
       it 'raises an error with missing data' do
-        patch :update, params: { id: classroom1.id, classroom: { name: nil }, format: :json }
+        patch :update, params: { id: classroom1.id, classroom: { subject: nil }, format: :json }
         expect(response).to have_http_status(422)
         expect(response.body).to include('error')
       end
     end
   end
 
+  # note: this test will fail if not logged in as a teacher
   describe '#new' do
     it 'returns blank classroom' do
       get :new, format: :json
@@ -112,14 +113,16 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'saves a new classroom' do
         put :create, params: {
           classroom: {
-            name: 'Test Classroom 1',
-            start_time: Time.now + 1.hour,
-            end_time: Time.now + 2.hours
+            subject: 'English',
+            grade: 1,
+            group: 'A',
+            start_time: Time.current + 1.hour,
+            end_time: Time.current + 2.hours
           },
           format: :json
         }
         expect(response).to have_http_status(200)
-        expect(Classroom.find_by_name('Test Classroom 1')).to be_instance_of(Classroom)
+        expect(Classroom.find_by(subject: 'English', grade: 1, group: 'A')).to be_instance_of(Classroom)
       end
     end
 

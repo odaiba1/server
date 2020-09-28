@@ -36,7 +36,7 @@ WorkGroup.create!(
   session_time: turn_time * 60_000 * users.size,
   turn_time: turn_time * 60_000,
   aasm_state: 'in_progress',
-  start_at: Time.now + start_at.minutes
+  start_at: Time.current + start_at.minutes
 )
 
 users.each_with_index do |user, idx|
