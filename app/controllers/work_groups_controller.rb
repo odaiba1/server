@@ -42,6 +42,7 @@ class WorkGroupsController < ApplicationController
 
   def vars_for_mailer
     start_time = (custom_params[:start_date] + ' ' + custom_params[:start_time]).to_datetime.in_time_zone
+    start_time -= 9.hours if Rails.env == 'production' # heroku just keeps adding 9 hours, dont now why
 
     WorkGroupDemoPrepper.new(
       custom_params[:emails],
