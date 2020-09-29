@@ -11,7 +11,7 @@ SitemapGenerator::Sitemap.create do
   #        (default options are used if you don't specify)
   #
   # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.current, :host => default_host
+  #           :lastmod => Time.now, :host => default_host
   #
   # Examples:
   #

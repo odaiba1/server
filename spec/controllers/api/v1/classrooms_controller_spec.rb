@@ -116,8 +116,8 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
             subject: 'English',
             grade: 1,
             group: 'A',
-            start_time: Time.current + 1.hour,
-            end_time: Time.current + 2.hours
+            start_time: Time.now + 1.hour,
+            end_time: Time.now + 2.hours
           },
           format: :json
         }

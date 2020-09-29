@@ -75,7 +75,7 @@ class Classroom < ApplicationRecord
   def start_time_after_current_time
     return if start_time.nil?
 
-    errors.add(:start_time, 'must not be in the past') if Time.current >= start_time
+    errors.add(:start_time, 'must not be in the past') if Time.now >= start_time
   end
 
   def end_time_after_start_time
