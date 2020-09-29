@@ -44,6 +44,6 @@ module Odaiba
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.time_zone = 'Japan'
+    config.time_zone = Rails.env == 'production' ? 'UTC' : 'Japan'
   end
 end
