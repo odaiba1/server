@@ -5,7 +5,7 @@ FactoryBot.define do
     session_time    { 1_200_000 }
     turn_time       { 300_000 }
     aasm_state      { 'in_progress' }
-    start_at        { DateTime.current + 1.hour }
+    start_at        { DateTime.now + 1.hour }
     classroom       { create(:classroom) }
   end
 end
