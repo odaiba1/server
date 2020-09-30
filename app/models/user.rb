@@ -44,4 +44,11 @@ class User < ApplicationRecord
   def teachers
     User.joins(:classrooms).where(classrooms: attending_classrooms)
   end
+
+  def active_student_workgroups
+    return unless role == 'student'
+
+    # in the future we should do work_groups.where(aasm_state: 'in_progress')
+    work_groups.where("start_at > :time AND start_at - INTERVAL '1 millisecond' * session_time < :time", time: Time.now)
+  end
 end
