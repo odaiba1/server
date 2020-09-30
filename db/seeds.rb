@@ -47,9 +47,10 @@ subjects = ['English', 'Maths', 'Science', 'Geography', 'History']
 groups = ['A', 'B', 'C']
 
 subjects.each do |subject|
-  groups.each do |group|
+  groups.each_with_index do |group, idx|
+    user_id = idx.zero? ? User.first.id : User.where(role: 1)[(rand(User.where(role: 1).length))].id
     Classroom.create!(
-      user_id: User.where(role: 1)[(rand(User.where(role: 1).length))].id,
+      user_id: user_id,
       subject: subject,
       grade: 5,
       group: group,
@@ -123,15 +124,17 @@ p 'Finished assigning students to work groups'
 p 'creatin worksheet templates'
 
 WorksheetTemplate.create!(
-  title: 'Template 1',
+  title: 'Base Template',
   user: User.first,
-  image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
+  image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1599052572/2ae04a8f96087c49dc2c06164f3efbc6_gaajwm.jpg'
 )
-WorksheetTemplate.create!(
-  title: 'Template 2',
-  user: User.second,
-  image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
-)
+User.where(role: 'teacher').each_with_index do |user, idx|
+  WorksheetTemplate.create!(
+    title: "Template #{idx}",
+    user: user,
+    image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1599471022/zzsrgajrf5tshbhpxjtc.jpg'
+  )
+end
 
 p "Finished creating #{WorksheetTemplate.count} worksheets"
 
@@ -139,14 +142,14 @@ p 'assigning worksheets to work groups'
 
 work_groups = WorkGroup.all
 Classroom.all.each_with_index do |classroom, index|
-  template = index % 2 == 0 ? WorksheetTemplate.last : WorksheetTemplate.first
+  template = WorksheetTemplate.where(user_id: classroom.teacher.id).first
   classroom.work_groups.each do |work_group|
     Worksheet.create!(
       title: "Worksheet #{index}",
       canvas: '',
       worksheet_template: template,
       work_group: work_group,
-      template_image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'
+      template_image_url: template.image_url
     )
   end
 end
