@@ -46,6 +46,10 @@ html, body {
             cursor: pointer;
         }
     }
+
+    img:focus {
+        outline: 2px solid blue;
+    }
 }
 
 .img-container {
@@ -107,6 +111,7 @@ html, body {
         }
     }
 }
+
 #work_group_turn_time {
     max-width: 30%;
 }
