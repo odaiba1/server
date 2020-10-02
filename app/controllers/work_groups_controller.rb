@@ -7,7 +7,7 @@ class WorkGroupsController < ApplicationController
       @start_time = custom_params[:start_time]
       @start_date = custom_params[:start_date]
     end
-    @worksheet_urls = WorksheetTemplate.all.pluck(:image_url).uniq.select do |url|
+    @worksheet_urls = WorksheetTemplate.where(user_id: 1).pluck(:image_url).select do |url|
       url.include?('res.cloudinary.com/naokimi')
     end
   end
