@@ -77,5 +77,4 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'rspec-rails', '~> 4.0.1'
 end
