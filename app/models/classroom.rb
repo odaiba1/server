@@ -40,13 +40,13 @@ class Classroom < ApplicationRecord
       subject: subject,
       group: group,
       teacher: user.name,
-      color: get_color,
+      color: subject_color,
       link: '#',
-      classTime: class_time   # CamelCase used because this will be primarily used on the frontent
+      classTime: class_time # CamelCase used because this will be primarily used on the frontent
     }
   end
 
-  def get_color
+  def subject_color
     case subject
     when 'English' then 'blue'
     when 'Maths' then 'green'
@@ -59,11 +59,11 @@ class Classroom < ApplicationRecord
   end
 
   def name
-    "Grade #{self.grade} #{self.subject} Class #{self.group}"
+    "Grade #{grade} #{subject} Class #{group}"
   end
 
   def class_time
-    start_time.strftime("%H:%M") + " - " + end_time.strftime("%H:%M")
+    start_time.strftime('%H:%M') + ' - ' + end_time.strftime('%H:%M')
   end
 
   private

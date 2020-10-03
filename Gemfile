@@ -55,6 +55,7 @@ gem 'database_cleaner-active_record'
 gem 'deep_pluck'
 gem 'factory_bot'
 gem 'faker'
+gem 'flatpickr'
 gem 'font-awesome-sass', '~> 5.12.0'
 gem 'friendly_id', '~> 5.3'
 gem 'mini_magick'
@@ -64,7 +65,6 @@ gem 'simple_form'
 gem 'sitemap_generator'
 gem 'uglifier'
 gem 'whenever', require: false
-gem 'flatpickr'
 
 group :development, :test do
   gem 'annotate'
