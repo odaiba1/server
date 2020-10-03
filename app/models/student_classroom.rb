@@ -23,7 +23,7 @@ class StudentClassroom < ApplicationRecord
 
   belongs_to :user
   belongs_to :classroom
-
+  # this comment is to trick git
   validates :user, uniqueness: { scope: :classroom,
     message: "should not add the same student to the classroom multiple times" }
   validate :user_role
