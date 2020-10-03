@@ -3,6 +3,11 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   before_action :set_and_authorize_work_group, only: %i[new create index]
   before_action :set_and_authorize_worksheet, only: %i[show edit update]
 
+  def all
+    @worksheets = policy_scope(Worksheet)
+    render json: @worksheets.to_json
+  end
+
   def index
     @worksheets = policy_scope(Worksheet)
     render json: @worksheets.to_json
