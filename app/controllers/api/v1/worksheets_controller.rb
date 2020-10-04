@@ -5,7 +5,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
 
   def all
     @worksheets = policy_scope(Worksheet)
-    render json: @worksheets.to_json
+    render json: @worksheets.map(&:parse_for_dashboard).to_json
   end
 
   def index

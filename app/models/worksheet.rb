@@ -35,7 +35,7 @@ class Worksheet < ApplicationRecord
       title: title,
       subject: work_group.classroom.subject,
       color: get_color,
-      dueDate: "#{Date.now + 7}" # TODO add due_date to worksheet model, update seed
+      dueDate: Time.now.strftime("%d/%m/%Y") # TODO add due_date to worksheet model, update seed
       link: '#'
     }
   end
