@@ -40,6 +40,7 @@ class Worksheet < ApplicationRecord
     }
   end
 
+  # TODO: move the two get_color methods to separate file to DRY this up (other is in classroom.rb)
   def get_color
     case work_group.classroom.subject
     when 'English' then 'blue'
