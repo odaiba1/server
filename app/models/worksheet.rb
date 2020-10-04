@@ -35,13 +35,13 @@ class Worksheet < ApplicationRecord
       title: title,
       subject: work_group.classroom.subject,
       color: get_color,
-      dueDate: Time.now.strftime("%d/%m/%Y"), # TODO add due_date to worksheet model, update seed
+      dueDate: Time.now.strftime('%d/%m/%Y'), # TODO: add due_date to worksheet model, update seed
       link: '#'
     }
   end
 
   # TODO: move the two get_color methods to separate file to DRY this up (other is in classroom.rb)
-  def get_color
+  def subject_color
     case work_group.classroom.subject
     when 'English' then 'blue'
     when 'Maths' then 'green'
