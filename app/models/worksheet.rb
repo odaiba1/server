@@ -32,10 +32,10 @@ class Worksheet < ApplicationRecord
   def parse_for_dashboard
     {
       id: id,
-      title: subject,
+      title: title,
       subject: work_group.classroom.subject,
       color: get_color,
-      due_date: "#{Date.now + 7}"
+      due_date: "#{Date.now + 7}" # TODO add due_date to worksheet model
       link: '#'
     }
   end
