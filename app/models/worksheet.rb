@@ -28,4 +28,27 @@ class Worksheet < ApplicationRecord
 
   validates :title, :template_image_url, presence: true
   validates :canvas, length: { minimum: 0, allow_nil: false, message: "can't be nil" }
+
+  def parse_for_dashboard
+    {
+      id: id,
+      title: subject,
+      subject: work_group.classroom.subject,
+      color: get_color,
+      due_date: "#{Date.now + 7}"
+      link: '#'
+    }
+  end
+
+  def get_color
+    case work_group.classroom.subject
+    when 'English' then 'blue'
+    when 'Maths' then 'green'
+    when 'Science' then 'yellow'
+    when 'Geography' then 'purple'
+    when 'History' then 'red'
+    else
+      'blue'
+    end
+  end
 end
