@@ -46,12 +46,7 @@ class Classroom < ApplicationRecord
     }
   end
 
-<<<<<<< HEAD
-  # TODO: move the two get_color methods to separate file to DRY this up (other is in worksheet)
-  def get_color
-=======
   def subject_color
->>>>>>> master
     case subject
     when 'English' then 'blue'
     when 'Maths' then 'green'
