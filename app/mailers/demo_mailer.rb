@@ -11,6 +11,10 @@ class DemoMailer < ApplicationMailer
   end
 
   def send_worksheets
-
+    users = params[:users]
+    image_url = params[:image_url]
+    teacher = params[:teacher]
+    # iterate users, grab email, send it to 'to'
+    mail(to: users, subject: 'Hello World')
   end
 end
