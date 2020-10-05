@@ -1,5 +1,5 @@
-class InvitationMailer < ApplicationMailer
-  def demo_invite
+class DemoMailer < ApplicationMailer
+  def invite
     attachments.inline["odaiba-logo_inverted_icon.png"] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
     @user = params[:user]
     work_group = params[:work_group]
@@ -8,5 +8,9 @@ class InvitationMailer < ApplicationMailer
     return unless @user.update(password: @one_time_password)
 
     mail(to: @user.email, subject: 'You have been invited to an Odaiba demo session')
+  end
+
+  def send_worksheets
+
   end
 end
