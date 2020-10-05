@@ -21,6 +21,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: image_url })
     if @worksheet.update(prepped_params)
       # send email with final worksheet to all participants
+      DemoMailer.with(users: users, image_url: image_url, teacher: teacher).send_worksheets.deliver_later
       # need image_url
       # need participant's emails
       # need teacher's email (need to change teacher's email in seeds)
