@@ -12,10 +12,6 @@ class WorksheetPolicy < ApplicationPolicy
     %w[admin teacher].include?(@user.role)
   end
 
-  def destroy?
-    @user.role == 'admin'
-  end
-
   alias show? index?
   alias new? create?
   alias edit? index?
