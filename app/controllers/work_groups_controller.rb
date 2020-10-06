@@ -7,7 +7,7 @@ class WorkGroupsController < ApplicationController
       @start_time = custom_params[:start_time]
       @start_date = custom_params[:start_date]
     end
-    @worksheet_urls = WorksheetTemplate.all.pluck(:image_url).uniq.select do |url|
+    @worksheet_urls = WorksheetTemplate.where(user_id: 1).pluck(:image_url).select do |url|
       url.include?('res.cloudinary.com/naokimi')
     end
   end
@@ -15,14 +15,14 @@ class WorkGroupsController < ApplicationController
   def create
     return redirect_with_params('Please input at least 2 email addresses') if custom_params[:emails].split(' ').size < 2
 
-    users_and_work_groups = vars_for_mailer
-    if users_and_work_groups
+    begin
+      users_and_work_groups = vars_for_mailer
       users_and_work_groups[:users].each do |user|
         InvitationMailer.with(user: user, work_group: users_and_work_groups[:work_group]).demo_invite.deliver_later
       end
       redirect_to new_work_group_path, notice: 'Invitations sent'
-    else
-      redirect_with_params(errors.messages)
+    rescue StandardError => e
+      redirect_with_params(e.message)
     end
   end
 

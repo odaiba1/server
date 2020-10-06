@@ -36,7 +36,7 @@ User.create!(name: 'Myra', email: 'myra@gmail.com', password: 'secret')
 
 40.times do
   name = Faker::Name.name
-  User.create!(name: name, email: name.split.join('') + '@gmail.com', password: 'secret')
+  User.create!(name: name, email: name.split.join('').downcase + '@gmail.com', password: 'secret')
 end
 
 p "Finished creating #{User.where(role: 0).size} students"
@@ -66,13 +66,14 @@ p 'assigning students to classrooms'
 
 students = User.where(role: 0)
 
-students.each do |student|
+students.each_with_index do |student, idx|
   subjects.each do |subject|
     count = Classroom.where(subject: subject).count
+    classroom = (0..3).include?(idx) ? Classroom.first : Classroom.where(subject: subject)[rand(count)]
     StudentClassroom.create!(
       user: student,
-      classroom: Classroom.where(subject: subject)[rand(count)]
-    )
+      classroom: classroom
+    ) unless StudentClassroom.find_by(user: student, classroom: classroom)
   end
 end
 

@@ -8,8 +8,8 @@ class WorkGroupDemoPrepper
 
   def call
     find_or_create_users
-    create_work_groups
-    assign_students_to_work_groups
+    create_work_group
+    assign_students_to_work_group
     create_worksheet
     variables_for_mailer
   end
@@ -36,7 +36,7 @@ class WorkGroupDemoPrepper
     end
   end
 
-  def create_work_groups
+  def create_work_group
     @work_group = WorkGroup.create!(
       name: @users.pluck(:name).join('-'),
       video_call_code: 'abc',
@@ -48,7 +48,7 @@ class WorkGroupDemoPrepper
     )
   end
 
-  def assign_students_to_work_groups
+  def assign_students_to_work_group
     @users.each_with_index do |user, idx|
       StudentWorkGroup.create!(
         student: user,
@@ -62,7 +62,9 @@ class WorkGroupDemoPrepper
   def create_worksheet
     image_url = CloudinaryUploader.new(@worksheet_url, nil).call
 
-    worksheet_template = WorksheetTemplate.create!(
+    worksheet_template = WorksheetTemplate.find_by(image_url: image_url, user: User.first)
+
+    worksheet_template ||= WorksheetTemplate.create!(
       title: 'Demo Template',
       user: User.first,
       image_url: image_url
