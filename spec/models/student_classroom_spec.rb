@@ -52,5 +52,11 @@ RSpec.describe StudentClassroom, type: :model do
       subject.user = create(:teacher)
       expect(subject).not_to be_valid
     end
+
+    it 'when student-classroom pairing already exists' do
+      single_assignment = described_class.create(classroom: classroom, user: student)
+      double_assignment = described_class.new(classroom: classroom, user: student)
+      expect(double_assignment).not_to be_valid
+    end
   end
 end
