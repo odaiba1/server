@@ -55,6 +55,15 @@ html, body {
     }
 }
 
+.disclaimer {
+    color: #856404;
+    font-size: .8rem;
+    background-color: #fff3cd;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    border-radius: 6px;
+}
+
 .form {
     border-radius: 12px;
     background-color: white;
@@ -107,6 +116,7 @@ html, body {
         }
     }
 }
+
 #work_group_turn_time {
     max-width: 30%;
 }
