@@ -18,7 +18,7 @@ class WorkGroupsController < ApplicationController
     begin
       users_and_work_groups = vars_for_mailer
       users_and_work_groups[:users].each do |user|
-        InvitationMailer.with(user: user, work_group: users_and_work_groups[:work_group]).demo_invite.deliver_later
+        DemoMailer.with(user: user, work_group: users_and_work_groups[:work_group]).invite.deliver_later
       end
       redirect_to new_work_group_path, notice: 'Invitations sent'
     rescue StandardError => e
