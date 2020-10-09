@@ -34,7 +34,7 @@ class Worksheet < ApplicationRecord
       id: id,
       title: title,
       subject: work_group.classroom.subject,
-      color: get_color,
+      color: subject_color,
       dueDate: Time.now.strftime('%d/%m/%Y'), # TODO: add due_date to worksheet model, update seed
       link: '#'
     }
