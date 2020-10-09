@@ -3,7 +3,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   before_action :set_and_authorize_work_group, only: %i[new create index]
   before_action :set_and_authorize_worksheet, only: %i[show edit update]
 
-  def all
+  def dashboard_index
     @worksheets = policy_scope(Worksheet)
     render json: @worksheets.map(&:parse_for_dashboard).to_json
   end
@@ -25,6 +25,11 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     image_url = remote_image_url
     prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: image_url })
     if @worksheet.update(prepped_params)
+      students = @worksheet.work_group.students.pluck(:email)
+      student_group = @worksheet.work_group
+      DemoMailer.with(students: students, student_group: student_group, image_url: image_url).send_worksheets.deliver_later
+      # teacher = @worksheet.worksheet_template.user.email
+      # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
       render json: @worksheet.to_json
     else
       render_error

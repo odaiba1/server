@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe InvitationMailer, type: :mailer do
+RSpec.describe DemoMailer, type: :mailer do
   context 'demo mailer' do
     let(:student_work_group) { create(:student_work_group) }
     let(:user)               { student_work_group.student }
     let(:work_group)         { student_work_group.work_group }
     subject do
-      InvitationMailer.with(
+      DemoMailer.with(
         user: user,
         work_group: work_group
-      ).demo_invite
+      ).invite
     end
 
     it 'renders the subject' do
