@@ -22,7 +22,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     if @worksheet.update(prepped_params)
       students = @worksheet.work_group.students.pluck(:email)
       student_group = @worksheet.work_group
-      DemoMailer.with(students: students, student_group:student_group, image_url: image_url).send_worksheets.deliver_later
+      DemoMailer.with(students: students, student_group: student_group, image_url: image_url).send_worksheets.deliver_later
       # teacher = @worksheet.worksheet_template.user.email
       # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
       render json: @worksheet.to_json
