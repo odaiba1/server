@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div class="image">
+        <%= image_tag(attachments['odaiba-logo.png'].url, height:'48px') %>
+      </div>
+    </div>
+    <div class="card-text">
+      <p>Hello student in <%= @student_group.name %> for <%= @student_group.classroom.name %>,</p>
+      <p>
+        Congratulations in completing the session. Your submission for your worksheet has been successfully uploaded. You can access the submission here: <%= @image_url %> 
+      </p>
+      <br/>
+      <p>Sincerely,</p>
+      <p>The odaiba team</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>
+      Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
+      Or contact us at <a class="link" href="mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
+    </p>
+  </div>
+</div>
