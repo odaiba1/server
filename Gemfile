@@ -50,6 +50,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'autoprefixer-rails'
+gem 'bitly'
 gem 'cloudinary', '~> 1.12.0'
 gem 'database_cleaner-active_record'
 gem 'deep_pluck'
