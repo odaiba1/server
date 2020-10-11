@@ -12,6 +12,7 @@ class DemoMailer < ApplicationMailer
   end
 
   def send_worksheets
+    attachments.inline['odaiba-logo.png'] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
     students_email = params[:students]
     @student_group = params[:student_group]
     @image_url = params[:image_url]
