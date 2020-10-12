@@ -59,22 +59,11 @@ class WorkGroupsController < ApplicationController
   end
 
   def custom_links
-    env = Rails.env == 'production' ? 'https://odaiba-app.netlify.app' : 'http://localhost:3000'
     work_group = @users_and_work_groups[:work_group]
-    base_url = "#{env}/classrooms/#{work_group.classroom_id}/work_groups/#{work_group.id}"
 
     @users_and_work_groups[:users].map do |user|
-      one_time_password = rand(36**10).to_s(36)
-      user.update(password: one_time_password)
-      long_url = "#{base_url}?email=#{user.email}&password=#{one_time_password}"
-      short_url = Rails.env == 'production' ? shorten_long_url(long_url) : long_url
+      short_url = work_group.minified_url(user)
       "Link #{short_url} for user #{user.email}"
     end
-  end
-
-  def shorten_long_link(url)
-    client = Bitly::API::Client.new(token: ENV['BITLY_TOKEN'])
-    bitlink = client.shorten(long_url: url)
-    bitlink.link
   end
 end
