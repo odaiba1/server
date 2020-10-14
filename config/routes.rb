@@ -14,9 +14,10 @@ Rails.application.routes.draw do
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
           resources :worksheets, except: :destroy, shallow: true
+          resources :messages, only: :create
         end
       end
-      
+
       resources :worksheet_templates
     end
   end
