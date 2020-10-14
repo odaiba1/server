@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_024158) do
+ActiveRecord::Schema.define(version: 2020_10_14_055834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,14 +51,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_024158) do
   create_table "images", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.string "content"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "student_classrooms", force: :cascade do |t|
@@ -112,6 +104,14 @@ ActiveRecord::Schema.define(version: 2020_10_14_024158) do
     t.index ["classroom_id"], name: "index_work_groups_on_classroom_id"
   end
 
+  create_table "worksheet_reviews", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_worksheet_reviews_on_user_id"
+  end
+
   create_table "worksheet_templates", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
@@ -136,12 +136,12 @@ ActiveRecord::Schema.define(version: 2020_10_14_024158) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "classrooms", "users"
-  add_foreign_key "messages", "users"
   add_foreign_key "student_classrooms", "classrooms"
   add_foreign_key "student_classrooms", "users"
   add_foreign_key "student_work_groups", "users"
   add_foreign_key "student_work_groups", "work_groups"
   add_foreign_key "work_groups", "classrooms"
+  add_foreign_key "worksheet_reviews", "users"
   add_foreign_key "worksheet_templates", "users"
   add_foreign_key "worksheets", "work_groups"
   add_foreign_key "worksheets", "worksheet_templates"
