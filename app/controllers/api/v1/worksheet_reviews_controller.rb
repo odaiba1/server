@@ -3,6 +3,7 @@ class Api::V1::WorksheetReviewsController < Api::V1::BaseController
 
   def create
     @worksheet_review = WorksheetReview.new(message_params)
+    @worksheet_review.worksheet = params[:worksheet_id]
     authorize @worksheet_review
     if @worksheet_review.save
       render json: @worksheet_review

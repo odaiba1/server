@@ -13,8 +13,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
-          resources :worksheets, except: :destroy, shallow: true
-          resources :messages, only: :create
+          resources :worksheets, except: :destroy, shallow: true do
+            resources :worksheet_reviews, only: :create
+          end
         end
       end
 
