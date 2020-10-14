@@ -23,5 +23,7 @@ class WorksheetReview < ApplicationRecord
   belongs_to :user
   belongs_to :worksheet
 
+  scope :teacher, ->() {self.worksheet.work_group.classroom.user}
+
   validates :content, :user, :worksheet, presence: true
 end
