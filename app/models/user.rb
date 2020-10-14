@@ -37,6 +37,7 @@ class User < ApplicationRecord
   has_many :classrooms
   has_many :student_classrooms
   has_many :attending_classrooms, through: :student_classrooms, source: :classroom
+  has_many :messages, dependent: :destroy
 
   def students
     User.joins(:student_classrooms).where(student_classrooms: { classroom_id: classrooms })
