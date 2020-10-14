@@ -26,7 +26,8 @@ class StudentClassroom < ApplicationRecord
 
   validates :user, uniqueness: {
     scope: :classroom,
-    message: 'should not add the same student to the classroom multiple times' }
+    message: 'should not add the same student to the classroom multiple times'
+  }
   validate :user_role
 
   private
