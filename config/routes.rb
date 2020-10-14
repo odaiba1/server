@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :classrooms, only: %i[new create]
   resources :work_groups, only: %i[new create]
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
@@ -16,7 +17,7 @@ Rails.application.routes.draw do
           resources :worksheets, except: :destroy, shallow: true
         end
       end
-      
+
       resources :worksheet_templates
     end
   end
