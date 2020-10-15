@@ -96,4 +96,26 @@ RSpec.describe Api::V1::WorksheetReviewsController, type: :controller do
       end
     end
   end
+
+  describe '#destroy' do
+    context 'success' do
+      it 'deletes selected worksheet review' do
+        delete :destroy, params: { id: worksheet_review.id, format: :json }
+        expect(response).to have_http_status(200)
+        expect(WorksheetReview.all).not_to include(worksheet_review)
+      end
+    end
+
+    context 'failure' do
+      it 'restricts worksheet review belonging to another teacher' do
+        delete :destroy, params: { id: worksheet_review2.id, format: :json }
+        expect(response).to have_http_status(403)
+      end
+
+      it 'returns 404 for missing worksheet_review' do
+        delete :destroy, params: { id: 999, format: :json }
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
 end
