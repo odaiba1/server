@@ -1,7 +1,7 @@
 class Api::V1::WorkGroupsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User
   before_action :set_and_authorize_classroom, only: %i[new create index]
-  before_action :set_and_authorize_work_group, only: %i[show edit update destroy]
+  before_action :set_and_authorize_work_group, only: %i[show edit update initiate conclude cancel destroy]
 
   def index
     @work_groups = policy_scope(WorkGroup)
@@ -25,6 +25,25 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     else
       render_error
     end
+  end
+
+  def initiate
+    return unless @work_group.created?
+
+    @work_group.initiate!
+    render json: @work_group
+  end
+
+  def conclude
+    return unless @work_group.in_progress?
+
+    @work_group.conclude!
+    render json: @work_group
+  end
+
+  def cancel
+    @work_group.cancel!
+    render json: @work_group
   end
 
   def new
