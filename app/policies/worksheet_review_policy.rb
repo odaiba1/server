@@ -4,11 +4,6 @@ class WorksheetReviewPolicy < ApplicationPolicy
     @record.teacher == @user || @user.role == 'admin'
   end
 
-  def update?
-    @record.teacher == @user || @user.role == 'admin'
-  end
-
-  def destroy?
-    @record.teacher == @user || @user.role == 'admin'
-  end
+  alias update? create?
+  alias destroy? create?
 end
