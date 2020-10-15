@@ -24,12 +24,14 @@ class Classroom < ApplicationRecord
   alias_attribute :students, :users
   alias_attribute :teacher, :user
 
+  # OPTIMIZE: add AASM state?
+
   belongs_to :user
   has_many :work_groups, dependent: :destroy
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :subject, :group, :grade, :start_time, :end_time, presence: true
+  validates :subject, :group, :grade, presence: true
   validate :user_role
   validate :start_time_after_current_time
   validate :end_time_after_start_time
