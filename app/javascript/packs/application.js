@@ -36,6 +36,6 @@ const urlField = document.querySelector("#no_model_fields_worksheet_url");
 
   document.querySelectorAll(".img-container img").forEach(item => {
     item.addEventListener('click', event => {
-      urlField.value += item.src;
+      urlField.value = item.src;
     });
   });

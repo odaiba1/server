@@ -4,6 +4,7 @@ AllCops:
     - 'config/**/*'
     - 'db/**/*'
     - 'lib/**/*'
+    - 'node_modules/**/*'
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/Documentation:

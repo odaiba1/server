@@ -40,11 +40,11 @@ ActiveRecord::Schema.define(version: 2020_10_14_060724) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string "subject"
     t.string "group"
     t.integer "grade"
-    t.datetime "start_time"
-    t.datetime "end_time"
     t.index ["user_id"], name: "index_classrooms_on_user_id"
   end
 
