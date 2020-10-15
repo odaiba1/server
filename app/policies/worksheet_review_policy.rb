@@ -1,7 +1,7 @@
 class WorksheetReviewPolicy < ApplicationPolicy
 
   def create?
-    record.teacher == @user
+    @record.teacher == @user || @user.role == 'admin'
   end
 
   # class Scope < Scope
