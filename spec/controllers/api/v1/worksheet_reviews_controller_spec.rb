@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::WorksheetReviewsController, type: :controller do
-  let(:teacher)             { create(:teacher) }
+  let(:teacher)              { create(:teacher) }
   let(:teacher2)             { create(:teacher) }
-  let(:student)             { create(:student) }
+  let(:student)              { create(:student) }
 
-  let(:classroom)   { create(:classroom, user: teacher) }
-  let(:classroom2)   { create(:classroom, user: teacher2) }
-  let(:work_group) { create(:work_group, classroom: classroom) }
-  let(:work_group2) { create(:work_group, classroom: classroom2) }
-  let(:worksheet_template)  { create(:worksheet_template, user: teacher) }
+  let(:classroom)            { create(:classroom, user: teacher) }
+  let(:classroom2)           { create(:classroom, user: teacher2) }
+  let(:work_group)           { create(:work_group, classroom: classroom) }
+  let(:work_group2)          { create(:work_group, classroom: classroom2) }
+  let(:worksheet_template)   { create(:worksheet_template, user: teacher) }
   let(:worksheet_template2)  { create(:worksheet_template, user: teacher2) }
-  let(:worksheet)          { create(:worksheet, work_group: work_group, worksheet_template: worksheet_template) }
-  let(:worksheet2)          { create(:worksheet, work_group: work_group2, worksheet_template: worksheet_template2) }
-  let(:worksheet_review) { create(:worksheet_review, user: student, worksheet: worksheet) }
-  let(:worksheet_review2) { create(:worksheet_review, user: student, worksheet: worksheet2) }
+  let(:worksheet)            { create(:worksheet, work_group: work_group, worksheet_template: worksheet_template) }
+  let(:worksheet2)           { create(:worksheet, work_group: work_group2, worksheet_template: worksheet_template2) }
+  let(:worksheet_review)     { create(:worksheet_review, user: student, worksheet: worksheet) }
+  let(:worksheet_review2)    { create(:worksheet_review, user: student, worksheet: worksheet2) }
 
 
   before do
@@ -25,7 +25,7 @@ RSpec.describe Api::V1::WorksheetReviewsController, type: :controller do
   describe '#create' do
     context 'success' do
       it 'saves a new worksheet review' do
-        put :create, params: {
+        post :create, params: {
           worksheet_id: worksheet.id,
           worksheet_review: {
             content: 'Test Worksheet Review',
@@ -40,7 +40,7 @@ RSpec.describe Api::V1::WorksheetReviewsController, type: :controller do
 
     context 'failure' do
       it 'raises an error with missing data' do
-        put :create, params: {
+        post :create, params: {
           worksheet_id: worksheet.id,
           worksheet_review: {
             content: nil
