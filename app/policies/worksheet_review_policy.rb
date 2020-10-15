@@ -1,7 +1,7 @@
 class WorksheetReviewPolicy < ApplicationPolicy
 
   def create?
-    %w[admin teacher].include?(@user.role)
+    record.teacher == @user
   end
 
   # class Scope < Scope

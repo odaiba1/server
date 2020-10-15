@@ -23,9 +23,9 @@ class WorksheetReview < ApplicationRecord
   belongs_to :user
   belongs_to :worksheet
 
-  validates :content, :user, :worksheet, presence: true
+  validates :content, presence: true
 
   def teacher
-    self.worksheet.work_group.classroom.user
+    worksheet.work_group.classroom.teacher
   end
 end
