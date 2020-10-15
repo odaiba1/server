@@ -8,6 +8,8 @@ RSpec.describe WorksheetReviewPolicy do
     let(:user) { create(:admin) }
 
     it { should permit(:create) }
+    it { should permit(:update) }
+    it { should permit(:destroy) }
   end
 
   context 'teacher user' do
@@ -16,6 +18,8 @@ RSpec.describe WorksheetReviewPolicy do
 
     context 'own worksheet review' do
       it { should permit(:create) }
+      it { should permit(:update) }
+      it { should permit(:destroy) }
 
     end
 
@@ -23,6 +27,8 @@ RSpec.describe WorksheetReviewPolicy do
       let(:user) {create(:teacher)}
 
       it { should_not permit(:create) }
+      it { should_not permit(:update) }
+      it { should_not permit(:destroy) }
     end
   end
 
@@ -30,5 +36,7 @@ RSpec.describe WorksheetReviewPolicy do
     let(:user) { create(:student) }
 
     it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
 end
