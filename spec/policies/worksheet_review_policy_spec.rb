@@ -20,7 +20,6 @@ RSpec.describe WorksheetReviewPolicy do
       it { should permit(:create) }
       it { should permit(:update) }
       it { should permit(:destroy) }
-
     end
 
     context 'foreign worksheet review' do
