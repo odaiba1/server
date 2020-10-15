@@ -31,29 +31,4 @@ RSpec.describe WorksheetReviewPolicy do
 
     it { should_not permit(:create) }
   end
-
-  # context 'policy scope' do
-  #   subject { Pundit.policy_scope!(user, WorksheetReview) }
-
-  #   before do
-  #     create(:worksheet_review)
-  #     create(:worksheet_review)
-  #   end
-
-  #   context 'admin' do
-  #     let(:user) { create(:admin) }
-  #     it { expect(subject.size).to eq(2) }
-  #   end
-
-  #   context 'teacher' do
-  #     let(:user) { User.where(role: 'teacher').first }
-  #     it { expect(subject.size).to eq(1) }
-  #     it { expect(subject.first.user_id).to eq(user.id) }
-  #   end
-
-  #   context 'student' do
-  #     let(:user) { create(:student) }
-  #     it { expect(subject.size).to eq(0) }
-  #   end
-  # end
 end

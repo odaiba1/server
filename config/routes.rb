@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
           resources :worksheets, except: :destroy, shallow: true do
-            resources :worksheet_reviews, only: :create
+            resources :worksheet_reviews, only: %i[create update destroy]
           end
         end
       end
