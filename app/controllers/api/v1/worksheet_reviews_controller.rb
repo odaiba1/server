@@ -4,11 +4,11 @@ class Api::V1::WorksheetReviewsController < Api::V1::BaseController
 
 
   def create
-    worksheet_review = WorksheetReview.new(worksheet_review_params)
-    worksheet_review.worksheet_id = params[:worksheet_id]
-    authorize worksheet_review
-    if worksheet_review.save
-      render json: worksheet_review
+    @worksheet_review = WorksheetReview.new(worksheet_review_params)
+    @worksheet_review.worksheet_id = params[:worksheet_id]
+    authorize @worksheet_review
+    if @worksheet_review.save
+      render json: @worksheet_review
     else
       render_error
     end
@@ -37,7 +37,7 @@ class Api::V1::WorksheetReviewsController < Api::V1::BaseController
   end
 
   def render_error
-    render json: { errors: worksheet_review.errors.full_messages },
+    render json: { errors: @worksheet_review.errors.full_messages },
            status: :unprocessable_entity
   end
 
