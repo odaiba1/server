@@ -28,22 +28,20 @@ class WorkGroup < ApplicationRecord
 
   aasm do
     state :created, initial: true
-    state :next_up
     state :in_progress
     state :done
     state :canceled
 
-    event :schedule do
-      transitions from: :created, to: :next_up
+    event :initiate do
+      transitions from: :created, to: :in_progress
     end
 
-    event :proceed do
-      transitions from: :next_up, to: :in_progress
+    event :conclude do
       transitions from: :in_progress, to: :done
     end
 
     event :cancel do
-      transitions from: %i[created next_up in_progress], to: :canceled
+      transitions from: %i[created in_progress], to: :canceled
     end
   end
 
@@ -54,13 +52,11 @@ class WorkGroup < ApplicationRecord
   has_many :student_work_groups
   has_many :users, through: :student_work_groups
 
-  validates :aasm_state, :video_call_code, :session_time, :turn_time, :start_at, presence: true
+  validates :aasm_state, :video_call_code, :turn_time, presence: true
   validate :start_time_after_current_time
   validate :turn_time_less_than_session_time
 
-  scope :active_groups, lambda {
-    where("start_at > :time AND start_at - INTERVAL '1 millisecond' * session_time < :time", time: Time.now)
-  }
+  scope :active_groups, -> { where(aasm_state: 'in_progress') }
 
   private
 

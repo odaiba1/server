@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
-    root to: "devise/sessions#new"
+    root to: 'devise/sessions#new'
   end
 
   resources :user, only: [:show, :update]
@@ -14,9 +14,14 @@ Rails.application.routes.draw do
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
           resources :worksheets, except: :destroy, shallow: true
+          member do
+            patch :initiate
+            patch :conclude
+            patch :cancel
+          end
         end
       end
-      
+
       resources :worksheet_templates
     end
   end
