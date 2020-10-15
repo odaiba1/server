@@ -24,6 +24,9 @@ class WorkGroupPolicy < ApplicationPolicy
   alias new? create?
   alias edit? update?
   alias destroy? update?
+  alias initiate? update?
+  alias conclude? update?
+  alias cancel? update?
 
   class Scope < Scope
     def resolve
