@@ -2,18 +2,19 @@
 #
 # Table name: work_groups
 #
-#  id              :bigint           not null, primary key
-#  aasm_state      :string
-#  answered        :integer
-#  name            :string
-#  score           :integer
-#  session_time    :integer
-#  start_at        :datetime
-#  turn_time       :integer
-#  video_call_code :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  classroom_id    :bigint           not null
+#  id                   :bigint           not null, primary key
+#  aasm_state           :string
+#  answered             :integer
+#  name                 :string
+#  score                :integer
+#  session_time         :integer
+#  start_at             :datetime
+#  turn_time            :integer
+#  video_call_code      :string
+#  worksheet_email_sent :boolean          default(FALSE)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  classroom_id         :bigint           not null
 #
 # Indexes
 #

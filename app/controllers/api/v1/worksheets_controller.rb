@@ -20,11 +20,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     image_url = remote_image_url
     prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: image_url })
     if @worksheet.update(prepped_params)
-      students = @worksheet.work_group.students.pluck(:email)
-      student_group = @worksheet.work_group
-      DemoMailer.with(students: students, student_group: student_group, image_url: image_url).send_worksheets.deliver_later
-      # teacher = @worksheet.worksheet_template.user.email
-      # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
+      mail_worksheets unless @worksheet.work_group.worksheet_email_sent
       render json: @worksheet.to_json
     else
       render_error
@@ -55,6 +51,19 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   def remote_image_url
     prms = params[:worksheet]
     CloudinaryUploader.new(prms[:image_url], prms[:photo]).call
+  end
+
+  def mail_worksheets
+    students = @worksheet.work_group.students.pluck(:email)
+    student_group = @worksheet.work_group
+    DemoMailer.with(
+      students: students,
+      student_group: student_group,
+      image_url: image_url
+    ).send_worksheets.deliver_later
+    # teacher = @worksheet.worksheet_template.user.email
+    # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
+    @worksheet.work_group.update(worksheet_email_sent: true)
   end
 
   def set_and_authorize_worksheet
