@@ -25,6 +25,7 @@
 class Worksheet < ApplicationRecord
   belongs_to :worksheet_template
   belongs_to :work_group
+  has_many :worksheet_reviews
 
   validates :title, :template_image_url, presence: true
   validates :canvas, length: { minimum: 0, allow_nil: false, message: "can't be nil" }
