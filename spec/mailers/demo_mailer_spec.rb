@@ -38,7 +38,7 @@ RSpec.describe DemoMailer, type: :mailer do
   context 'invitation mailer' do
     let(:work_group) { create(:work_group) }
     let(:student_work_group) { create(:student_work_group, work_group: work_group) }
-    let(:worksheet) { create(:worksheet, work_group: work_group) }
+    let(:worksheet) { create(:worksheet, work_group: work_group, image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg') }
     let(:user_email) { student_work_group.student.email }
     let(:image_url) { worksheet.image_url }
     subject do
@@ -62,7 +62,7 @@ RSpec.describe DemoMailer, type: :mailer do
     end
 
     it 'renders the image url' do
-      # expect(subject.body.encoded).to match('')
+      expect(subject.body.encoded).to match('https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg')
     end
   end
 end
