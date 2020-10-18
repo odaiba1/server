@@ -27,5 +27,9 @@ class WorksheetPolicy < ApplicationPolicy
       else @scope.where(id: -1)
       end
     end
+
+    def dashboard_scope
+      @scope.all
+    end
   end
 end
