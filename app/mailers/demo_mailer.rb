@@ -12,11 +12,12 @@ class DemoMailer < ApplicationMailer
   end
 
   def send_worksheets
+    attachments.inline['odaiba-logo.png'] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
     students_email = params[:students]
     @student_group = params[:student_group]
-    image_url = params[:image_url]
+    @image_url = params[:image_url]
     # teacher_email = params[:teacher]
-    mail(to: students_email, subject: '[#{@student_group.name} for #{@student_group.classroom.name} on Odaiba] Successfully submitted worksheet')
+    mail(to: students_email, subject: "[Odaiba: #{@student_group.name}] Successfully submitted worksheet")
     # mail(to: teacher, cc: students, subject: 'Hello World')
   end
 end
