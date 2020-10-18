@@ -15,6 +15,19 @@ RSpec.describe Api::V1::WorksheetsController, type: :controller do
       request.headers['X-User-Token'] = student.authentication_token
     end
 
+    describe '#dashboard_index' do
+      context 'success' do
+        it "lists all the student's worksheets" do
+          worksheet1
+          worksheet2
+          get :dashboard_index, format: :json
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body).size).to eq(1)
+          expect(JSON.parse(response.body).first['color']).to_not eq(nil)
+        end
+      end
+    end
+
     describe '#index' do
       context 'success' do
         it "lists worksheets belonging to student's work group" do
