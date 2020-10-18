@@ -32,7 +32,7 @@ class WorksheetPolicy < ApplicationPolicy
       case @user.role
       when 'admin'   then @scope.all
       # when 'teacher' then @scope.where(worksheet_template_id: @user.worksheet_templates.ids) #TODO: Check the teacher dashboard on frontend and set correct scope
-      when 'student' then @scope.joins(:users).where(students: { id: @user.id })
+      when 'student' then @user.worksheets
       else @scope.where(id: -1)
       end
     end
