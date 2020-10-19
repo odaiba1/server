@@ -35,24 +35,32 @@ document.addEventListener('DOMContentLoaded', function() {
 const modal = document.querySelector(".modal");
 const trigger = document.querySelector(".trigger");
 const closeButton = document.querySelector(".close-button");
+const form = document.getElementById("new_work_group");
 
 const urlField = document.querySelector("#no_model_fields_worksheet_url");
 
-  document.querySelectorAll(".img-container img").forEach(item => {
-    item.addEventListener('click', event => {
-      urlField.value = item.src;
-    });
+document.querySelectorAll(".img-container img").forEach(item => {
+  item.addEventListener('click', event => {
+    urlField.value = item.src;
   });
-
-window.addEventListener('beforeunload', (event) => {
-  // Cancel the event as stated by the standard.
-  //event.preventDefault();
-  // Older browsers supported custom message
-  //event.returnValue = '';
-  modal.classList.add("show-modal");
-  console.log("hello");
 });
 
-/*const showModal = () => {
-}*/
-//<body onunload="myFunction()"></body>
+const toggleModal = () => {
+    modal.classList.toggle("show-modal");
+}
+
+const windowOnClick = (event) => {
+  if (event.target === modal) {
+      toggleModal();
+  }
+}
+
+form.addEventListener('submit', (event) => {
+  // Cancel the event as stated by the standard.
+  //event.preventDefault();
+  //event.returnValue = '';
+  modal.classList.add("show-modal");
+});
+
+window.addEventListener("click", windowOnClick);
+closeButton.addEventListener("click", toggleModal);
