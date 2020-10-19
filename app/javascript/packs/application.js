@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+const modal = document.querySelector(".modal");
+const trigger = document.querySelector(".trigger");
+const closeButton = document.querySelector(".close-button");
+
 const urlField = document.querySelector("#no_model_fields_worksheet_url");
 
   document.querySelectorAll(".img-container img").forEach(item => {
@@ -40,5 +44,15 @@ const urlField = document.querySelector("#no_model_fields_worksheet_url");
     });
   });
 
-//const showModal
+window.addEventListener('beforeunload', (event) => {
+  // Cancel the event as stated by the standard.
+  //event.preventDefault();
+  // Older browsers supported custom message
+  //event.returnValue = '';
+  modal.classList.add("show-modal");
+  console.log("hello");
+});
+
+/*const showModal = () => {
+}*/
 //<body onunload="myFunction()"></body>
