@@ -19,7 +19,10 @@ class ClassroomDemoPrepper
   def prep_users
     @teacher = User.find_by(email: @teacher_email, role: 'teacher')
     unless @teacher
-      @teacher = User.new(email: @teacher_email, name: @teacher_email.split('@').first, role: 'teacher')
+      @teacher = User.new(email: @teacher_email,
+                          name: @teacher_email.split('@').first,
+                          role: 'teacher',
+                          password: 'secret')
       return @teacher.errors.messages unless @teacher.save
     end
 

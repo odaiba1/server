@@ -2,6 +2,9 @@ class ClassroomsController < ApplicationController
   def new
     @classroom = params[:classroom] ? Classroom.new(classroom_params) : Classroom.new
     if params[:no_model_fields]
+      @teacher_email =  custom_params[:teacher_email]
+      @student_emails = custom_params[:student_emails]
+      @worksheet_urls = custom_params[:worksheet_urls]
     end
   end
 
@@ -22,6 +25,6 @@ class ClassroomsController < ApplicationController
   end
 
   def custom_params
-    params.require(:no_model_fields).permit(:teacher_email, :student_emails, :worksheet_templates)
+    params.require(:no_model_fields).permit(:teacher_email, :student_emails, :worksheet_urls)
   end
 end

@@ -1,9 +1,47 @@
-<h1>Classrooms#new</h1>
-<p>Find me in app/views/classrooms/new.html.erb</p>
+<div class="header">
+  <div class="logo">
+    <%= image_tag 'odaiba-logo_inverted_icon.png' %>
+  </div>
+</div>
 
-teacher_email: teacher email
+<div class="wrapper">
+  <div class="form">
+    <div class="grey-header">
+      <h3>Create a New Classroom</h3>
+    </div>
+    <div class="form-text">
+      <%= simple_fields_for :no_model_fields do |n| %>
+        <h3>Teacher</h3>
+        <p>Please write the email of the teacher.</p>
+        <%= n.input_field :teacher_email, value: @teacher_email %>
 
-student_emails: student emails
+        <h3>Emails</h3>
+        <p>Please write emails of the students. Please separate by a single empty space.</p>
+        <%= n.text_area :student_emails, value: @emails %>
+
+        <h3>Worksheet URLs</h3>
+        <p>Paste image url of a online worksheets (separated by empty space), or click of one of the options below</p>
+        <%= n.text_area :worksheet_urls, value: @worksheet_urls %>
+        <div class="disclaimer">
+          <h3>Disclaimer:</h3>
+          <p>Please read this disclaimer before submitting the form. The odaiba app and <a href="https://www.odaiba-app.com/">https://www.odaiba-app.com/</a> are owned and operated by odaiba ("us", "we", "our").
+          <br/>We are currently in pre-alpha stage, and all the information posted on here is published in good faith and meant for informational or demonstration purposes. We cannot guarantee the information or application will be free of errors.
+          <br/>We reserve the right to change this policy at any time. Please visit our website (above) in order to keep up to date with the latest changes.
+          </p>
+          <h3>Technical Requirements:</h3>
+          <p>Currently our app only supports Google Chrome, and can only be used on a laptop or desktop computer. It is not intended for mobile usage at this time. Please contact <a href="mailto:infoodaiba@gmail.com">infoodaiba@gmail.com</a> if you have any questions or comments.</p>
+        </div>
+        <div class="submit-container">
+          <%= n.submit "Create Classroom", id: "form-submit"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- teacher_email: teacher email
+
+student_emails: student emails (add option to load students from previous sessions)
 
 load said teacher's worksheet templates
 
@@ -20,3 +58,4 @@ individual time (default 1, optional)
 session length (optional)
 
 session start time (optional)
+ -->
