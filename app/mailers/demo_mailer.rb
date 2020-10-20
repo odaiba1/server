@@ -11,6 +11,11 @@ class DemoMailer < ApplicationMailer
     mail(to: @user.email, subject: 'You have been invited to an Odaiba demo session')
   end
 
+  def invite_teacher
+    attachments.inline['odaiba-logo.png'] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
+    # TODO: complete and create view
+  end
+
   def send_worksheets
     attachments.inline['odaiba-logo.png'] = File.read("#{Rails.root}/app/assets/images/odaiba-logo_inverted_icon.png")
     students_email = params[:students]
