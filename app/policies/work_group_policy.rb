@@ -20,13 +20,21 @@ class WorkGroupPolicy < ApplicationPolicy
     end
   end
 
+  def initiate?
+    # hot patch while we implement classroom creating form
+    case @user.role
+    when 'admin' then true
+    # when 'teacher' then @record.classroom.user_id == @user.id
+    else @record.classroom_id == Classroom.first.id
+    end
+  end
+
   alias show? index?
   alias new? create?
   alias edit? update?
   alias destroy? update?
-  alias initiate? update?
-  alias conclude? update?
-  alias cancel? update?
+  alias conclude? initiate?
+  alias cancel? initiate?
 
   class Scope < Scope
     def resolve
