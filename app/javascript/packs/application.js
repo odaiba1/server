@@ -44,16 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const modal = document.querySelector(".modal");
 const closeButton = document.querySelector(".close-button");
-const copyButton = document.querySelector(".copy-button");
+const trigger = document.querySelector(".trigger");
 
 const toggleModal = () => {
     modal.classList.toggle("hide-modal");
-}
-
-const windowOnClick = (event) => {
-  if (event.target === modal) {
-      toggleModal();
-  }
 }
 
 document.querySelector(".copy-button").addEventListener('click', async event => {
@@ -86,5 +80,5 @@ document.querySelector(".copy-button").addEventListener('click', async event => 
 //   console.log(selectedText.textContent);
 // }
 
-window.addEventListener("click", windowOnClick);
+trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
