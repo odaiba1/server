@@ -22,11 +22,12 @@ class WorkGroupPolicy < ApplicationPolicy
 
   def initiate?
     # hot patch while we implement classroom creating form
-    case @user.role
-    when 'admin' then true
+    # case @user.role
+    # when 'admin' then true
     # when 'teacher' then @record.classroom.user_id == @user.id
-    else @record.classroom_id == Classroom.first.id
-    end
+    # else @record.classroom_id == Classroom.first.id
+    # end
+    true
   end
 
   alias show? index?
