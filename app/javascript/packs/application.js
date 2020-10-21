@@ -32,9 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-const modal = document.querySelector(".modal");
-// const trigger = document.querySelector(".trigger");
-const closeButton = document.querySelector(".close-button");
 // const form = document.getElementById("new_work_group");
 
 // const urlField = document.querySelector("#no_model_fields_worksheet_url");
@@ -45,22 +42,49 @@ const closeButton = document.querySelector(".close-button");
 //   });
 // });
 
+const modal = document.querySelector(".modal");
+const closeButton = document.querySelector(".close-button");
+const copyButton = document.querySelector(".copy-button");
+
 const toggleModal = () => {
-    modal.classList.toggle("show-modal");
+    modal.classList.toggle("hide-modal");
 }
 
-// const windowOnClick = (event) => {
-//   if (event.target === modal) {
-//       toggleModal();
-//   }
+const windowOnClick = (event) => {
+  if (event.target === modal) {
+      toggleModal();
+  }
+}
+
+document.querySelector(".copy-button").addEventListener('click', async event => {
+  if (!navigator.clipboard) {
+    // Clipboard API not available
+    return
+  }
+  const text = document.querySelector("#modal-content").innerText
+  try {
+    await navigator.clipboard.writeText(text)
+    event.target.textContent = 'Copied to clipboard!'
+  } catch (err) {
+    console.error('Failed to copy!', err)
+  }
+})
+
+// const copyText = () => {
+//   /* Get the text field */
+//   let selectedText = document.getElementById("modal-content");
+
+//   let textArea = document.createElement("textarea");
+//   textArea.value = selectedText.textContent;
+
+//   document.body.appendChild(textArea);
+//   textArea.select();
+
+//   document.execCommand("copy");
+//   textArea.remove();
+//   /* Alert the copied text */
+//   console.log(selectedText.textContent);
 // }
 
-// form.addEventListener('submit', (event) => {
-//   // Cancel the event as stated by the standard.
-//   //event.preventDefault();
-//   //event.returnValue = '';
-//   modal.classList.add("show-modal");
-// });
-
-// window.addEventListener("click", windowOnClick);
+window.addEventListener("click", windowOnClick);
 closeButton.addEventListener("click", toggleModal);
