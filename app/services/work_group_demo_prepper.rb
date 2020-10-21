@@ -37,13 +37,16 @@ class WorkGroupDemoPrepper
   end
 
   def create_work_group
+    if @turn_time
+      session_time = @turn_time * 60_000 * @users.size
+      turn_time = @turn_time * 60_000
+    end
     @work_group = WorkGroup.create!(
       name: @users.pluck(:name).join('-'),
       video_call_code: 'abc',
       classroom: Classroom.first,
-      session_time: @turn_time * 60_000 * @users.size,
-      turn_time: @turn_time * 60_000,
-      aasm_state: 'in_progress',
+      session_time: session_time,
+      turn_time: turn_time,
       start_at: @start_at
     )
   end
