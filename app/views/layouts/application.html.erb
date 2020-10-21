@@ -11,12 +11,7 @@
   </head>
   <body class="flex flex-col h-screen font-sans" >
     <% render 'pages/navbar' %>
-    <div class="modal">
-      <div class="modal-content">
-        <span class="close-button">x</span>
-        <p class="notice"><%= notice %></p>
-      </div>
-    </div>
+    <p class="notice"></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
     <% render 'pages/footer' %>
