@@ -48,7 +48,9 @@ class WorkGroupsController < ApplicationController
   end
 
   def vars_for_mailer
-    start_time = (custom_params[:start_date] + ' ' + custom_params[:start_time]).in_time_zone
+    if custom_params[:start_date] && custom_params[:start_time]
+      start_time = (custom_params[:start_date] + ' ' + custom_params[:start_time]).in_time_zone
+    end
 
     WorkGroupDemoPrepper.new(
       custom_params[:emails],
