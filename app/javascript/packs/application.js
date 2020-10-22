@@ -32,15 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-// const form = document.getElementById("new_work_group");
+const form = document.getElementById("new_work_group");
 
-// const urlField = document.querySelector("#no_model_fields_worksheet_url");
+const urlField = document.querySelector("#no_model_fields_worksheet_url");
 
-// document.querySelectorAll(".img-container img").forEach(item => {
-//   item.addEventListener('click', event => {
-//     urlField.value = item.src;
-//   });
-// });
+document.querySelectorAll(".img-container img").forEach(item => {
+  item.addEventListener('click', event => {
+    urlField.value = item.src;
+  });
+});
 
 const modal = document.querySelector(".modal");
 const closeButton = document.querySelector(".close-button");
@@ -63,22 +63,6 @@ document.querySelector(".copy-button").addEventListener('click', async event => 
     console.error('Failed to copy!', err)
   }
 })
-
-// const copyText = () => {
-//   /* Get the text field */
-//   let selectedText = document.getElementById("modal-content");
-
-//   let textArea = document.createElement("textarea");
-//   textArea.value = selectedText.textContent;
-
-//   document.body.appendChild(textArea);
-//   textArea.select();
-
-//   document.execCommand("copy");
-//   textArea.remove();
-//   /* Alert the copied text */
-//   console.log(selectedText.textContent);
-// }
 
 trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);

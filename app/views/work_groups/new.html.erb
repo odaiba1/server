@@ -84,8 +84,9 @@
           <%= n.text_area :emails, value: @emails %>
 
           <h3>Delivery Method</h3>
-          <p>Select if participants will receive email with url, login, and password, or if you want to generate a unique url for each participant (which you can then copy and share via text)</p>
-          <%= n.input_field :delivery_method, as: :radio_buttons, collection: ['send email', 'generate links'], value: @delivery_method %>
+          <p class="mb-3">Select if participants will receive email with url, login, and password, or if you want to generate a unique url for each participant (which you can then copy and share via text)</p>
+          
+          <%= n.input_field :delivery_method, as: :radio_buttons, class: "mr-2", collection: ['send email', 'generate links'], value: @delivery_method %>
 
           <h3>Worksheet URL</h3>
           <p>Paste image url of an online worksheet, or click of one of the options below</p>
