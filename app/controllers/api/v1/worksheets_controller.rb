@@ -2,6 +2,12 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User
   before_action :set_and_authorize_work_group, only: %i[new create index]
   before_action :set_and_authorize_worksheet, only: %i[show edit update]
+  after_action :verify_authorized, except: %i[index dashboard_index]
+
+  def dashboard_index
+    @worksheets = WorksheetPolicy::Scope.new(current_user, Worksheet).dashboard_scope
+    render json: @worksheets.map(&:parse_for_dashboard).to_json
+  end
 
   def index
     @worksheets = policy_scope(Worksheet)

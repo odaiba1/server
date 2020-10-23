@@ -38,6 +38,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     return unless @work_group.in_progress?
 
     @work_group.conclude!
+    # mail all worksheets
     render json: @work_group
   end
 

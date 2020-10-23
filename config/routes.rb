@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      get '/worksheets', to: 'worksheets#dashboard_index'
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
           resources :worksheets, except: :destroy, shallow: true do
