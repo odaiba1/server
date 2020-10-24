@@ -2,16 +2,16 @@ class WorkGroupsController < ApplicationController
   def new
     @work_group = params[:work_group] ? WorkGroup.new(work_group_params) : WorkGroup.new
     @notice = params[:notice]
-    if params[:no_model_fields]
-      @emails =          custom_params[:emails]
-      @urls =            custom_params[:worksheet_url]
-      @delivery_method = custom_params[:delivery_method] # TODO: fix passing of params for this
-      @start_time =      custom_params[:start_time]
-      @start_date =      custom_params[:start_date]
-    end
     @worksheet_urls = WorksheetTemplate.where(user_id: 1).pluck(:image_url).select do |url|
       url.include?('res.cloudinary.com/naokimi')
     end
+    return unless params[:no_model_fields]
+
+    @emails =          custom_params[:emails]
+    @urls =            custom_params[:worksheet_url]
+    @delivery_method = custom_params[:delivery_method] # TODO: fix passing of params for this
+    @start_time =      custom_params[:start_time]
+    @start_date =      custom_params[:start_date]
   end
 
   def create

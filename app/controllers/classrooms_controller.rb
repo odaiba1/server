@@ -1,11 +1,12 @@
 class ClassroomsController < ApplicationController
   def new
     @classroom = params[:classroom] ? Classroom.new(classroom_params) : Classroom.new
-    if params[:no_model_fields]
-      @teacher_email =  custom_params[:teacher_email]
-      @student_emails = custom_params[:student_emails]
-      @worksheet_urls = custom_params[:worksheet_urls]
-    end
+    @notice = params[:notice]
+    return unless params[:no_model_fields]
+
+    @teacher_email =  custom_params[:teacher_email]
+    @student_emails = custom_params[:student_emails]
+    @worksheet_urls = custom_params[:worksheet_urls]
   end
 
   def create
@@ -19,7 +20,7 @@ class ClassroomsController < ApplicationController
     vars_for_mailer[:students].each do |student|
       DemoMailer.with(user: student[:email], work_group: student[:work_group]).invite.deliver_later
     end
-    redirect_to new_classroom_path, notice: 'Invitations sent'
+    redirect_to new_classroom_path(notice: 'Invitations sent')
   rescue StandardError => e
     redirect_with_params(e.message)
   end
@@ -35,6 +36,6 @@ class ClassroomsController < ApplicationController
   end
 
   def redirect_with_params(message)
-    redirect_to new_classroom_path(classroom: classroom_params, no_model_fields: custom_params), notice: message
+    redirect_to new_classroom_path(classroom: classroom_params, no_model_fields: custom_params, notice: message)
   end
 end
