@@ -62,12 +62,10 @@ class WorkGroupsController < ApplicationController
 
   def custom_links
     work_group = @users_and_work_groups[:work_group]
-    email_link_hash = {}
     @users_and_work_groups[:users].map do |user|
       short_url = work_group.minified_url(user)
       # "Link #{short_url} for user #{user.email}"
-      email_link_hash[user.email] = short_url
+      [short_url, user.email]
     end
-    email_link_hash
   end
 end
