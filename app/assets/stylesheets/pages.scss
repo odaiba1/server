@@ -46,6 +46,7 @@ html, body {
             cursor: pointer;
         }
     }
+
 }
 
 .img-container {
@@ -117,6 +118,12 @@ html, body {
     }
 }
 
+.radio {
+    input {
+        width: auto;
+    }
+}
+
 #work_group_turn_time {
     max-width: 30%;
 }
@@ -129,4 +136,9 @@ html, body {
     border: none;
     font-weight: 500;
     color: white;
+}
+
+.hide-modal {
+    visibility: hidden;
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }

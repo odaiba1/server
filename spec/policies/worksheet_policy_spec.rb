@@ -60,28 +60,50 @@ RSpec.describe WorksheetPolicy do
   end
 
   context 'policy scope' do
-    subject { Pundit.policy_scope!(user, Worksheet) }
+    context 'index' do
+      subject { Pundit.policy_scope!(user, Worksheet) }
 
-    before do
-      create(:worksheet)
-      create(:worksheet)
+      before do
+        create(:worksheet)
+        create(:worksheet)
+      end
+
+      context 'admin' do
+        let(:user) { create(:admin) }
+        it { expect(subject.size).to eq(2) }
+      end
+
+      context 'teacher' do
+        let(:user) { User.where(role: 'teacher').first }
+        it { expect(subject.size).to eq(1) }
+        it { expect(user.worksheet_templates.ids).to include(subject.first.worksheet_template_id) }
+      end
+
+      context 'student' do
+        let(:user) { create(:student_work_group, work_group: Worksheet.first.work_group).user }
+        it { expect(subject.size).to eq(1) }
+        it { expect(user.work_groups.ids).to include(subject.first.work_group_id) }
+      end
     end
 
-    context 'admin' do
-      let(:user) { create(:admin) }
-      it { expect(subject.size).to eq(2) }
-    end
+    context 'dashboard_index' do
+      subject { WorksheetPolicy::Scope.new(user, Worksheet).dashboard_scope }
 
-    context 'teacher' do
-      let(:user) { User.where(role: 'teacher').first }
-      it { expect(subject.size).to eq(1) }
-      it { expect(user.worksheet_templates.ids).to include(subject.first.worksheet_template_id) }
-    end
+      before do
+        create(:worksheet)
+        create(:worksheet)
+      end
 
-    context 'student' do
-      let(:user) { create(:student_work_group, work_group: Worksheet.first.work_group).user }
-      it { expect(subject.size).to eq(1) }
-      it { expect(user.work_groups.ids).to include(subject.first.work_group_id) }
+      context 'admin' do
+        let(:user) { create(:admin) }
+        it { expect(subject.size).to eq(2) }
+      end
+
+      context 'student' do
+        let(:user) { create(:student_work_group, work_group: Worksheet.first.work_group).user }
+        it { expect(subject.size).to eq(1) }
+        it { expect(user.work_groups.ids).to include(subject.first.work_group_id) }
+      end
     end
   end
 end

@@ -4,19 +4,27 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
-    root to: "devise/sessions#new"
+    root to: 'devise/sessions#new'
   end
 
   resources :user, only: [:show, :update]
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      get '/worksheets', to: 'worksheets#dashboard_index'
       resources :classrooms, defaults: { format: :json } do
         resources :work_groups, shallow: true do
-          resources :worksheets, except: :destroy, shallow: true
+          resources :worksheets, except: :destroy, shallow: true do
+            resources :worksheet_reviews, only: %i[create update destroy]
+          end
+          member do
+            patch :initiate
+            patch :conclude
+            patch :cancel
+          end
         end
       end
-      
+
       resources :worksheet_templates
     end
   end
