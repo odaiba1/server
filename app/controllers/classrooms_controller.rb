@@ -17,9 +17,9 @@ class ClassroomsController < ApplicationController
     ).call
 
     # vars_for_mailer[:teacher] -> deliver email to teacher
-    vars_for_mailer[:students].each do |student|
-      DemoMailer.with(user: student[:email], work_group: student[:work_group]).invite.deliver_later
-    end
+    # vars_for_mailer[:students].each do |student|
+    #   DemoMailer.with(user: student, work_group: student.work_groups.last).invite.deliver_later
+    # end
     redirect_to new_classroom_path(notice: 'Invitations sent')
   rescue StandardError => e
     redirect_with_params(e.message)

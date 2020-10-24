@@ -12,6 +12,7 @@ class ClassroomDemoPrepper
     create_worksheet_templates
     create_work_groups
     create_worksheets
+    variables_for_mailer
   end
 
   private
@@ -79,5 +80,12 @@ class ClassroomDemoPrepper
         )
       end
     end
+  end
+
+  def variables_for_mailer
+    {
+      teacher: @teacher,
+      students: @students
+    }
   end
 end

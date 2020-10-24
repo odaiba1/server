@@ -17,7 +17,7 @@ class WorkGroupDemoPrepper
   private
 
   def find_or_create_users
-    StudentsDemoPrepper.new(@emails, Classroom.first).call
+    @users = StudentsDemoPrepper.new(@emails, Classroom.first).call
   end
 
   def create_work_group
