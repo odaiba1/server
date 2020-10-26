@@ -64,8 +64,7 @@ class WorkGroupsController < ApplicationController
     work_group = @users_and_work_groups[:work_group]
     @users_and_work_groups[:users].map do |user|
       short_url = work_group.minified_url(user)
-      # "Link #{short_url} for user #{user.email}"
-      [short_url, user.email]
+      short_url + '---' + user.email
     end
   end
 end

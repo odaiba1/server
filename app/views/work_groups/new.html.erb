@@ -35,7 +35,7 @@
                     <% if @notice.class == Array %>
                       <ul>
                         <% @notice.each do |array| %>
-                          <li>Link <%= link_to array.first %> for user <b><%= array.second %></b></li>
+                          <li>Link <%= link_to array.split('---').first %> for user <b><%= array.split('---').second %></b></li>
                         <% end %>
                       </ul>
                     <% else %>
