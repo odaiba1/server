@@ -23,8 +23,8 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   def update
-    image_url = remote_image_url
-    prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: image_url })
+    @image_url = remote_image_url
+    prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: @image_url })
     if @worksheet.update(prepped_params)
       mail_worksheets unless @worksheet.work_group.worksheet_email_sent
       render json: @worksheet.to_json
@@ -65,7 +65,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     DemoMailer.with(
       students: students,
       student_group: student_group,
-      image_url: image_url
+      image_url: @image_url
     ).send_worksheets.deliver_later
     # teacher = @worksheet.worksheet_template.user.email
     # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
