@@ -68,6 +68,18 @@ class Classroom < ApplicationRecord
     start_time.strftime('%H:%M') + ' - ' + end_time.strftime('%H:%M')
   end
 
+  def minified_url_for_teacher(teacher)
+    one_time_password = rand(36**10).to_s(36)
+    teacher.update(password: one_time_password)
+    url_suffix = "/classrooms/#{id}?email=#{teacher.email}&password=#{one_time_password}"
+    if Rails.env == 'production'
+      url = 'https://odaiba-app.netlify.app' + url_suffix
+      LinkShortener.new(url).call
+    else
+      'http://localhost:3000' + url_suffix
+    end
+  end
+
   private
 
   def user_role

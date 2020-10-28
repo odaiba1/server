@@ -16,10 +16,8 @@ class ClassroomsController < ApplicationController
       custom_params[:worksheet_urls]
     ).call
 
-    # vars_for_mailer[:teacher] -> deliver email to teacher
-    vars_for_mailer[:students].each do |student|
-      DemoMailer.with(user: student, work_group: student.work_groups.last).invite.deliver_later
-    end
+    send_emails(vars_for_mailer)
+
     redirect_to new_classroom_path(notice: 'Invitations sent')
   rescue StandardError => e
     redirect_with_params(e.message)
@@ -28,7 +26,7 @@ class ClassroomsController < ApplicationController
   private
 
   def classroom_params
-    # params.require(:classroom).permit(:grade, :group, :subject)
+    # params.require(:classroom).permit(:grade, :group, :subject) # TODO: will uncomment after we start passing classroom params
   end
 
   def custom_params
@@ -37,5 +35,18 @@ class ClassroomsController < ApplicationController
 
   def redirect_with_params(message)
     redirect_to new_classroom_path(classroom: classroom_params, no_model_fields: custom_params, notice: message)
+  end
+
+  def send_emails(vars_for_mailer)
+    DemoMailer.with(
+      teacher: vars_for_mailer[:teacher],
+      work_groups_hash: vars_for_mailer[:work_groups]
+    ).invite_teacher.deliver_later
+
+    vars_for_mailer[:work_groups].each do |hash|
+      hash[:students].each do |student|
+        DemoMailer.with(user: student, work_group: hash[:work_group]).invite.deliver_later
+      end
+    end
   end
 end

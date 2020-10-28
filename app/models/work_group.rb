@@ -65,19 +65,13 @@ class WorkGroup < ApplicationRecord
     url_suffix = "/classrooms/#{classroom_id}/work_groups/#{id}?email=#{user.email}&password=#{one_time_password}"
     if Rails.env == 'production'
       url = 'https://odaiba-app.netlify.app' + url_suffix
-      shorten_long_link(url)
+      LinkShortener.new(url).call
     else
       'http://localhost:3000' + url_suffix
     end
   end
 
   private
-
-  def shorten_long_link(url)
-    client = Bitly::API::Client.new(token: ENV['BITLY_TOKEN'])
-    bitlink = client.shorten(long_url: url)
-    bitlink.link
-  end
 
   def start_time_after_current_time
     return if start_at.nil?

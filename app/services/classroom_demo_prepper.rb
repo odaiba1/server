@@ -105,7 +105,9 @@ class ClassroomDemoPrepper
   def variables_for_mailer
     {
       teacher: @teacher,
-      students: @students
+      work_groups: @work_groups.map do |work_group|
+        { work_group: work_group, students: work_group.students }
+      end
     }
   end
 end
