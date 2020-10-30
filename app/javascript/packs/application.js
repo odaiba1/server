@@ -32,10 +32,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+const form = document.getElementById("new_work_group");
+
 const urlField = document.querySelector("#no_model_fields_worksheet_url");
 
-  document.querySelectorAll(".img-container img").forEach(item => {
-    item.addEventListener('click', event => {
-      urlField.value += item.src;
-    });
+document.querySelectorAll(".img-container img").forEach(item => {
+  item.addEventListener('click', event => {
+    urlField.value = item.src;
   });
+});
+
+const modal = document.querySelector(".modal");
+const closeButton = document.querySelector(".close-button");
+const trigger = document.querySelector(".trigger");
+
+const toggleModal = () => {
+    modal.classList.toggle("hide-modal");
+}
+
+document.querySelector(".copy-button").addEventListener('click', async event => {
+  if (!navigator.clipboard) {
+    // Clipboard API not available
+    console.error('Clipboard API not available', err)
+    return
+  }
+  const text = document.querySelector(".modal-content").innerText
+  try {
+    await navigator.clipboard.writeText(text)
+    event.target.textContent = 'Copied to clipboard!'
+  } catch (err) {
+    console.error('Failed to copy!', err)
+  }
+})
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);

@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_10_30_000611) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,7 +103,16 @@ ActiveRecord::Schema.define(version: 2020_10_30_000611) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "aasm_state"
+    t.boolean "worksheet_email_sent", default: false
     t.index ["classroom_id"], name: "index_work_groups_on_classroom_id"
+  end
+
+  create_table "worksheet_reviews", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "worksheet_id", null: false
+    t.index ["user_id"], name: "index_worksheet_reviews_on_user_id"
+    t.index ["worksheet_id"], name: "index_worksheet_reviews_on_worksheet_id"
   end
 
   create_table "worksheet_templates", force: :cascade do |t|
@@ -133,6 +144,8 @@ ActiveRecord::Schema.define(version: 2020_10_30_000611) do
   add_foreign_key "student_work_groups", "users"
   add_foreign_key "student_work_groups", "work_groups"
   add_foreign_key "work_groups", "classrooms"
+  add_foreign_key "worksheet_reviews", "users"
+  add_foreign_key "worksheet_reviews", "worksheets"
   add_foreign_key "worksheet_templates", "users"
   add_foreign_key "worksheets", "work_groups"
   add_foreign_key "worksheets", "worksheet_templates"

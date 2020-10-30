@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe WorkGroupsController, type: :controller do
+
   let(:teacher)     { create(:teacher) }
   let(:student1)    { create(:student) }
   let(:student2)    { create(:student) }
@@ -49,7 +50,6 @@ RSpec.describe WorkGroupsController, type: :controller do
       expect(controller.instance_variable_get(:@worksheet_urls)).to eq([])
       expect(response).to have_http_status(:success)
     end
-  end
 
   describe 'GET #create' do
     context 'success' do
@@ -114,5 +114,6 @@ RSpec.describe WorkGroupsController, type: :controller do
         expect { create }.to raise_error(StandardError)
       end
     end
+
   end
 end

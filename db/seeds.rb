@@ -92,7 +92,6 @@ Classroom.all.each do |classroom|
       turn_time: 300_000, # time in miliseconds, 60000 == 1 minute
       score: 0,
       answered: 0,
-      aasm_state: 'in_progress',
       start_at: DateTime.new(2030, 1, 1, 10, 30)
     )
   end

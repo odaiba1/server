@@ -2,6 +2,12 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User
   before_action :set_and_authorize_work_group, only: %i[new create index]
   before_action :set_and_authorize_worksheet, only: %i[show edit update]
+  after_action :verify_authorized, except: %i[index dashboard_index]
+
+  def dashboard_index
+    @worksheets = WorksheetPolicy::Scope.new(current_user, Worksheet).dashboard_scope
+    render json: @worksheets.map(&:parse_for_dashboard).to_json
+  end
 
   def index
     @worksheets = policy_scope(Worksheet)
@@ -17,14 +23,10 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   def update
-    image_url = remote_image_url
-    prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: image_url })
+    @image_url = remote_image_url
+    prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: @image_url })
     if @worksheet.update(prepped_params)
-      students = @worksheet.work_group.students.pluck(:email)
-      student_group = @worksheet.work_group
-      DemoMailer.with(students: students, student_group: student_group, image_url: image_url).send_worksheets.deliver_later
-      # teacher = @worksheet.worksheet_template.user.email
-      # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
+      mail_worksheets unless @worksheet.work_group.worksheet_email_sent
       render json: @worksheet.to_json
     else
       render_error
@@ -55,6 +57,19 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   def remote_image_url
     prms = params[:worksheet]
     CloudinaryUploader.new(prms[:image_url], prms[:photo]).call
+  end
+
+  def mail_worksheets
+    students = @worksheet.work_group.students.pluck(:email)
+    student_group = @worksheet.work_group
+    DemoMailer.with(
+      students: students,
+      student_group: student_group,
+      image_url: @image_url
+    ).send_worksheets.deliver_later
+    # teacher = @worksheet.worksheet_template.user.email
+    # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
+    @worksheet.work_group.update(worksheet_email_sent: true)
   end
 
   def set_and_authorize_worksheet
