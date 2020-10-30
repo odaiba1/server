@@ -65,8 +65,10 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
   end
 
   def work_group_params
+    # params.require(:work_group).permit(:name, :classroom_id, :session_time, :aasm_state,
+    #                                    :turn_time, :video_call_code, :start_at)
     params.require(:work_group).permit(:name, :classroom_id, :session_time, :session_time,
-                                       :turn_time, :video_call_code, :start_at)
+                                   :turn_time, :video_call_code, :start_at)
   end
 
   def set_and_authorize_classroom
