@@ -1,6 +1,6 @@
 class Api::V1::ClassroomsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User
-  before_action :set_classroom, only: %i[show edit update destroy]
+  before_action :set_classroom, only: %i[show edit update destroy initiate_all_work_groups conclude_all_work_groups]
 
   def index
     @classrooms = policy_scope(Classroom)
@@ -53,6 +53,18 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   def destroy
     @classroom.destroy
     render json: {}
+  end
+
+  def initiate_all_work_groups
+    work_groups = @classroom.work_groups.where(aasm_state: :created)
+    work_groups.update_all(aasm_state: :in_progress)
+    render json: @classroom.work_groups.where(aasm_state: :in_progress).to_json
+  end
+
+  def conclude_all_work_groups
+    work_groups = @classroom.work_groups.where(aasm_state: :in_progress)
+    work_groups.update_all(aasm_state: :done)
+    render json: @classroom.work_groups.where(aasm_state: :done).to_json
   end
 
   private
