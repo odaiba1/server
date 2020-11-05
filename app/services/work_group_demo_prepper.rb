@@ -1,8 +1,8 @@
 class WorkGroupDemoPrepper
-  def initialize(emails, worksheet_url, start_at, turn_time)
+  def initialize(emails, worksheet_url, start_time, turn_time)
     @emails =        emails
     @worksheet_url = worksheet_url
-    @start_at =      start_at
+    @start_at =      start_time
     @turn_time =     turn_time.to_i
   end
 
@@ -38,7 +38,6 @@ class WorkGroupDemoPrepper
 
   def create_work_group
     session_time = @start_at ? @turn_time * 60_000 * @users.size : 30 * 60_000
-
     @work_group = WorkGroup.create!(
       name: @users.pluck(:name).join('-'),
       video_call_code: 'abc',
