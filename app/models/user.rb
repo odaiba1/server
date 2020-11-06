@@ -39,6 +39,8 @@ class User < ApplicationRecord
   has_many :attending_classrooms, through: :student_classrooms, source: :classroom
   has_many :worksheet_reviews, dependent: :destroy
 
+  scope :first_teacher, -> { where(role: 'teacher').first }
+
   def students
     User.joins(:student_classrooms).where(student_classrooms: { classroom_id: classrooms })
   end

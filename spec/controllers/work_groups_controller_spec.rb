@@ -1,24 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe WorkGroupsController, type: :controller do
-  let(:teacher)     { create(:teacher, id: 1) }
-  let(:student1)    { create(:student, id: 2) }
-  let(:student2)    { create(:student, id: 3) }
-  let(:classroom)   { create(:classroom, user: teacher) }
-  let(:work_group1) { create(:work_group, classroom: classroom) }
-  let(:student_work_group1) { create(:student_work_group1, student: student1, work_group: work_group1) }
-  let(:student_work_group2) { create(:student_work_group2, student: student2, work_group: work_group1) }
-  let(:worksheet_template) { create(:worksheet_template, user: teacher) }
-  let(:worksheet_template2) { create(:worksheet_template, image_url: 'google.com', user: teacher) }
-  let(:worksheet1) { create(:worksheet, work_group: work_group1, worksheet_template: worksheet_template) }
+  let(:work_group)              { create(:work_group) }
+  let(:student_work_group1)     { create(:student_work_group, work_group: work_group) }
+  let(:student_work_group2)     { create(:student_work_group, work_group: work_group) }
+  let(:worksheet_template2)     { create(:worksheet_template, image_url: 'google.com') }
+  let(:worksheet)               { create(:worksheet) }
   let(:work_group_demo_prepper) { double(WorkGroupDemoPrepper) }
-  let(:demo_mailer) { double(DemoMailer) }
+  let(:demo_mailer)             { double(DemoMailer) }
+  let(:params)                  { nil }
 
   describe '#new' do
-    context 'returns correct work group' do
-      it 'with params' do
-        worksheet1
-        get :new, params: {
+    subject { get :new, params: params }
+
+    context 'with params' do
+      let(:params) do
+        {
           work_group: { turn_time: 300_000 },
           no_model_fields: {
             emails: 'test1@gmail.com test2@gmail.com',
@@ -28,28 +25,24 @@ RSpec.describe WorkGroupsController, type: :controller do
             start_date: Date.today
           }
         }
-        expect(controller.instance_variable_get(:@work_group).turn_time).to eq(300_000)
+      end
+
+      it 'renders template with instance variables' do
+        worksheet
+        expect(subject).to have_http_status(200)
         expect(WorkGroup.find_by_turn_time(300_000)).to be_instance_of(WorkGroup)
         expect(controller.instance_variable_get(:@emails)).to eq('test1@gmail.com test2@gmail.com')
         expect(controller.instance_variable_get(:@delivery_method)).to eq('generate links')
         expect(controller.instance_variable_get(:@urls)).to eq('https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg')
-      end
-
-      it 'with no params' do
-        get :new
-        expect(controller.instance_variable_get(:@work_group).turn_time).to eq(nil)
+        expect(controller.instance_variable_get(:@worksheet_urls)).to eq(['https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'])
       end
     end
 
-    context 'returns correct worksheet urls' do
-      it 'with correct url format' do
-        worksheet_template
-        get :new
-        expect(controller.instance_variable_get(:@worksheet_urls)).to eq(['https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg'])
-      end
-      it 'with incorrect url format' do
+    context 'with no params' do
+      it 'render template' do
         worksheet_template2
         get :new
+        expect(controller.instance_variable_get(:@work_group).turn_time).to eq(nil)
         expect(controller.instance_variable_get(:@worksheet_urls)).to eq([])
       end
     end
@@ -59,16 +52,16 @@ RSpec.describe WorkGroupsController, type: :controller do
     context 'success' do
       before do
         allow(WorkGroupDemoPrepper).to receive(:new).and_return(work_group_demo_prepper)
-        allow(work_group_demo_prepper).to receive(:call).and_return({ users: [student1, student2], work_group: work_group1 })
-        allow(DemoMailer).to receive(:with).and_return(demo_mailer)
-        allow(demo_mailer).to receive(:invite).and_return(demo_mailer)
-        allow(demo_mailer).to receive(:deliver_later).and_return(demo_mailer)
+        allow(work_group_demo_prepper).to receive(:call).and_return(
+          { users: [student_work_group1.student, student_work_group2.student], work_group: work_group }
+        )
+        allow(DemoMailer).to receive_message_chain(:with, :invite, :deliver_later)
       end
-      it 'returns correct email invitations' do
+      it 'sends email invitations' do
         post :create, params: {
-          work_group: { turn_time: 300_000},
+          work_group: { turn_time: 300_000 },
           no_model_fields: {
-            emails: "#{student1.email} #{student2.email}",
+            emails: "#{student_work_group1.student.email} #{student_work_group2.student.email}",
             worksheet_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
             delivery_method: 'send email',
             start_time: Time.now + 1.hour,
@@ -80,9 +73,9 @@ RSpec.describe WorkGroupsController, type: :controller do
       end
       it 'returns generated links' do
         post :create, params: {
-          work_group: { turn_time: 300_000},
+          work_group: { turn_time: 300_000 },
           no_model_fields: {
-            emails: "#{student1.email} #{student2.email}",
+            emails: "#{student_work_group1.student.email} #{student_work_group2.student.email}",
             worksheet_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
             delivery_method: 'generate links',
             start_time: Time.now + 1.hour,
@@ -90,7 +83,7 @@ RSpec.describe WorkGroupsController, type: :controller do
           }
         }
         expect(response).to have_http_status(302)
-        expect(response.location).to include(CGI.escape("---#{student2.email}"))
+        expect(response.location).to include(CGI.escape("---#{student_work_group2.student.email}"))
       end
     end
 
@@ -99,12 +92,12 @@ RSpec.describe WorkGroupsController, type: :controller do
         allow(WorkGroupDemoPrepper).to receive(:new).and_return(work_group_demo_prepper)
         allow(work_group_demo_prepper).to receive(:call)
       end
+
       it 'has less than 2 email addresses' do
-        student1
         post :create, params: {
-          work_group: { turn_time: 300_000},
+          work_group: { turn_time: 300_000 },
           no_model_fields: {
-            emails: student1.email.to_s
+            emails: student_work_group1.student.email.to_s
           }
         }
         expect(response).to have_http_status(302)
@@ -112,11 +105,10 @@ RSpec.describe WorkGroupsController, type: :controller do
       end
 
       it 'nonexistent delivery method' do
-        classroom
-        put :create, params: {
-          work_group: { turn_time: 300_000},
+        post :create, params: {
+          work_group: { turn_time: 300_000 },
           no_model_fields: {
-            emails: "#{student1.email} #{student2.email}",
+            emails: "#{student_work_group1.student.email} #{student_work_group2.student.email}",
             worksheet_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
             start_time: Time.now + 1.hour,
             start_date: Date.today
@@ -127,10 +119,10 @@ RSpec.describe WorkGroupsController, type: :controller do
       end
 
       it 'raise error for invalid start time' do
-        put :create, params: {
-          work_group: { turn_time: 300_000},
+        post :create, params: {
+          work_group: { turn_time: 300_000 },
           no_model_fields: {
-            emails: "#{student1.email} #{student2.email}",
+            emails: "#{student_work_group1.student.email} #{student_work_group2.student.email}",
             worksheet_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg',
             delivery_method: 'send email',
             start_time: Time.now + 1.day,
