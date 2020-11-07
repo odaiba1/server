@@ -8,7 +8,12 @@
     <div class="card-text">
       <p>Hello student in <%= @student_group.name %> for <%= @student_group.classroom.name %>,</p>
       <p>
-        Congratulations in completing the session. Your submission for your worksheet has been successfully uploaded. You can access the submission here: <%= @image_url %> 
+        Congratulations in completing the session. Your submission for your worksheet has been successfully uploaded. You can access the submissions here:
+        <ul>
+          <% @image_urls.each_with_index do |image_url, idx| %>
+            <li><%= link_to "Worksheet no. #{idx + 1}", image_url %></li>
+          <% end %>
+        </ul>
       </p>
       <br/>
       <p>Sincerely,</p>

@@ -26,7 +26,10 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     @image_url = remote_image_url
     prepped_params = worksheet_params.except(:image_url, :photo).merge({ image_url: @image_url })
     if @worksheet.update(prepped_params)
-      mail_worksheets unless @worksheet.work_group.worksheet_email_sent
+      if !@worksheet.work_group.worksheet_email_sent &&
+         @worksheet.work_group.classroom.teacher == User.where(role: 'teacher').first
+        mail_worksheets
+      end
       render json: @worksheet.to_json
     else
       render_error
@@ -67,8 +70,6 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
       student_group: student_group,
       image_url: @image_url
     ).send_worksheets.deliver_later
-    # teacher = @worksheet.worksheet_template.user.email
-    # DemoMailer.with(students: students, teacher: teacher, image_url: image_url).send_worksheets.deliver_later
     @worksheet.work_group.update(worksheet_email_sent: true)
   end
 

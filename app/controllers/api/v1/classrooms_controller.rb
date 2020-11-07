@@ -63,11 +63,22 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def conclude_all_work_groups
     work_groups = @classroom.work_groups.where(aasm_state: :in_progress)
+    # need to make sure that all the worksheets are updated before sending the emails
+    work_groups.each { |work_group| mail_worksheets(work_group) unless work_group.worksheet_email_sent }
     work_groups.update_all(aasm_state: :done)
     render json: @classroom.work_groups.where(aasm_state: :done).to_json
   end
 
   private
+
+  def mail_worksheets(work_group)
+    DemoMailer.with(
+      students: work_group.students,
+      student_group: work_group,
+      image_urls: work_group.worksheets.pluck(:image_url)
+    ).send_worksheets.deliver_later
+    work_group.update(worksheet_email_sent: true)
+  end
 
   def classroom_with_relations
     {
