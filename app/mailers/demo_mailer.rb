@@ -23,9 +23,14 @@ class DemoMailer < ApplicationMailer
     students_email = params[:students]
     @student_group = params[:student_group]
     @image_urls = params[:image_urls]
-    # teacher_email = params[:teacher]
     mail(to: students_email, subject: "[Odaiba: #{@student_group.name}] Successfully submitted worksheet")
-    # mail(to: teacher, cc: students, subject: 'Hello World')
+  end
+
+  def send_worksheets_to_teacher
+    odaiba_logo
+    @teacher = params[:teacher]
+    @work_groups = params[:work_groups]
+    mail(to: @teacher.email, subject: 'Your Odaiba classroom is concluded')
   end
 
   private

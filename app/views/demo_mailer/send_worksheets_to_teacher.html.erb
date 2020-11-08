@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div class="image">
+        <%= image_tag(attachments['odaiba-logo.png'].url, height:'48px') %>
+      </div>
+    </div>
+    <div class="card-text">
+      <p>Hello <%= @teacher.name %>,</p>
+      <p>
+        Congratulations on completing the classroom session. All the student worksheets have been successfully uploaded. You can access their submissions here:
+        <ol>
+          <% @work_groups.each_with_index do |work_group, idx| %>
+            <li>
+              <h4>Group no. <%= idx + 1 %></h4>
+              <ul>
+                <p>Students:</p>
+                <% work_group[:users].each do |student| %>
+                  <li><%= student['name'] %></li>
+                <% end %>
+              </ul>
+              <ul>
+                <p>Worksheet submissions:</p>
+                <% work_group[:worksheets].each_with_index do |worksheet, index| %>
+                  <li><%= link_to "Worksheet no. #{index + 1}", worksheet['image_url'] %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ol>
+      </p>
+      <br/>
+      <p>Sincerely,</p>
+      <p>The odaiba team</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>
+      Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
+      Or contact us at <a class="link" href="mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
+    </p>
+  </div>
+</div>
