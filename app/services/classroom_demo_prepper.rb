@@ -106,7 +106,7 @@ class ClassroomDemoPrepper
     {
       teacher: @teacher,
       work_groups: @work_groups.map do |work_group|
-        { work_group: work_group, students: work_group.students }
+        { work_group: work_group, students: work_group.students.to_a }
       end
     }
   end

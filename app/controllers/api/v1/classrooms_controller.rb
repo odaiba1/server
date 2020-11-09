@@ -74,7 +74,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
 
   def mail_worksheets(work_group)
     DemoMailer.with(
-      students: work_group.students,
+      students: work_group.students.to_a,
       student_group: work_group,
       image_urls: work_group.worksheets.pluck(:image_url)
     ).send_worksheets.deliver_later
