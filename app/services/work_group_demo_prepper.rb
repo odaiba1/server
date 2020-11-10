@@ -1,8 +1,8 @@
 class WorkGroupDemoPrepper
-  def initialize(emails, worksheet_url, start_time, turn_time)
+  def initialize(emails, worksheet_url, start_at, turn_time)
     @emails =        emails
     @worksheet_url = worksheet_url
-    @start_at =      start_time
+    @start_at =      start_at
     @turn_time =     turn_time.to_i
   end
 

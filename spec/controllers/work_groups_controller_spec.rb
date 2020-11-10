@@ -10,7 +10,7 @@ RSpec.describe WorkGroupsController, type: :controller do
   let(:demo_mailer)             { double(DemoMailer) }
   let(:params)                  { nil }
 
-  describe '#new' do
+  describe 'GET#new' do
     subject { get :new, params: params }
 
     context 'with params' do
@@ -39,7 +39,7 @@ RSpec.describe WorkGroupsController, type: :controller do
     end
 
     context 'with no params' do
-      it 'render template' do
+      it 'renders template with new work group' do
         worksheet_template2
         get :new
         expect(controller.instance_variable_get(:@work_group).turn_time).to eq(nil)
@@ -48,7 +48,7 @@ RSpec.describe WorkGroupsController, type: :controller do
     end
   end
 
-  describe '#create' do
+  describe 'POST#create' do
     context 'success' do
       before do
         allow(WorkGroupDemoPrepper).to receive(:new).and_return(work_group_demo_prepper)
@@ -57,6 +57,7 @@ RSpec.describe WorkGroupsController, type: :controller do
         )
         allow(DemoMailer).to receive_message_chain(:with, :invite, :deliver_later)
       end
+
       it 'sends email invitations' do
         post :create, params: {
           work_group: { turn_time: 300_000 },
@@ -71,6 +72,7 @@ RSpec.describe WorkGroupsController, type: :controller do
         expect(response).to have_http_status(302)
         expect(response.location).to include(CGI.escape('Invitations sent'))
       end
+
       it 'returns generated links' do
         post :create, params: {
           work_group: { turn_time: 300_000 },
