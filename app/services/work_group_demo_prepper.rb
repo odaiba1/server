@@ -22,7 +22,6 @@ class WorkGroupDemoPrepper
 
   def create_work_group
     session_time = @start_at ? @turn_time * 60_000 * @users.size : 30 * 60_000
-
     @work_group = WorkGroup.create!(
       name: @users.pluck(:name).join('-'),
       video_call_code: 'abc',
