@@ -59,13 +59,6 @@ document.querySelector(".copy-button").addEventListener('click', async event => 
   const text = document.querySelector(".modal-content").innerText
   await navigator.clipboard.writeText(text)
   event.target.textContent = 'Copied to clipboard!'
-  // const text = document.querySelector(".modal-content").innerText
-  // try {
-  //   await navigator.clipboard.writeText(text)
-  //   event.target.textContent = 'Copied to clipboard!'
-  // } catch (err) {
-  //   console.error('Failed to copy!', err)
-  // }
 })
 
 trigger.addEventListener("click", toggleModal);
