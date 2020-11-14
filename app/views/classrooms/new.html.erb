@@ -23,15 +23,7 @@
           <h3>Worksheet URLs</h3>
           <p>Paste image url of a online worksheets (separated by empty space), or click of one of the options below</p>
           <%= n.text_area :worksheet_urls, value: @worksheet_urls %>
-          <div class="disclaimer">
-            <h3>Disclaimer:</h3>
-            <p>Please read this disclaimer before submitting the form. The odaiba app and <a href="https://www.odaiba-app.com/">https://www.odaiba-app.com/</a> are owned and operated by odaiba ("us", "we", "our").
-            <br/>We are currently in pre-alpha stage, and all the information posted on here is published in good faith and meant for informational or demonstration purposes. We cannot guarantee the information or application will be free of errors.
-            <br/>We reserve the right to change this policy at any time. Please visit our website (above) in order to keep up to date with the latest changes.
-            </p>
-            <h3>Technical Requirements:</h3>
-            <p>Currently our app only supports Google Chrome, and can only be used on a laptop or desktop computer. It is not intended for mobile usage at this time. Please contact <a href="mailto:infoodaiba@gmail.com">infoodaiba@gmail.com</a> if you have any questions or comments.</p>
-          </div>
+          <%= render partial: 'shared/disclaimer' %>
         <% end %>
         <div class="submit-container">
           <%= f.submit "Create Classroom", id: "form-submit" %>
