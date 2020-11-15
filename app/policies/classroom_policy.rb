@@ -24,6 +24,8 @@ class ClassroomPolicy < ApplicationPolicy
   alias new? create?
   alias edit? update?
   alias destroy? update?
+  alias initiate_all_work_groups? update?
+  alias conclude_all_work_groups? update?
 
   class Scope < Scope
     def resolve

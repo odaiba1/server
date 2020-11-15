@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :classrooms, only: %i[new create]
   resources :work_groups, only: %i[new create]
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
@@ -13,14 +14,18 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/worksheets', to: 'worksheets#dashboard_index'
       resources :classrooms, defaults: { format: :json } do
+        member do
+          patch :initiate_all_work_groups
+          patch :conclude_all_work_groups
+        end
         resources :work_groups, shallow: true do
-          resources :worksheets, except: :destroy, shallow: true do
-            resources :worksheet_reviews, only: %i[create update destroy]
-          end
           member do
             patch :initiate
             patch :conclude
             patch :cancel
+          end
+          resources :worksheets, except: :destroy, shallow: true do
+            resources :worksheet_reviews, only: %i[create update destroy]
           end
         end
       end

@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div class="image">
+        <%= image_tag(attachments['odaiba-logo.png'].url, height:'48px') %>
+      </div>
+    </div>
+    <div class="card-text">
+      <h2>Your classroom is ready!</h2>
+      <hr>
+      <p>Dear teacher <%= @teacher.name %>,</p>
+      <p>
+        The classroom you've prepared is ready.<br/>
+        You can access your dashboard by clicking here:
+      </p>
+      <%= link_to @classroom_url, @classroom_url %>
+      <br/>
+      <p>From there you can initiate and conclude the collaboration sessions, as well as follow the progress of all groups in real time.</p>
+      <p>For your information, here are all the groups and their respective students:</p>
+      <ul>
+        <% @work_groups_hash.each_with_index do |hash, index| %>
+          <h5>Group <%= index + 1 %></h5>
+          <% hash[:students].each do |student| %>
+            <li><%= student.name %></li>
+          <% end %>
+        <% end %>
+      </ul>
+      <p>Sincerely,</p>
+      <p>The odaiba team</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>
+      Learn more at <a class="link" href="https://www.odaiba-app.com/">www.odaiba-app.com</a><br/>
+      Or contact us at <a class="link" href="mailto: infoodaiba@gmail.com">infoodaiba@gmail.com</a>
+    </p>
+  </div>
+</div>

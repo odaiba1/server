@@ -17,23 +17,7 @@ class WorkGroupDemoPrepper
   private
 
   def find_or_create_users
-    new_users = []
-    @users = @emails.split(' ').map do |email|
-      user = User.find_by_email(email)
-
-      if user
-        user
-      else
-        new_user = User.new(name: email.split('@').first, email: email, password: 'secret')
-        new_user.save!
-        new_users << new_user
-        new_user
-      end
-    end
-
-    new_users.each do |user|
-      StudentClassroom.create!(user: user, classroom: Classroom.first)
-    end
+    @users = StudentsDemoPrepper.new(@emails, Classroom.first).call
   end
 
   def create_work_group

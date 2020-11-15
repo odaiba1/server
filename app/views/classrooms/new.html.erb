@@ -1,0 +1,55 @@
+<div class="header">
+  <div class="logo">
+    <%= image_tag 'odaiba-logo_inverted_icon.png' %>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="form">
+    <div class="grey-header">
+      <h3>Create a New Classroom</h3>
+    </div>
+    <%= render partial: 'shared/modal', locals: { notice: @notice } %>
+    <div class="form-text">
+      <%= simple_form_for @classroom do |f| %>
+        <%= simple_fields_for :no_model_fields do |n| %>
+          <h3>Teacher</h3>
+          <p>Please write the email of the teacher.</p>
+          <%= n.input_field :teacher_email, value: @teacher_email %>
+
+          <h3>Emails</h3>
+          <p>Please write emails of the students. Please separate by a single empty space.</p>
+          <%= n.text_area :student_emails, value: @student_emails %>
+
+          <h3>Worksheet URLs</h3>
+          <p>Paste image url of a online worksheets (separated by empty space), or click of one of the options below</p>
+          <%= n.text_area :worksheet_urls, value: @worksheet_urls %>
+          <%= render partial: 'shared/disclaimer' %>
+        <% end %>
+        <div class="submit-container">
+          <%= f.submit "Create Classroom", id: "form-submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- teacher_email: teacher email
+
+student_emails: student emails (add option to load students from previous sessions)
+
+load said teacher's worksheet templates
+
+worksheet_urls: worksheet templates (upload and copy url options)
+
+# should hide optional choices and just load on click
+
+classroom grade, group, subject (need to invent default values, optional)
+
+group size (default 4, optional)
+
+individual time (default 1, optional)
+
+session length (optional)
+
+session start time (optional)
+ -->

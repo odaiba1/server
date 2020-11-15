@@ -24,12 +24,14 @@ class Classroom < ApplicationRecord
   alias_attribute :students, :users
   alias_attribute :teacher, :user
 
+  # OPTIMIZE: add AASM state?
+
   belongs_to :user
   has_many :work_groups, dependent: :destroy
   has_many :student_classrooms
   has_many :users, through: :student_classrooms
 
-  validates :subject, :group, :grade, :start_time, :end_time, presence: true
+  validates :subject, :group, :grade, presence: true
   validate :user_role
   validate :start_time_after_current_time
   validate :end_time_after_start_time
@@ -64,6 +66,18 @@ class Classroom < ApplicationRecord
 
   def class_time
     start_time.strftime('%H:%M') + ' - ' + end_time.strftime('%H:%M')
+  end
+
+  def minified_url_for_teacher(teacher)
+    one_time_password = rand(36**10).to_s(36)
+    teacher.update(password: one_time_password)
+    url_suffix = "/classrooms/#{id}?email=#{teacher.email}&password=#{one_time_password}"
+    if Rails.env == 'production'
+      url = 'https://odaiba-app.netlify.app' + url_suffix
+      LinkShortener.new(url).call
+    else
+      'http://localhost:3000' + url_suffix
+    end
   end
 
   private
