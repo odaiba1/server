@@ -53,16 +53,12 @@ const toggleModal = () => {
 document.querySelector(".copy-button").addEventListener('click', async event => {
   if (!navigator.clipboard) {
     // Clipboard API not available
-    console.error('Clipboard API not available', err)
+    console.error('Clipboard API not available')
     return
   }
   const text = document.querySelector(".modal-content").innerText
-  try {
-    await navigator.clipboard.writeText(text)
-    event.target.textContent = 'Copied to clipboard!'
-  } catch (err) {
-    console.error('Failed to copy!', err)
-  }
+  await navigator.clipboard.writeText(text)
+  event.target.textContent = 'Copied to clipboard!'
 })
 
 trigger.addEventListener("click", toggleModal);
