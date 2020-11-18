@@ -8,7 +8,7 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/Documentation:
-  Enabled: true
+  Enabled: false
 Metrics/MethodLength:
   Max: 15
 Metrics/AbcSize:
