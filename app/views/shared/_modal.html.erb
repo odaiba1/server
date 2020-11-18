@@ -22,7 +22,16 @@
                 </div>
               </div>
               <div class="mt-2 modal-content">
-                <p class="text-sm leading-5 text-gray-500 mb-2"><%= @notice %></p>
+                <% if @notice.class == Array %>
+                  <ul>
+                    <% @notice.each do |link_and_name| %>
+                      <% array = link_and_name.split('---') %>
+                      <li>Link <%= link_to array.first %> for user <b><%= link_to array.second %></b></li>
+                    <% end %>
+                  </ul>
+                <% else %>
+                  <p class="text-sm leading-5 text-gray-500 mb-2"><%= @notice %></p>
+                <% end %>
               </div>
             </div>
           </div>
