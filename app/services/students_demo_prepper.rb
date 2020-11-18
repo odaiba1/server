@@ -5,10 +5,7 @@ class StudentsDemoPrepper
   end
 
   def call
-    @students = @emails.split(' ').map do |email|
-      user = User.find_by_email(email)
-      user || User.create!(name: email.split('@').first, email: email, password: 'secret')
-    end
+    prep_students
 
     assigned_students = @classroom.students
     @students.each do |user|
@@ -16,5 +13,22 @@ class StudentsDemoPrepper
     end
 
     @students
+  end
+
+  private
+
+  def prep_students
+    @students = @emails.split(' ').map do |email|
+      new_email = email.split('@').join('+student@')
+      student = User.find_by_email(new_email)
+      user = User.find_by_email(email)
+      if student
+        student
+      elsif user&.role == 'student'
+        user
+      else
+        User.create!(name: email.split('@').first, email: user ? email : new_email, password: 'secret')
+      end
+    end
   end
 end

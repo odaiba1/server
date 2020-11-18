@@ -19,16 +19,19 @@ class ClassroomDemoPrepper
   private
 
   def prep_teacher
-    @teacher = User.find_by(email: @teacher_email, role: 'teacher')
-    return if @teacher
-
-    @teacher = User.new(email: @teacher_email,
-                        name: @teacher_email.split('@').first,
-                        role: 'teacher',
-                        password: 'secret')
-    return if @teacher.save
-
-    raise StandardError.new(@teacher), 'the selected teacher email address is taken for a student account'
+    email = @teacher_email.split('@').join('+teacher@')
+    teacher = User.find_by_email(email)
+    user = User.find_by_email(@teacher_email)
+    @teacher = if teacher
+                 teacher
+               elsif user&.role == 'teacher'
+                 user
+               else
+                 User.create!(email: user ? email : @teacher_email,
+                              name: @teacher_email.split('@').first,
+                              role: 'teacher',
+                              password: 'secret')
+               end
   end
 
   def prep_classroom_and_students
