@@ -5,7 +5,7 @@ class StudentsDemoPrepper
   end
 
   def call
-    prep_student
+    prep_students
 
     assigned_students = @classroom.students
     @students.each do |user|
@@ -17,7 +17,7 @@ class StudentsDemoPrepper
 
   private
 
-  def prep_student
+  def prep_students
     @students = @emails.split(' ').map do |email|
       new_email = email.split('@').join('+student@')
       student = User.find_by_email(new_email)
