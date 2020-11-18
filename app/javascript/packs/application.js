@@ -42,6 +42,8 @@ document.querySelectorAll(".img-container img").forEach(item => {
   });
 });
 
+// close modal
+
 const modal = document.querySelector(".modal");
 const closeButton = document.querySelector(".close-button");
 const trigger = document.querySelector(".trigger");
@@ -49,6 +51,11 @@ const trigger = document.querySelector(".trigger");
 const toggleModal = () => {
     modal.classList.toggle("hide-modal");
 }
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+
+// copy to clipoboard
 
 document.querySelector(".copy-button").addEventListener('click', async event => {
   if (!navigator.clipboard) {
@@ -60,6 +67,3 @@ document.querySelector(".copy-button").addEventListener('click', async event => 
   await navigator.clipboard.writeText(text)
   event.target.textContent = 'Copied to clipboard!'
 })
-
-trigger.addEventListener("click", toggleModal);
-closeButton.addEventListener("click", toggleModal);
