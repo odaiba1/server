@@ -85,4 +85,31 @@ RSpec.describe WorkGroup, type: :model do
 
     # TODO: it can be only one student's turn
   end
+
+  # context 'methods' do
+  #   describe '.minified_url(subject)' do
+  #     context 'test and staging env' do
+  #       it 'returns full url' do
+  #         expect(subject.minified_url).to include(
+  #           # "http://localhost:3000/classrooms/#{subject.id}?email=#{teacher.email}&password="
+  #           "http://localhost:3000/classrooms/#{subject.id}/work_groups/#{user.id}?email=#{user.email}&password="
+  #         )
+  #       end
+  #     end
+
+  #     context 'production env' do
+  #       let(:link_shortener) { double(LinkShortener) }
+
+  #       before do
+  #         allow(Rails).to receive(:env).and_return('production')
+  #         allow(LinkShortener).to receive(:new).and_return(link_shortener)
+  #         allow(link_shortener).to receive(:call).and_return('www.test.com')
+  #       end
+
+  #       it 'returns minified url' do
+  #         expect(subject.minified_url).to eql('www.test.com')
+  #       end
+  #     end
+  #   end
+  # end
 end
