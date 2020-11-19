@@ -65,6 +65,8 @@ class Classroom < ApplicationRecord
   end
 
   def class_time
+    return 'Time range not set' if start_time.nil? || end_time.nil?
+
     start_time.strftime('%H:%M') + ' - ' + end_time.strftime('%H:%M')
   end
 
