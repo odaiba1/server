@@ -34,7 +34,7 @@ RSpec.describe WorkGroup, type: :model do
   let(:classroom) { create(:classroom) }
   subject do
     described_class.new(
-      aasm_state: 'next_up',
+      # aasm_state: 'next_up',
       # answered: 0,
       name: 'Test Group',
       # score: 0,
@@ -68,18 +68,8 @@ RSpec.describe WorkGroup, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without a session time' do
-      subject.session_time = nil
-      expect(subject).not_to be_valid
-    end
-
     it 'without a turn time' do
       subject.turn_time = nil
-      expect(subject).not_to be_valid
-    end
-
-    it 'without a start time' do
-      subject.start_at = nil
       expect(subject).not_to be_valid
     end
 
