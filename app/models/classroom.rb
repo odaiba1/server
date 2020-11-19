@@ -70,7 +70,7 @@ class Classroom < ApplicationRecord
     start_time.strftime('%H:%M') + ' - ' + end_time.strftime('%H:%M')
   end
 
-  def minified_url_for_teacher(teacher)
+  def minified_url_for_teacher
     one_time_password = rand(36**10).to_s(36)
     teacher.update(password: one_time_password)
     url_suffix = "/classrooms/#{id}?email=#{teacher.email}&password=#{one_time_password}"

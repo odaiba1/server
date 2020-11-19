@@ -93,5 +93,35 @@ RSpec.describe Classroom, type: :model do
         expect(subject.class_time).to eql('Time range not set')
       end
     end
+
+    describe '.name' do
+      it 'returns the correct name for display' do
+        expect(subject.name).to eql('Grade 1 English Class A')
+      end
+    end
+
+    describe '.minified_url_for_teacher' do
+      context 'test and staging env' do
+        it 'returns full url' do
+          expect(subject.minified_url_for_teacher).to include(
+            "http://localhost:3000/classrooms/#{subject.id}?email=#{teacher.email}&password="
+          )
+        end
+      end
+
+      context 'production env' do
+        let(:link_shortener) { double(LinkShortener) }
+
+        before do
+          allow(Rails).to receive(:env).and_return('production')
+          allow(LinkShortener).to receive(:new).and_return(link_shortener)
+          allow(link_shortener).to receive(:call).and_return('www.test.com')
+        end
+
+        it 'returns minified url' do
+          expect(subject.minified_url_for_teacher).to eql('www.test.com')
+        end
+      end
+    end
   end
 end
