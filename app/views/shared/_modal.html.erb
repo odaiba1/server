@@ -1,4 +1,5 @@
 <% if @notice %>
+  <% login_links = @notice.class == Array %>
   <div class="modal fixed z-10 inset-0 overflow-y-auto">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <div class="trigger fixed inset-0 transition-opacity">
@@ -14,7 +15,7 @@
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
               <!-- Title -->
               <div class="flex justify-between items-center pb-3">
-                <p class="text-xl font-bold">Login Links</p>
+                <p class="text-xl font-bold"><%= login_links ? 'Login Links' : 'Notice' %></p>
                 <div class="modal-close cursor-pointer z-50">
                   <svg class="close-button fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 18 18">
                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
@@ -22,7 +23,7 @@
                 </div>
               </div>
               <div class="mt-2 modal-content">
-                <% if @notice.class == Array %>
+                <% if login_links %>
                   <ul>
                     <% @notice.each do |link_and_name| %>
                       <% array = link_and_name.split('---') %>

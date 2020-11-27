@@ -56,7 +56,7 @@ class WorkGroupsController < ApplicationController
       custom_params[:emails],
       custom_params[:worksheet_url],
       start_time,
-      work_group_params[:turn_time]
+      work_group_params[:turn_time].presence? || '1'
     ).call
   end
 
