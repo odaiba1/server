@@ -19,15 +19,15 @@ class ClassroomDemoPrepper
   private
 
   def prep_teacher
-    email = @teacher_email.split('@').join('+teacher@')
-    teacher = User.find_by_email(email)
+    modified_email = @teacher_email.split('@').join('+teacher@')
+    teacher = User.find_by_email(modified_email)
     user = User.find_by_email(@teacher_email)
     @teacher = if teacher
                  teacher
                elsif user&.role == 'teacher'
                  user
                else
-                 User.create!(email: user ? email : @teacher_email,
+                 User.create!(email: user ? modified_email : @teacher_email,
                               name: @teacher_email.split('@').first,
                               role: 'teacher',
                               password: 'secret')

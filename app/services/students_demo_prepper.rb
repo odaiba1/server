@@ -27,7 +27,7 @@ class StudentsDemoPrepper
       elsif user&.role == 'student'
         user
       else
-        User.create!(name: email.split('@').first, email: user ? email : new_email, password: 'secret')
+        User.create!(name: email.split('@').first, email: user ? new_email : email, password: 'secret')
       end
     end
   end
