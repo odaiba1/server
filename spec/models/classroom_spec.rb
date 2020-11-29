@@ -33,9 +33,7 @@ RSpec.describe Classroom, type: :model do
       subject: 'English',
       group: 'A',
       grade: 1,
-      user: teacher,
-      start_time: Time.new(2021, 10, 18, 9, 0, 0, '+00:00'),
-      end_time: Time.new(2021, 10, 18, 10, 15, 0, '+00:00')
+      user: teacher
     )
   end
 
@@ -77,31 +75,53 @@ RSpec.describe Classroom, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without a start time' do
-      subject.start_time = nil
-      expect(subject).not_to be_valid
-    end
-
-    it 'without an end time' do
-      subject.end_time = nil
-      expect(subject).not_to be_valid
-    end
-
-    it 'without start and end time' do
-      subject.end_time = nil
-      subject.start_time = nil
-      expect(subject).not_to be_valid
-    end
-
     it 'start time in the past' do
       subject.start_time = Time.now - 1.hour
       expect(subject).not_to be_valid
     end
   end
 
-  context 'valid method' do
-    it 'returns the correct time output' do
-      expect(subject.class_time).to eql('09:00 - 10:15')
+  context 'methods' do
+    describe '.class_time' do
+      it 'returns the correct time output with a time range' do
+        subject.start_time = Time.zone.local(2020, 12, 12, 9, 0)
+        subject.end_time = Time.zone.local(2020, 12, 12, 10, 15)
+        expect(subject.class_time).to eql('09:00 - 10:15')
+      end
+
+      it 'returns message without range' do
+        expect(subject.class_time).to eql('Time range not set')
+      end
+    end
+
+    describe '.name' do
+      it 'returns the correct name for display' do
+        expect(subject.name).to eql('Grade 1 English Class A')
+      end
+    end
+
+    describe '.minified_url_for_teacher' do
+      context 'test and staging env' do
+        it 'returns full url' do
+          expect(subject.minified_url_for_teacher).to include(
+            "http://localhost:3000/classrooms/#{subject.id}?email=#{teacher.email}&password="
+          )
+        end
+      end
+
+      context 'production env' do
+        let(:link_shortener) { double(LinkShortener) }
+
+        before do
+          allow(Rails).to receive(:env).and_return('production')
+          allow(LinkShortener).to receive(:new).and_return(link_shortener)
+          allow(link_shortener).to receive(:call).and_return('www.test.com')
+        end
+
+        it 'returns minified url' do
+          expect(subject.minified_url_for_teacher).to eql('www.test.com')
+        end
+      end
     end
   end
 end

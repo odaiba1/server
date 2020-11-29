@@ -12,7 +12,7 @@ class DemoMailer < ApplicationMailer
     odaiba_logo
     @teacher = params[:teacher]
     classroom = @teacher.classrooms.last
-    @classroom_url = classroom.minified_url_for_teacher(@teacher)
+    @classroom_url = classroom.minified_url_for_teacher
     @work_groups_hash = params[:work_groups_hash]
 
     mail(to: @teacher.email, subject: 'Your Odaiba classroom is ready')

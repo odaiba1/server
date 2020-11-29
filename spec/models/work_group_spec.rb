@@ -34,7 +34,7 @@ RSpec.describe WorkGroup, type: :model do
   let(:classroom) { create(:classroom) }
   subject do
     described_class.new(
-      aasm_state: 'next_up',
+      # aasm_state: 'next_up',
       # answered: 0,
       name: 'Test Group',
       # score: 0,
@@ -68,18 +68,8 @@ RSpec.describe WorkGroup, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without a session time' do
-      subject.session_time = nil
-      expect(subject).not_to be_valid
-    end
-
     it 'without a turn time' do
       subject.turn_time = nil
-      expect(subject).not_to be_valid
-    end
-
-    it 'without a start time' do
-      subject.start_at = nil
       expect(subject).not_to be_valid
     end
 
@@ -95,4 +85,31 @@ RSpec.describe WorkGroup, type: :model do
 
     # TODO: it can be only one student's turn
   end
+
+  # context 'methods' do
+  #   describe '.minified_url(subject)' do
+  #     context 'test and staging env' do
+  #       it 'returns full url' do
+  #         expect(subject.minified_url).to include(
+  #           # "http://localhost:3000/classrooms/#{subject.id}?email=#{teacher.email}&password="
+  #           "http://localhost:3000/classrooms/#{subject.id}/work_groups/#{user.id}?email=#{user.email}&password="
+  #         )
+  #       end
+  #     end
+
+  #     context 'production env' do
+  #       let(:link_shortener) { double(LinkShortener) }
+
+  #       before do
+  #         allow(Rails).to receive(:env).and_return('production')
+  #         allow(LinkShortener).to receive(:new).and_return(link_shortener)
+  #         allow(link_shortener).to receive(:call).and_return('www.test.com')
+  #       end
+
+  #       it 'returns minified url' do
+  #         expect(subject.minified_url).to eql('www.test.com')
+  #       end
+  #     end
+  #   end
+  # end
 end
