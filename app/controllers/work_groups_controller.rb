@@ -36,7 +36,7 @@ class WorkGroupsController < ApplicationController
   private
 
   def work_group_params
-    params.require(:work_group).permit(:turn_time)
+    # params.require(:work_group).permit(:turn_time)
   end
 
   def custom_params
@@ -56,7 +56,7 @@ class WorkGroupsController < ApplicationController
       custom_params[:emails],
       custom_params[:worksheet_url],
       start_time,
-      work_group_params[:turn_time].presence? || '1'
+      '1'
     ).call
   end
 
