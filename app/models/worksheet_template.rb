@@ -24,10 +24,17 @@ class WorksheetTemplate < ApplicationRecord
 
   validates :title, :image_url, presence: true
   validate :user_role
+  validate :url_is_an_image
 
   private
 
   def user_role
     errors.add(:user_role, 'Students cannot create worksheet templates') if user&.student?
+  end
+
+  def url_is_an_image
+    accepted_suffixes = %w[jpg jpeg png]
+    accepted = accepted_suffixes.include?(image_url.split('.').last)
+    errors.add(:url_is_am_image, 'Please insert a valid image url') unless accepted
   end
 end
