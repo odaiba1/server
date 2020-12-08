@@ -22,7 +22,7 @@ class WorksheetTemplate < ApplicationRecord
   has_many :worksheets
   has_many :work_groups, through: :worksheets
 
-  validates :title, presence: true
+  validates :title, :image_url, presence: true
   validate :user_role
 
   private
