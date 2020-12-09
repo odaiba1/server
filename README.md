@@ -1,24 +1,31 @@
-# README
+## Installation
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Follow the rails server installation [here](https://www.notion.so/Rails-Documentation-f6843e6e30604b25aaced5e4bf070105)
 
-Things you may want to cover:
+Follow the client installation [here](https://github.com/odaiba-app/client-v2)
 
-* Ruby version
+git clone the server-help [here](https://github.com/odaiba-app/server-help) 
 
-* System dependencies
+### Run rails server
 
-* Configuration
+Inside project folder:
 
-* Database creation
+`cd server`
 
-* Database initialization
+`rails s -p 3002`
 
-* How to run the test suite
+### Run server-help
 
-* Services (job queues, cache servers, search engines, etc.)
+Inside project folder:
 
-* Deployment instructions
+`cd server-help`
 
-* ...
+`yarn start`
+
+### Run client
+
+Inside project folder:
+
+`cd client-v2`
+
+`yarn start`
