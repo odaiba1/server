@@ -33,6 +33,6 @@ class StudentClassroom < ApplicationRecord
   private
 
   def user_role
-    errors.add(:not_authorized, 'Teachers cannot create studen classrooms') if user&.teacher?
+    errors.add(:not_authorized, 'Teachers cannot create student classrooms') if user&.teacher?
   end
 end

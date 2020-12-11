@@ -59,8 +59,8 @@ RSpec.describe Worksheet, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'without an image url' do
-      subject.image_url = nil
+    it 'without a template image url' do
+      subject.template_image_url = nil
       expect(subject).not_to be_valid
     end
 
