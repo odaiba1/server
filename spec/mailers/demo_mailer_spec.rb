@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DemoMailer, type: :mailer do
-  context 'demo mailer' do
+  context 'invite student' do
     let(:student_work_group) { create(:student_work_group) }
     let(:user)               { student_work_group.student }
     let(:work_group)         { student_work_group.work_group }
@@ -30,27 +30,27 @@ RSpec.describe DemoMailer, type: :mailer do
 
     it 'assigns @confirmation_url' do
       expect(subject.body.encoded).to match(
-        "https://odaiba-app.netlify.app/classrooms/#{work_group.classroom_id}/work_groups/#{work_group.id}"
+        "http://localhost:3000/classrooms/#{work_group.classroom_id}/work_groups/#{work_group.id}"
       )
     end
   end
 
-  context 'invitation mailer' do
-    let(:work_group) { create(:work_group) }
+  context 'send worksheets' do
+    let(:work_group)         { create(:work_group) }
     let(:student_work_group) { create(:student_work_group, work_group: work_group) }
-    let(:worksheet) { create(:worksheet, work_group: work_group, image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg') }
-    let(:user_email) { student_work_group.student.email }
-    let(:image_url) { worksheet.image_url }
+    let(:worksheet)          { create(:worksheet, work_group: work_group, image_url: 'https://res.cloudinary.com/naokimi/image/upload/v1563422680/p7ojmgdtwshkrhxmjzh1.jpg') }
+    let(:user_email)         { student_work_group.student.email }
+    let(:image_urls)         { [worksheet.image_url] }
     subject do
       DemoMailer.with(
         students: user_email,
         student_group: work_group,
-        image_url: image_url
+        image_urls: image_urls
       ).send_worksheets
     end
 
     it 'renders the subject' do
-      expect(subject.subject).to eql("[Odaiba: #{work_group.name} in #{work_group.classroom.name}] Successfully submitted worksheet")
+      expect(subject.subject).to eql("[Odaiba: #{work_group.name}] Successfully submitted worksheet")
     end
 
     it 'renders the receiver email' do
