@@ -10,7 +10,9 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
   end
 
   def index
-    @worksheets = policy_scope(Worksheet)
+    @worksheets = @work_group.worksheets
+    # @worksheets = policy_scope(Worksheet) # this is to get all the personal worksheets
+    # # instead of the ones belonging to a workgroup
     render json: @worksheets.to_json
   end
 
