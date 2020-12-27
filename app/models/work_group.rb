@@ -56,6 +56,7 @@ class WorkGroup < ApplicationRecord
   validates :aasm_state, :video_call_code, :turn_time, presence: true
   validate :start_time_after_current_time
   validate :turn_time_less_than_session_time
+  validate :only_one_student_turn
 
   scope :active_groups, -> { where(aasm_state: 'in_progress') }
 
@@ -83,5 +84,11 @@ class WorkGroup < ApplicationRecord
     return if turn_time.nil? || session_time.nil?
 
     errors.add(:turn_time, 'Must be less than session time') if turn_time >= session_time
+  end
+
+  def only_one_student_turn
+    return unless student_work_groups.select(&:turn).length > 1
+
+    errors.add(:student_work_groups, 'only one can be turn: true')
   end
 end
