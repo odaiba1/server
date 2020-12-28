@@ -54,5 +54,11 @@ RSpec.describe StudentWorkGroup, type: :model do
       subject.user = create(:teacher)
       expect(subject).not_to be_valid
     end
+
+    it 'with more than one turn set to true' do
+      create(:work_group)
+      create(:student_work_group, work_group: WorkGroup.last, turn: true)
+      expect { create(:student_work_group, work_group: WorkGroup.last, turn: true)}.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end

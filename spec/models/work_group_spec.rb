@@ -82,12 +82,6 @@ RSpec.describe WorkGroup, type: :model do
       subject.turn_time = 2_000_000
       expect(subject).not_to be_valid
     end
-
-    # TODO: it can be only one student's turn
-    # it 'with more than one turn set to true' do
-    #   create(:student_work_group, turn: true)
-    #   expect{ create(:student_work_group, work_group: WorkGroup.last, turn: true) }.to raise_error('only one can be turn: true')
-    # end
   end
 
   # context 'methods' do
