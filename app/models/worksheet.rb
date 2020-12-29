@@ -23,6 +23,7 @@
 #  fk_rails_...  (worksheet_template_id => worksheet_templates.id)
 #
 class Worksheet < ApplicationRecord
+  include UrlValidation
   belongs_to :worksheet_template
   belongs_to :work_group
   has_many :worksheet_reviews

@@ -18,11 +18,12 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class WorksheetTemplate < ApplicationRecord
+  include UrlValidation
   belongs_to :user
   has_many :worksheets
   has_many :work_groups, through: :worksheets
 
-  validates :title, presence: true
+  validates :title, :image_url, presence: true
   validate :user_role
 
   private

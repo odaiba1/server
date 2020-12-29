@@ -27,10 +27,19 @@ class StudentWorkGroup < ApplicationRecord
   belongs_to :work_group
 
   validate :user_role
+  validate :only_one_student_turn
 
   private
 
   def user_role
     errors.add(:not_student, 'Teachers cannot create Student Work Groups') if user&.teacher?
+  end
+
+  def only_one_student_turn
+    return if work_group.nil?
+
+    return unless work_group.student_work_groups.select(&:turn).length >= 1
+
+    errors.add(:turn, 'only one can be turn: true')
   end
 end
