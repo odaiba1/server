@@ -27,7 +27,6 @@ class StudentWorkGroup < ApplicationRecord
   belongs_to :work_group
 
   validate :user_role
-  validates :work_group, presence: true
   validate :only_one_student_turn
 
   private
@@ -38,6 +37,7 @@ class StudentWorkGroup < ApplicationRecord
 
   def only_one_student_turn
     return if work_group.nil?
+
     return unless work_group.student_work_groups.select(&:turn).length >= 1
 
     errors.add(:turn, 'only one can be turn: true')
