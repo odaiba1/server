@@ -8,17 +8,17 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   end
 
   def show
-    render json: {
-      classroom: @classroom.as_json(methods: :class_time),
-      teacher: @classroom.teacher.deep_pluck(:id, :name),
-      students: @classroom.students.map do |s|
-        {
-          id: s.id,
-          name: s.name,
-          active_groups: s.active_student_workgroups
-        }
-      end
-    }.to_json
+    # render json: {
+    #   classroom: @classroom.as_json(methods: :class_time),
+    #   teacher: @classroom.teacher.deep_pluck(:id, :name),
+    #   students: @classroom.students.map do |s|
+    #     {
+    #       id: s.id,
+    #       name: s.name,
+    #       active_groups: s.active_student_workgroups
+    #     }
+    #   end
+    # }.to_json
   end
 
   def edit
