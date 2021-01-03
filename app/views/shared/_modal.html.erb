@@ -27,7 +27,7 @@
                   <ul>
                     <% @notice.each do |link_and_name| %>
                       <% array = link_and_name.split('---') %>
-                      <li>Link <%= link_to array.first %> for user <b><%= link_to array.second %></b></li>
+                      <li>Link <%= link_to array.first, array.first %> for user <b><%= mail_to array.second, array.second %></b></li>
                     <% end %>
                   </ul>
                 <% else %>
