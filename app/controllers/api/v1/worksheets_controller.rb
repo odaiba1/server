@@ -71,7 +71,7 @@ class Api::V1::WorksheetsController < Api::V1::BaseController
     DemoMailer.with(
       students: students,
       student_group: student_group,
-      image_url: @image_url
+      image_urls: [@image_url]
     ).send_worksheets.deliver_later
     @worksheet.work_group.update(worksheet_email_sent: true)
   end
