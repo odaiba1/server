@@ -136,6 +136,11 @@ html, body {
     border: none;
     font-weight: 500;
     color: white;
+    cursor: pointer;
+}
+
+#form-submit:hover {
+    opacity: 80%;
 }
 
 .hide-modal {
