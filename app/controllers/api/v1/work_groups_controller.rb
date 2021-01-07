@@ -11,17 +11,15 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     }.to_json
   end
 
-  def show
-    render json: work_group_with_relations
-  end
+  def show; end
 
   def edit
-    render json: work_group_with_relations
+    render :show
   end
 
   def update
     if @work_group.update(work_group_params)
-      render json: work_group_with_relations
+      render :show
     else
       render_error
     end
@@ -58,7 +56,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     @work_group.classroom = @classroom
     authorize @work_group
     if @work_group.save
-      render json: work_group_with_relations
+      render :show
     else
       render_error
     end
@@ -71,14 +69,6 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
 
   private
 
-  def work_group_with_relations
-    {
-      work_group: @work_group,
-      teacher: @work_group.classroom.teacher.deep_pluck(:id, :name),
-      students: @work_group.student_work_groups.deep_pluck(:turn, :joined, user: %i[id name])
-    }.to_json
-  end
-
   def set_and_authorize_work_group
     @work_group = WorkGroup.find(params[:id])
     authorize @work_group
@@ -88,7 +78,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     # params.require(:work_group).permit(:name, :classroom_id, :session_time, :aasm_state,
     #                                    :turn_time, :video_call_code, :start_at)
     params.require(:work_group).permit(:name, :classroom_id, :session_time, :session_time,
-                                   :turn_time, :video_call_code, :start_at)
+                                       :turn_time, :video_call_code, :start_at)
   end
 
   def set_and_authorize_classroom
