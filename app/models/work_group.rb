@@ -71,6 +71,10 @@ class WorkGroup < ApplicationRecord
     end
   end
 
+  def student_initiated
+    classroom_id == 1 # dummy classroom
+  end
+
   private
 
   def start_time_after_current_time

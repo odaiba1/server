@@ -7,27 +7,15 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
     render json: @classrooms.map(&:parse_for_dashboard).to_json
   end
 
-  def show
-    render json: {
-      classroom: @classroom.as_json(methods: :class_time),
-      teacher: @classroom.teacher.deep_pluck(:id, :name),
-      students: @classroom.students.map do |s|
-        {
-          id: s.id,
-          name: s.name,
-          active_groups: s.active_student_workgroups
-        }
-      end
-    }.to_json
-  end
+  def show; end
 
   def edit
-    render json: classroom_with_relations
+    render :show
   end
 
   def update
     if @classroom.update(classroom_params)
-      render json: classroom_with_relations
+      render :show
     else
       render_error
     end
@@ -44,7 +32,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
     @classroom.user = current_user
     authorize @classroom
     if @classroom.save
-      render json: classroom_with_relations
+      render :show
     else
       render_error
     end
@@ -86,14 +74,6 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
       teacher: work_groups.first.classroom.teacher,
       work_groups: work_groups.deep_pluck(users: :name, worksheets: :image_url)
     ).send_worksheets_to_teacher.deliver_later
-  end
-
-  def classroom_with_relations
-    {
-      classroom: @classroom.as_json(methods: :class_time),
-      teacher: @classroom.teacher.deep_pluck(:id, :name),
-      students: @classroom.students.deep_pluck(:id, :name)
-    }.to_json
   end
 
   def set_classroom

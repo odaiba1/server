@@ -4,13 +4,6 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
   let(:teacher)    { create(:teacher) }
   let(:classroom1) { create(:classroom, user: teacher) }
   let(:classroom2) { create(:classroom) }
-  let(:classroom_json) do
-    {
-      classroom: classroom1.as_json(methods: :class_time),
-      teacher: classroom1.teacher.deep_pluck(:id, :name),
-      students: classroom1.students.deep_pluck(:id, :name)
-    }.to_json
-  end
 
   before do
     request.headers['X-User-Email'] = teacher.email
@@ -32,7 +25,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'returns selected classroom' do
         get :show, params: { id: classroom1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(classroom_json)
+        expect(controller.instance_variable_get(:@classroom)).to eq(classroom1)
       end
     end
 
@@ -54,7 +47,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'returns selected classroom to modify' do
         get :edit, params: { id: classroom1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(classroom_json)
+        expect(controller.instance_variable_get(:@classroom)).to eq(classroom1)
       end
     end
 
@@ -76,7 +69,7 @@ RSpec.describe Api::V1::ClassroomsController, type: :controller do
       it 'changes selected classroom' do
         patch :update, params: { id: classroom1.id, classroom: { subject: 'English', group: 'B', grade: 1 }, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to include('English')
+        expect(controller.instance_variable_get(:@classroom)).to eq(classroom1)
       end
     end
 

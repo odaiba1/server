@@ -65,6 +65,7 @@ gem 'sassc-rails'
 gem 'simple_form'
 gem 'sitemap_generator'
 gem 'uglifier'
+gem 'rubocop'
 gem 'whenever', require: false
 
 group :development, :test do
