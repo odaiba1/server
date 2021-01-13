@@ -4,7 +4,8 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
   let(:teacher)     { create(:teacher) }
   let(:classroom)   { create(:classroom, user: teacher) }
   let(:work_group1) { create(:work_group, classroom: classroom) }
-  let(:work_group2) { create(:work_group) }
+  let(:work_group2) { create(:work_group, aasm_state: 'created') }
+  let(:work_group3) { create(:work_group, aasm_state: 'done') }
   let(:work_group_json) do
     {
       work_group: work_group1,
@@ -42,7 +43,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'returns selected work group' do
         get :show, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(work_group_json)
+        expect(controller.instance_variable_get(:@work_group).id).to eq(work_group1.id)
       end
     end
 
@@ -64,7 +65,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'returns selected work group to modify' do
         get :edit, params: { id: work_group1.id, format: :json }
         expect(response).to have_http_status(200)
-        expect(response.body).to eq(work_group_json)
+        expect(controller.instance_variable_get(:@work_group).id).to eq(work_group1.id)
       end
     end
 
@@ -90,7 +91,7 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
           format: :json
         }
         expect(response).to have_http_status(200)
-        expect(response.body).to include('New Test')
+        expect(controller.instance_variable_get(:@work_group).name).to eq('New Test work_group')
       end
     end
 
@@ -201,6 +202,77 @@ RSpec.describe Api::V1::WorkGroupsController, type: :controller do
       it 'returns 404 for missing classroom' do
         delete :destroy, params: { id: 999, format: :json }
         expect(response).to have_http_status(404)
+      end
+    end
+  end
+
+  describe '#initiate' do
+    context 'success' do
+      it 'sets the progess status of a work group to in_progress' do
+        patch :initiate, params: { id: work_group2.id, format: :json }
+        expect(controller.instance_variable_get(:@work_group).aasm_state).to eq('in_progress')
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'failure' do
+      it 'returns 204 for work group just created' do
+        patch :conclude, params: { id: work_group2.id, format: :json }
+        expect(response).to have_http_status(204)
+      end
+
+      it 'returns 404 for nonexistent work group' do
+        patch :initiate, params: { id: 4, format: :json }
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
+
+  describe '#conclude' do
+    context 'success' do
+      it 'sets the progess status of a work group to done' do
+        patch :conclude, params: { id: work_group1.id, format: :json }
+        expect(controller.instance_variable_get(:@work_group).aasm_state).to eq('done')
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'failure' do
+      it 'returns 204 for work group just created' do
+        patch :conclude, params: { id: work_group2.id, format: :json }
+        expect(response).to have_http_status(204)
+      end
+
+      it 'returns 404 for nonexistent work groups' do
+        patch :conclude, params: { id: 4, format: :json }
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
+
+  describe '#cancel' do
+    context 'success' do
+      it 'sets state of in progress work group to canceled' do
+        patch :cancel, params: { id: work_group1.id, format: :json }
+        expect(controller.instance_variable_get(:@work_group).aasm_state).to eq('canceled')
+        expect(response).to have_http_status(200)
+      end
+
+      it 'sets state of created work group to canceled' do
+        patch :cancel, params: { id: work_group2.id, format: :json }
+        expect(controller.instance_variable_get(:@work_group).aasm_state).to eq('canceled')
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'failure' do
+      it 'returns 404 for nonexistent work group' do
+        patch :cancel, params: { id: 4, format: :json }
+        expect(response).to have_http_status(404)
+      end
+
+      it 'sets state of work group that is done' do
+        expect { patch :cancel, params: { id: work_group3.id, format: :json } }.to raise_error(AASM::InvalidTransition)
       end
     end
   end
