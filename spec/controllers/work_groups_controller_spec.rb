@@ -4,7 +4,6 @@ RSpec.describe WorkGroupsController, type: :controller do
   let(:work_group)              { create(:work_group) }
   let(:student_work_group1)     { create(:student_work_group, work_group: work_group) }
   let(:student_work_group2)     { create(:student_work_group, work_group: work_group) }
-  let(:worksheet_template2)     { create(:worksheet_template, image_url: 'google.com') }
   let(:worksheet)               { create(:worksheet) }
   let(:work_group_demo_prepper) { double(WorkGroupDemoPrepper) }
   let(:demo_mailer)             { double(DemoMailer) }
@@ -40,7 +39,6 @@ RSpec.describe WorkGroupsController, type: :controller do
 
     context 'with no params' do
       it 'renders template with new work group' do
-        worksheet_template2
         get :new
         expect(controller.instance_variable_get(:@work_group).turn_time).to eq(nil)
         expect(controller.instance_variable_get(:@worksheet_urls)).to eq([])
