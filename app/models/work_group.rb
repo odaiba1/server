@@ -7,9 +7,9 @@
 #  answered             :integer
 #  name                 :string
 #  score                :integer
-#  session_time         :integer
+#  session_time         :bigint
 #  start_at             :datetime
-#  turn_time            :integer
+#  turn_time            :bigint
 #  video_call_code      :string
 #  worksheet_email_sent :boolean          default(FALSE)
 #  created_at           :datetime         not null
@@ -68,6 +68,14 @@ class WorkGroup < ApplicationRecord
       LinkShortener.new(url).call
     else
       'http://localhost:3000' + url_suffix
+    end
+  end
+
+  def assign_colors()
+    # orange, yellow, green, blue, pink, purple
+    colors = ['#FF5733', '#FFE632', '#11841F', '#2B86E7', '#E72BD8', '#B554FF']
+    users.each_with_index do |student, index|
+      student.update(pen_colour: colors[index])
     end
   end
 

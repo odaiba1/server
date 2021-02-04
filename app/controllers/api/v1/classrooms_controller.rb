@@ -72,7 +72,7 @@ class Api::V1::ClassroomsController < Api::V1::BaseController
   def mail_worksheets_to_teacher(work_groups)
     DemoMailer.with(
       teacher: work_groups.first.classroom.teacher,
-      work_groups: work_groups.deep_pluck(users: :name, worksheets: :image_url)
+      work_groups: work_groups.deep_pluck(users: [:name, :pen_colour], worksheets: :image_url) 
     ).send_worksheets_to_teacher.deliver_later
   end
 

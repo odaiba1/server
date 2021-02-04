@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_135428) do
+ActiveRecord::Schema.define(version: 2021_02_04_014208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,11 +40,11 @@ ActiveRecord::Schema.define(version: 2020_10_15_135428) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string "subject"
     t.string "group"
     t.integer "grade"
-    t.datetime "start_time"
-    t.datetime "end_time"
     t.index ["user_id"], name: "index_classrooms_on_user_id"
   end
 
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_135428) do
     t.string "name"
     t.integer "role", default: 0
     t.string "authentication_token", limit: 30
+    t.string "pen_colour", default: "#000000"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -92,8 +93,8 @@ ActiveRecord::Schema.define(version: 2020_10_15_135428) do
   create_table "work_groups", force: :cascade do |t|
     t.string "name"
     t.string "video_call_code"
-    t.integer "session_time"
-    t.integer "turn_time"
+    t.bigint "session_time"
+    t.bigint "turn_time"
     t.integer "score"
     t.integer "answered"
     t.datetime "start_at"
