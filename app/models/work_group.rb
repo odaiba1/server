@@ -71,7 +71,7 @@ class WorkGroup < ApplicationRecord
     end
   end
 
-  def assign_colors()
+  def assign_colors
     # orange, yellow, green, blue, pink, purple
     colors = ['#FF5733', '#FFE632', '#11841F', '#2B86E7', '#E72BD8', '#B554FF']
     users.each_with_index do |student, index|
