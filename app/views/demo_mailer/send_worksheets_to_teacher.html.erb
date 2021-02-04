@@ -18,17 +18,17 @@
                 <p>Students:</p>
                 <% work_group[:users].each do |student| %>
                    <div class="row">
-                      <div class="col-sm-2"> <span><div class="circle" style='background-color: <%= student['pen_colour'] %>'></div></span>
-                        <p><%=student['name'] %></p>  
+                      <div class="col-sm-2"> <span><div class="circle" style="background-color: <%= student['pen_colour'] %>"></div></span>
+                        <p><%= student['name'] %></p>  
                       </div>
                     </div>
                 <% end %>
               </ul>
               <ul>
                 <p>Worksheet submissions:</p>
-                <%# <% work_group[:worksheets].each_with_index do |worksheet, index| %>
-                  <%# <li><%= link_to "worksheet no. #{index + 1}", worksheet['image_url']</li> %> %>
-                <%# <% end %> %> %>
+                <% work_group[:worksheets].each_with_index do |worksheet, index| %>
+                  <li><%= link_to "worksheet no. #{index + 1}", worksheet['image_url'] %></li>  
+                <% end %> 
               </ul>
             </li>
           <% end %>

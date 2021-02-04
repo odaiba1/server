@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 2021_02_04_014208) do
   create_table "work_groups", force: :cascade do |t|
     t.string "name"
     t.string "video_call_code"
-    t.bigint "session_time"
-    t.bigint "turn_time"
+    t.integer "session_time"
+    t.integer "turn_time"
     t.integer "score"
     t.integer "answered"
     t.datetime "start_at"

@@ -7,9 +7,9 @@
 #  answered             :integer
 #  name                 :string
 #  score                :integer
-#  session_time         :bigint
+#  session_time         :integer
 #  start_at             :datetime
-#  turn_time            :bigint
+#  turn_time            :integer
 #  video_call_code      :string
 #  worksheet_email_sent :boolean          default(FALSE)
 #  created_at           :datetime         not null
