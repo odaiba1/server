@@ -19,7 +19,11 @@
                 <% work_group[:users].each do |student| %>
                    <div class="row">
                       <div class="col-sm-2"> <span><div class="circle" style="background-color: <%= student['pen_colour'] %>"></div></span>
-                        <p><%= student['name'] %></p>  
+                        <% if WorkGroup::COLOURS.key(student['pen_colour']) != nil %>
+                          <p><%= student['name'] %> (<%= WorkGroup::COLOURS.key(student['pen_colour']) %>)</p>
+                        <% else %>
+                          <p><%= student['name'] %></p>
+                        <% end %>
                       </div>
                     </div>
                 <% end %>
@@ -27,8 +31,8 @@
               <ul>
                 <p>Worksheet submissions:</p>
                 <% work_group[:worksheets].each_with_index do |worksheet, index| %>
-                  <li><%= link_to "worksheet no. #{index + 1}", worksheet['image_url'] %></li>  
-                <% end %> 
+                 <li><%= link_to "worksheet no. #{index + 1}", worksheet['image_url'] %></li>
+                <% end %>
               </ul>
             </li>
           <% end %>
