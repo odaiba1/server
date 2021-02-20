@@ -7,8 +7,9 @@ json.teacher do
   json.extract! @work_group.classroom.teacher, :id, :name
 end
 
+
 json.students @work_group.student_work_groups do |student|
-  json.extract! student, :turn, :joined
+  json.extract! student, :turn, :joined, :pen_colour
   json.user do
     json.extract! student.user, :id, :name
   end

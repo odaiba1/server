@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  joined        :boolean
+#  pen_colour    :string           default("#000000")
 #  turn          :boolean
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

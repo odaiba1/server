@@ -27,6 +27,15 @@
 class WorkGroup < ApplicationRecord
   include AASM
 
+  COLOURS = {
+    'orange': '#FF5733',
+    'yellow': '#FFE632',
+    'green': '#11841F',
+    'blue': '#2B86E7',
+    'pink': '#E72BD8',
+    'purple': '#B554FF'
+  }.freeze
+
   aasm do
     state :created, initial: true
     state :in_progress
@@ -64,10 +73,18 @@ class WorkGroup < ApplicationRecord
     user.update(password: one_time_password)
     url_suffix = "/classrooms/#{classroom_id}/work_groups/#{id}?email=#{user.email}&password=#{one_time_password}"
     if Rails.env == 'production'
-      url = 'https://odaiba-app.netlify.app' + url_suffix
+      url = "https://odaiba-app.netlify.app#{url_suffix}"
       LinkShortener.new(url).call
     else
-      'http://localhost:3000' + url_suffix
+      "http://localhost:3000#{url_suffix}"
+    end
+  end
+
+  def assign_colors
+    # orange, yellow, green, blue, pink, purple
+    sample_colors = COLOURS.to_a.sample(6)
+    student_work_groups.each_with_index do |student, index|
+      student.update(pen_colour: sample_colors[index][1])
     end
   end
 

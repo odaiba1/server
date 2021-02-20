@@ -29,6 +29,7 @@ class Api::V1::WorkGroupsController < Api::V1::BaseController
     return unless @work_group.created?
 
     @work_group.initiate!
+    @work_group.assign_colors
     render json: @work_group
   end
 

@@ -111,7 +111,8 @@ Classroom.all.each do |classroom|
       student: students[current_student_index],
       work_group: work_groups[current_group_index],
       joined: true,
-      turn: work_groups[current_group_index].student_work_groups.size.zero? # sets the first student assigned to the group to turn = true
+      turn: false
+      # turn: work_groups[current_group_index].student_work_groups.size.zero? # sets the first student assigned to the group to turn = true
     )
     # increases the group index by 1 until it reaches the end of the max of the group, then starts over
     current_group_index == work_groups.size - 1 ? current_group_index = 0 : current_group_index += 1
